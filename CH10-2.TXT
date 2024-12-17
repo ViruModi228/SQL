@@ -1,0 +1,999 @@
+SQL> 
+SQL> REM CONSTRAINTS : DATA VALIDATION RULES
+SQL> 
+SQL> REM TYPES OF CONSTRAINTS : 1 CHECK 2 NOT NULL 3 UNIQUE 4 PRIMARY KEY 5 REFERENCES           // IMPORTANT CONCEPT BOLTE!!!!!!!!!
+SQL> 
+SQL> REM CHECK : TO ATTACH SOME CONDITION(S) TO COLUMNS, WHICH WILL BE CHECKED FOR INSERT/UPDATE OPERATION
+SQL> 
+SQL> REM NOT NULL : TO MAKE VALUE MANDATORY WHILE INSERTING NEW ROW
+SQL> 
+SQL> REM UNIQUE : TO ALLOW ONLY UNIQUE/NON-DUPLICATE VALUES
+SQL> 
+SQL> REM PRIMARY KEY : COMBINATION OF NOT NULL + UNIQUE. WE CAN USE PRIMARY KEY CONSTRAINT ONLY ONCE PER TABLE.             
+SQL> 
+SQL> REM REFERENCES : TO ALLOW ONLY THOSE VALUES WHICH ARE ALREADY STORED IN REFERRED PRIMARY KEY OR UNIQUE COLUMN(S).
+SQL> 
+SQL> 
+SQL> SELECT EMPLOYEE_ID , FIRST_NAME , MANAGER_ID FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME MANAGER_ID                                               
+----------- ---------- ----------                                               
+        100 Steven                                                              
+        101 Neena             100                                               
+        102 Lex               100                                               
+        103 Alexander         102                                               
+        104 Bruce             103                                               
+        107 Diana             103                                               
+        124 Kevin             100                                               
+        141 Trenna            124                                               
+        142 Curtis            124                                               
+        143 Randall           124                                               
+        144 Peter             124                                               
+
+EMPLOYEE_ID FIRST_NAME MANAGER_ID                                               
+----------- ---------- ----------                                               
+        149 Eleni             100                                               
+        174 Ellen             149                                               
+        176 Jonathon          149                                               
+        178 Kimerely          149                                               
+        200 Jennifer          101                                               
+        201 Michael           100                                               
+        202 Pat               201                                               
+        205 Shelley           101                                               
+        206 William           205                                               
+
+20 rows selected.
+
+SQL> SET LINES 200 PAGES 24
+SQL> 
+SQL> R
+  1* SELECT EMPLOYEE_ID , FIRST_NAME , MANAGER_ID FROM EMPLOYEES
+
+EMPLOYEE_ID FIRST_NAME MANAGER_ID                                                                                                                                                                       
+----------- ---------- ----------                                                                                                                                                                       
+        100 Steven                                                                                                                                                                                      
+        101 Neena             100                                                                                                                                                                       
+        102 Lex               100                                                                                                                                                                       
+        103 Alexander         102                                                                                                                                                                       
+        104 Bruce             103                                                                                                                                                                       
+        107 Diana             103                                                                                                                                                                       
+        124 Kevin             100                                                                                                                                                                       
+        141 Trenna            124                                                                                                                                                                       
+        142 Curtis            124                                                                                                                                                                       
+        143 Randall           124                                                                                                                                                                       
+        144 Peter             124                                                                                                                                                                       
+        149 Eleni             100                                                                                                                                                                       
+        174 Ellen             149                                                                                                                                                                       
+        176 Jonathon          149                                                                                                                                                                       
+        178 Kimerely          149                                                                                                                                                                       
+        200 Jennifer          101                                                                                                                                                                       
+        201 Michael           100                                                                                                                                                                       
+        202 Pat               201                                                                                                                                                                       
+        205 Shelley           101                                                                                                                                                                       
+        206 William           205                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> DROP TABLE STD5A;
+DROP TABLE STD5A
+           *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> CREATE TABLE STD5A(RNO NUMBER(2),NM VARCHAR(10));
+
+Table created.
+
+SQL> REM RNO : -99 TO +99
+SQL> 
+SQL> INSERT INTO STD5A VALUES (1,'GANESH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (1,'RIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (NULL,'SIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (31,'SHUBH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (99,'LABH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (-99,'LAKSHMI');
+
+1 row created.
+
+SQL> SELECT * FROM STD5A;
+
+       RNO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         1 RIDDHI                                                                                                                                                                                       
+           SIDDHI                                                                                                                                                                                       
+        31 SHUBH                                                                                                                                                                                        
+        99 LABH                                                                                                                                                                                         
+       -99 LAKSHMI                                                                                                                                                                                      
+
+6 rows selected.
+
+SQL> INSERT INTO STD5A VALUES (0,'SARSVATI');
+
+1 row created.
+
+SQL> SELECT * FROM STD5A;
+
+       RNO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         1 RIDDHI                                                                                                                                                                                       
+           SIDDHI                                                                                                                                                                                       
+        31 SHUBH                                                                                                                                                                                        
+        99 LABH                                                                                                                                                                                         
+       -99 LAKSHMI                                                                                                                                                                                      
+         0 SARSVATI                                                                                                                                                                                     
+
+7 rows selected.
+
+SQL> REM RNO : 1-30
+SQL> 
+SQL> DROP TABLE STD5A;
+
+Table dropped.
+
+SQL> CREATE TABLE STD5A(RNO NUMBER(2) CHECK (RNO BETWEEN 1 AND 30),NM VARCHAR(10));
+
+Table created.
+
+SQL> INSERT INTO STD5A VALUES (1,'GANESH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (1,'RIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (NULL,'SIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (31,'SHUBH');
+INSERT INTO STD5A VALUES (31,'SHUBH')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015734) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (99,'LABH');
+INSERT INTO STD5A VALUES (99,'LABH')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015734) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (-99,'LAKSHMI');
+INSERT INTO STD5A VALUES (-99,'LAKSHMI')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015734) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (0,'SARSVATI');
+INSERT INTO STD5A VALUES (0,'SARSVATI')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015734) violated 
+
+
+SQL> SELECT * FROM STD5A;
+
+       RNO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         1 RIDDHI                                                                                                                                                                                       
+           SIDDHI                                                                                                                                                                                       
+
+SQL> DROP TABLE STD5A;
+
+Table dropped.
+
+SQL> CREATE TABLE STD5A(RNO NUMBER(2) CHECK (RNO BETWEEN 1 AND 30) NOT NULL,NM VARCHAR(10));
+
+Table created.
+
+SQL> INSERT INTO STD5A VALUES (1,'GANESH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (1,'RIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (NULL,'SIDDHI');
+INSERT INTO STD5A VALUES (NULL,'SIDDHI')
+                          *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SCOTT"."STD5A"."RNO") 
+
+
+SQL> INSERT INTO STD5A VALUES (31,'SHUBH');
+INSERT INTO STD5A VALUES (31,'SHUBH')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015736) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (99,'LABH');
+INSERT INTO STD5A VALUES (99,'LABH')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015736) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (-99,'LAKSHMI');
+INSERT INTO STD5A VALUES (-99,'LAKSHMI')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015736) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (0,'SARSVATI');
+INSERT INTO STD5A VALUES (0,'SARSVATI')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015736) violated 
+
+
+SQL> SELECT * FROM STD5A;
+
+       RNO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         1 RIDDHI                                                                                                                                                                                       
+
+SQL> DROP TABLE STD5A;
+
+Table dropped.
+
+SQL> CREATE TABLE STD5A(RNO NUMBER(2) UNIQUE CHECK (RNO BETWEEN 1 AND 30) NOT NULL,NM VARCHAR(10));
+
+Table created.
+
+SQL> INSERT INTO STD5A VALUES (1,'GANESH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (1,'RIDDHI');
+INSERT INTO STD5A VALUES (1,'RIDDHI')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C0015739) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (NULL,'SIDDHI');
+INSERT INTO STD5A VALUES (NULL,'SIDDHI')
+                          *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SCOTT"."STD5A"."RNO") 
+
+
+SQL> INSERT INTO STD5A VALUES (31,'SHUBH');
+INSERT INTO STD5A VALUES (31,'SHUBH')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015738) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (99,'LABH');
+INSERT INTO STD5A VALUES (99,'LABH')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015738) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (-99,'LAKSHMI');
+INSERT INTO STD5A VALUES (-99,'LAKSHMI')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015738) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (0,'SARSVATI');
+INSERT INTO STD5A VALUES (0,'SARSVATI')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015738) violated 
+
+
+SQL> SELECT * FROM STD5A;
+
+       RNO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+
+SQL> INSERT INTO STD5A VALUES (2,'Riddhi');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (3,'siddhi');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (4,'sHUbh');
+
+1 row created.
+
+SQL> SELECT * FROM STD5A;
+
+       RNO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         2 Riddhi                                                                                                                                                                                       
+         3 siddhi                                                                                                                                                                                       
+         4 sHUbh                                                                                                                                                                                        
+
+SQL> DROP TABLE STD5A;
+
+Table dropped.
+
+SQL> CREATE TABLE STD5A(RNO NUMBER(2) UNIQUE CHECK (RNO BETWEEN 1 AND 30) NOT NULL,NM VARCHAR(10) CHECK (NM=UPPER(NM));
+CREATE TABLE STD5A(RNO NUMBER(2) UNIQUE CHECK (RNO BETWEEN 1 AND 30) NOT NULL,NM VARCHAR(10) CHECK (NM=UPPER(NM))
+                                                                                                                *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> CREATE TABLE STD5A(RNO NUMBER(2) UNIQUE CHECK (RNO BETWEEN 1 AND 30) NOT NULL,NM VARCHAR(10) CHECK (NM=UPPER(NM)));
+
+Table created.
+
+SQL> INSERT INTO STD5A VALUES (1,'GANESH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (2,'Riddhi');
+INSERT INTO STD5A VALUES (2,'Riddhi')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015742) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (3,'siddhi');
+INSERT INTO STD5A VALUES (3,'siddhi')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015742) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (4,'sHUbh');
+INSERT INTO STD5A VALUES (4,'sHUbh')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015742) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (2,'RIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (3,'SIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (4,'SHUBH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (4,'LABH');
+INSERT INTO STD5A VALUES (4,'LABH')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C0015743) violated 
+
+
+SQL> DROP TABLE STD5A;
+
+Table dropped.
+
+SQL> CREATE TABLE STD5A(RNO NUMBER(2) PRIMARY KEY CHECK (RNO BETWEEN 1 AND 30) ,NM VARCHAR(10) CHECK (NM=UPPER(NM)));
+
+Table created.
+
+SQL> INSERT INTO STD5A VALUES (1,'GANESH');
+
+1 row created.
+
+SQL> INSERT INTO STD5A VALUES (2,'Riddhi');
+INSERT INTO STD5A VALUES (2,'Riddhi')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0015745) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (1,'RIDDHI');
+INSERT INTO STD5A VALUES (1,'RIDDHI')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C0015746) violated 
+
+
+SQL> INSERT INTO STD5A VALUES (NULL,'RIDDHI');
+INSERT INTO STD5A VALUES (NULL,'RIDDHI')
+                          *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SCOTT"."STD5A"."RNO") 
+
+
+SQL> DROP TABLE STD5A;
+
+Table dropped.
+
+SQL> DROP TABLE EMP;
+
+Table dropped.
+
+SQL> DROP TABLE DEPT;
+
+Table dropped.
+
+SQL> CREATE TABLE EMP(EID NUMBER(4), ENM VARCHAR(10), MID NUMBER(4) REFERENCES EMP(EID));        // REFERENCES CONCEPT BEGINS!!!!!!
+CREATE TABLE EMP(EID NUMBER(4), ENM VARCHAR(10), MID NUMBER(4) REFERENCES EMP(EID))
+                                                                          *
+ERROR at line 1:
+ORA-02270: no matching unique or primary key for this column-list         // JO COLUMN KO REFERENCE KARNA WO NOT NULL UNIQUE HONA CHAHIYE!!!!!
+
+
+SQL> CREATE TABLE EMP(EID NUMBER(4) NOT NULL UNIQUE, ENM VARCHAR(10), MID NUMBER(4) REFERENCES EMP(EID));
+
+Table created.
+
+SQL> DROP TABLE EMP;
+
+Table dropped.
+
+SQL> CREATE TABLE EMP(EID NUMBER(4) PRIMARY KEY, ENM VARCHAR(10), MID NUMBER(4) REFERENCES EMP(EID));
+
+Table created.
+
+SQL> DROP TABLE EMP;
+
+Table dropped.
+
+SQL> CREATE TABLE EMP(EID NUMBER(4) PRIMARY KEY, ENM VARCHAR(10), MID NUMBER(4) REFERENCES EMP);    // Op!!!!!!!!!!!
+
+Table created.
+
+SQL> DROP TABLE EMP;
+
+Table dropped.
+
+SQL> CREATE TABLE EMP(EID NUMBER(4) NOT NULL UNIQUE, ENM VARCHAR(10), MID NUMBER(4) REFERENCES EMP);
+CREATE TABLE EMP(EID NUMBER(4) NOT NULL UNIQUE, ENM VARCHAR(10), MID NUMBER(4) REFERENCES EMP)      // IF TABLE HAS A PRIMARY KEY AND WE DOESNT MENTION
+                                                                                          *     // IN REFERENCES COLUMN THAN IT IS OK
+ERROR at line 1:									// BUT IF IT DOESNT HAVE A PK AND WE DOESNT MENTION
+ORA-02268: referenced table doeS not have a primary key 						// THAN IT WILL RAISE AN ERROR
+
+
+SQL> CREATE TABLE EMP(EID NUMBER(4) NOT NULL UNIQUE, ENM VARCHAR(10), MID NUMBER(4) REFERENCES EMP(EID));
+
+Table created.
+
+SQL> INSERT INTO EMP VALUES (1,'GANESH',NULL);
+
+1 row created.
+
+SQL> INSERT INTO EMP VALUES (2,'RIDDHI',1);
+
+1 row created.
+
+SQL> INSERT INTO EMP VALUES (3,'SIDDHI',4);
+INSERT INTO EMP VALUES (3,'SIDDHI',4)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.SYS_C0015756) violated - parent key not found 
+
+
+SQL> REM WITHIN TABLE RELATIONSHIP
+SQL> 
+SQL> DROP TABLE EMP;
+
+Table dropped.
+
+SQL> CREATE TABLE DEPT(DID NUMBER(2) PRIMARY KEY,DNM VARCHAR(10);
+CREATE TABLE DEPT(DID NUMBER(2) PRIMARY KEY,DNM VARCHAR(10)
+                                                          *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> CREATE TABLE DEPT(DID NUMBER(2) PRIMARY KEY,DNM VARCHAR(10));
+
+Table created.
+
+SQL> CREATE TABLE EMP(EID NUMBER(4) PRIMARY KEY,ENM VARCHAR(10),MID NUMBER(4) REFERENCES EMP,DID NUMBER(2) REFERENCES DEPT); // ACROSS TABLE RELATIONSHIP
+
+Table created.
+
+SQL> REM ACROSS TABLE RELATIONSHIP
+SQL> 
+SQL> INSERT INTO DEPT VALUES (10,'ACC');
+
+1 row created.
+
+SQL> INSERT INTO DEPT VALUES (20,'RES');
+
+1 row created.
+
+SQL> INSERT INTO DEPT VALUES (20,'SAL');
+INSERT INTO DEPT VALUES (20,'SAL')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C0015757) violated 
+
+
+SQL> INSERT INTO DEPT VALUES (NULL,'SAL');
+INSERT INTO DEPT VALUES (NULL,'SAL')
+                         *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SCOTT"."DEPT"."DID") 
+
+
+SQL> INSERT INTO DEPT VALUES (20,'SAL');
+INSERT INTO DEPT VALUES (20,'SAL')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SYS_C0015757) violated 
+
+
+SQL> INSERT INTO DEPT VALUES (30,'SAL');
+
+1 row created.
+
+SQL> COMMTI;
+SP2-0042: unknown command "COMMTI" - rest of line ignored.
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM DEPT;
+
+       DID DNM                                                                                                                                                                                          
+---------- ----------                                                                                                                                                                                   
+        10 ACC                                                                                                                                                                                          
+        20 RES                                                                                                                                                                                          
+        30 SAL                                                                                                                                                                                          
+
+SQL> INSET INTO EMP VALUES (1,'GANESH',NULL,10);
+SP2-0734: unknown command beginning "INSET INTO..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> INSERT INTO EMP VALUES (1,'GANESH',NULL,10);
+
+1 row created.
+
+SQL> INSERT INTO EMP VALUES (2,'RIDDHI',1,20);
+
+1 row created.
+
+SQL> INSERT INTO EMP VALUES (3,'SIDDHI',4,20);
+INSERT INTO EMP VALUES (3,'SIDDHI',4,20)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.SYS_C0015759) violated - parent key not found 
+
+
+SQL> INSERT INTO EMP VALUES (3,'SIDDHI',2,40);
+INSERT INTO EMP VALUES (3,'SIDDHI',2,40)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.SYS_C0015760) violated - parent key not found 
+
+
+SQL> REM ORACLE SUPPORTS TWO TYPES OF CONSTRAINT NAMING : 1 SYSTEM GENERATED 2 USER DEFINED   // IMPORTANT THING BOLTE!!!!!
+SQL> 
+SQL> REM SYSTEM GENERATED : SYS_Cnnnnnnn
+SQL> 
+SQL> REM USER DEFINED CONSTRAINT NAME MUST BE UNIQUE IN WHOLE DATABASE.
+SQL> 
+SQL> REM USERNAME_TABLENAME_COLUMNNAME_CONSTRAINTTYPE#NUMBER
+SQL> 
+SQL> 
+SQL> 
+SQL> REM PRIMARY KEY : WE CAN USE IT ONLY ONCE PER TABLE.
+SQL> 
+SQL> REM UNIQUE , NOT NULL : WE CAN USE IT ONCE PER COLUMN.
+SQL> 
+SQL> REM CHECK , REFERENCES : WE CAN USE IT MULTIPLE TIMES PER COLUMN.
+SQL> 
+SQL> 
+SQL> 
+SQL> REM SCOTT_EMP_EID_PK
+SQL>  
+SQL> REM SCOTT_EMP_EMAIL_UK
+SQL> 
+SQL> REM SCOTT_EMP_MOBILE_UK
+SQL> 
+SQL> REM SCOTT_EMP_EID_CK#1
+SQL> 
+SQL> REM SCOTT_EMP_EID_CK#2
+SQL> 
+SQL> 
+SQL> 
+SQL> DESC DEPT
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DID                                                                                                               NOT NULL NUMBER(2)
+ DNM                                                                                                                        VARCHAR2(10)
+
+SQL> DESC EMP
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ EID                                                                                                               NOT NULL NUMBER(4)
+ ENM                                                                                                                        VARCHAR2(10)
+ MID                                                                                                                        NUMBER(4)
+ DID                                                                                                                        NUMBER(2)
+
+SQL> REM USER_CONSTRAINTS , USER_CONS_COLUMNS
+SQL> 
+SQL> COL TABLE_NAME FORMAT A30
+SQL> COL COLUMN_NAME FORMAT A30
+SQL> COL CONSTRAINT_NAME FORMAT A30
+SQL> COL R_CONSTRAINT_NAME FORMAT A30
+SQL> COL SEARCH_CONDITION FORMAT A30
+SQL> COL DELETE_RULE FORMAT A30
+SQL> 
+SQL> SELECT TABLE_NAME , CONSTRAINT_TYPE , CONSTRAINT_NAME , SEARCH_CONDITION , R_CONSTRAINT_NAME , DELETE_RULE FROM USER_CONSTRAINTS WHERE TABLE_NAME IN ('DEPT','EMP');
+
+TABLE_NAME                     C CONSTRAINT_NAME                SEARCH_CONDITION               R_CONSTRAINT_NAME              DELETE_RULE                                                               
+------------------------------ - ------------------------------ ------------------------------ ------------------------------ ------------------------------                                            
+DEPT                           P SYS_C0015757                                                                                                                                                           
+EMP                            P SYS_C0015758                                                                                                                                                           
+EMP                            R SYS_C0015759                                                  SYS_C0015758                   NO ACTION                                                                 
+EMP                            R SYS_C0015760                                                  SYS_C0015757                   NO ACTION                                                                 
+
+SQL> CROP TABLE EMP;
+SP2-0734: unknown command beginning "CROP TABLE..." - rest of line ignored.
+SQL> DROP TABLE EMP;
+
+Table dropped.
+
+SQL> DROP TABLE DEPT;
+
+Table dropped.
+
+SQL> CREATE TABLE DEPT(DID NUMBER(2) CONSTRAINT SCOTT_DEPT_DID_PK PRIMARY KEY,DNM VARCHAR(10));
+
+Table created.
+
+SQL> CREATE TABLE EMP(EID NUMBER(4) CONSTRAINT SCOTT_EMP_EID_PK PRIMARY KEY,ENM VARCHAR(10),MID NUMBER(4) CONSTRAINT SCOTT_EMP_MID_RK#1 REFERENCES EMP,DID NUMBER(2) CONSTRAINT SCOTT_EMP_DID_RK#1 REFERENCES DEPT);
+
+Table created.
+
+SQL> SELECT TABLE_NAME , CONSTRAINT_TYPE , CONSTRAINT_NAME , SEARCH_CONDITION , R_CONSTRAINT_NAME , DELETE_RULE FROM USER_CONSTRAINTS WHERE TABLE_NAME IN ('DEPT','EMP');  // OP!!!!!!!!!!
+
+TABLE_NAME                     C CONSTRAINT_NAME                SEARCH_CONDITION               R_CONSTRAINT_NAME              DELETE_RULE                                                               
+------------------------------ - ------------------------------ ------------------------------ ------------------------------ ------------------------------                                            
+EMP                            R SCOTT_EMP_MID_RK#1                                            SCOTT_EMP_EID_PK               NO ACTION                                                                 
+EMP                            R SCOTT_EMP_DID_RK#1                                            SCOTT_DEPT_DID_PK              NO ACTION                                                                 
+DEPT                           P SCOTT_DEPT_DID_PK                                                                                                                                                      
+EMP                            P SCOTT_EMP_EID_PK                                                                                                                                                       
+
+SQL> INSERT INTO DEPT VALUES (1,'ACC');
+
+1 row created.
+
+SQL> INSERT INTO DEPT VALUES (1,'RES');
+INSERT INTO DEPT VALUES (1,'RES')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SCOTT_DEPT_DID_PK) violated 
+
+
+SQL> INSERT INTO EMP VALUES (1,'GANESH',NULL,10);
+INSERT INTO EMP VALUES (1,'GANESH',NULL,10)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.SCOTT_EMP_DID_RK#1) violated - parent key not found 
+
+
+SQL> INSERT INTO EMP VALUES (1,'GANESH',NULL,1);
+
+1 row created.
+
+SQL> INSERT INTO EMP VALUES (1,'RIDDHI',NULL,1);
+INSERT INTO EMP VALUES (1,'RIDDHI',NULL,1)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (SCOTT.SCOTT_EMP_EID_PK) violated 
+
+
+SQL> INSERT INTO EMP VALUES (2,'RIDDHI',3,1);
+INSERT INTO EMP VALUES (2,'RIDDHI',3,1)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.SCOTT_EMP_MID_RK#1) violated - parent key not found 
+
+
+SQL> INSERT INTO EMP VALUES (2,'RIDDHI',1,2);
+INSERT INTO EMP VALUES (2,'RIDDHI',1,2)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.SCOTT_EMP_DID_RK#1) violated - parent key not found 
+
+
+SQL> REM RELATIONSHIP TYPES
+SQL> 
+SQL> REM PARENT TABLE : A TABLE WHICH HAS REFFRRED PRIMARY KEY OR UNIQUE CONSTRAINT.
+SQL> 
+SQL> REM CHILD TABLE : A TABLE WHICH AS REFERENCES CONSTRAINT.
+SQL> 
+SQL> 
+SQL> REM ORACLE SUPPORTS 3 TYPES OF RELATIONSHIPS BETWEE TABLES:
+SQL> 
+SQL> REM 1 NO ACTION/DEFAULT
+SQL> 
+SQL> REM 2 CASCADE
+SQL> 
+SQL> REM 3 SET NULL
+SQL> 
+SQL> 
+SQL> REM RELATIONSHIP TYPE MATTERS WHEN WE PERFORM DELETE OPERATION ON PARENT TABLE.
+SQL> 
+SQL> REM 1 NO ACTION/DEFAULT : IF CORRESPONDING CHILD ROW EXISTS, IT WILL NOT ALLOW US TO DELETE PARENT ROW.
+SQL> 
+SQL> REM 2 CASCADE : IF CORRESPONDING CHILD ROW EXISTS, IT WILL FIRST DELETE CORRESPONDING CHILD ROW AND THEN WILL DELETE PARENT ROW.
+SQL> 
+SQL> REM 3 SET NULL : IF CORRESPONDING CHILD ROW EXISTS, IT WILL FIRST UPDATE REFERENCES COLUMN WITH NULL FOR CORRESPONDING CHILD ROWS AND THEN WILL DELETE PARENT ROW.
+SQL> 
+SQL> 
+SQL> DROP TABLE C1;
+
+Table dropped.
+
+SQL> DROP TABLE C2;
+
+Table dropped.
+
+SQL> DROP TABLE C3;
+
+Table dropped.
+
+SQL> DROP TABLE P1;
+
+Table dropped.
+
+SQL> DROP TABLE P2;
+
+Table dropped.
+
+SQL> DROP TABLE P3;
+
+Table dropped.
+
+SQL> CREATE TABLE P1(NO NUMBER PRIMARY KEY, NM VARCHAR(10));
+
+Table created.
+
+SQL> CREATE TABLE P2(NO NUMBER PRIMARY KEY, NM VARCHAR(10));
+
+Table created.
+
+SQL> CREATE TABLE P3(NO NUMBER PRIMARY KEY, NM VARCHAR(10));
+
+Table created.
+
+SQL> CREATE TABLE C1(NO NUMBER REFERENCES P1, NM VARCHAR(10));
+
+Table created.
+
+SQL> CREATE TABLE C2(NO NUMBER REFERENCES P2 ON DELETE CASCADE, NM VARCHAR(10));
+
+Table created.
+
+SQL> CREATE TABLE C3(NO NUMBER REFERENCES P3 ON DELETE SET NULL, NM VARCHAR(10));
+
+Table created.
+
+SQL> INSERT INTO P1 VALUES (1,'GANESH');
+
+1 row created.
+
+SQL> DROP TABLE C1;
+
+Table dropped.
+
+SQL> DROP TABLE C2;
+
+Table dropped.
+
+SQL> DROP TABLE C3;
+
+Table dropped.
+
+SQL> DELETE P1;
+
+1 row deleted.
+
+SQL> CREATE TABLE C1(NO NUMBER REFERENCES P1, AMT NUMBER);
+
+Table created.
+
+SQL> CREATE TABLE C2(NO NUMBER REFERENCES P2 ON DELETE CASCADE, AMT NUMBER);
+
+Table created.
+
+SQL> CREATE TABLE C3(NO NUMBER REFERENCES P3 ON DELETE SET NULL, AMT NUMBER);
+
+Table created.
+
+SQL> 
+SQL> INSERT INTO P1 VALUES (1,'GANESH');
+
+1 row created.
+
+SQL> INSERT INTO P1 VALUES (2,'RIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO P1 VALUES (3,'SIDDHI');
+
+1 row created.
+
+SQL> INSERT INTO P2 SELECT * FROM P1;
+
+3 rows created.
+
+SQL> INSERT INTO P3 SELECT * FROM P1;
+
+3 rows created.
+
+SQL> INSERT INTO C1 VALUES(1,10000);
+
+1 row created.
+
+SQL> INSERT INTO C1 VALUES(2,20000);
+
+1 row created.
+
+SQL> INSERT INTO C1 VALUES(2,30000);
+
+1 row created.
+
+SQL> INSERT INTO C2 SELECT * FROM C1;
+
+3 rows created.
+
+SQL> INSERT INTO C3 SELECT * FROM C1;
+
+3 rows created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT TABLE_NAME , CONSTRAINT_TYPE , CONSTRAINT_NAME , SEARCH_CONDITION , R_CONSTRAINT_NAME , DELETE_RULE FROM USER_CONSTRAINTS WHERE TABLE_NAME IN ('P1','C1');
+
+TABLE_NAME                     C CONSTRAINT_NAME                SEARCH_CONDITION               R_CONSTRAINT_NAME              DELETE_RULE                                                               
+------------------------------ - ------------------------------ ------------------------------ ------------------------------ ------------------------------                                            
+P1                             P SYS_C0015765                                                                                                                                                           
+C1                             R SYS_C0015771                                                  SYS_C0015765                   NO ACTION                                                                 
+
+SQL> SELECT * FROM P1;
+
+        NO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         2 RIDDHI                                                                                                                                                                                       
+         3 SIDDHI                                                                                                                                                                                       
+
+SQL> SELECT * FROM C1;
+
+        NO        AMT                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         1      10000                                                                                                                                                                                   
+         2      20000                                                                                                                                                                                   
+         2      30000                                                                                                                                                                                   
+
+SQL> REM 1 NO ACTION/DEFAULT : IF CORRESPONDING CHILD ROW EXISTS, IT WILL NOT ALLOW US TO DELETE PARENT ROW. //OP!!!
+SQL> 
+SQL> DELETE P1 WHERE NO = 2;
+DELETE P1 WHERE NO = 2
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (SCOTT.SYS_C0015771) violated - child record found 
+
+
+SQL> SELECT TABLE_NAME , CONSTRAINT_TYPE , CONSTRAINT_NAME , SEARCH_CONDITION , R_CONSTRAINT_NAME , DELETE_RULE FROM USER_CONSTRAINTS WHERE TABLE_NAME IN ('P2','C2');
+
+TABLE_NAME                     C CONSTRAINT_NAME                SEARCH_CONDITION               R_CONSTRAINT_NAME              DELETE_RULE                                                               
+------------------------------ - ------------------------------ ------------------------------ ------------------------------ ------------------------------                                            
+P2                             P SYS_C0015766                                                                                                                                                           
+C2                             R SYS_C0015772                                                  SYS_C0015766                   CASCADE                                                                   
+
+SQL> SELECT * FROM P2;
+
+        NO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         2 RIDDHI                                                                                                                                                                                       
+         3 SIDDHI                                                                                                                                                                                       
+
+SQL> SELECT * FROM C2;
+
+        NO        AMT                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         1      10000                                                                                                                                                                                   
+         2      20000                                                                                                                                                                                   
+         2      30000                                                                                                                                                                                   
+
+SQL> REM 2 CASCADE : IF CORRESPONDING CHILD ROW EXISTS, IT WILL FIRST DELETE CORRESPONDING CHILD ROW AND THEN WILL DELETE PARENT ROW.
+SQL> 
+SQL> DELETE P2 WHERE NO = 2;
+
+1 row deleted.
+
+SQL> SELECT * FROM P2;
+
+        NO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         3 SIDDHI                                                                                                                                                                                       
+
+SQL> SELECT * FROM C2;         // YAHA SE BHI 2 ROWS HAVING NO 1 AND 2 ARE DELETED!!!!!!!
+
+        NO        AMT                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         1      10000                                                                                                                                                                                   
+
+SQL> SELECT TABLE_NAME , CONSTRAINT_TYPE , CONSTRAINT_NAME , SEARCH_CONDITION , R_CONSTRAINT_NAME , DELETE_RULE FROM USER_CONSTRAINTS WHERE TABLE_NAME IN ('P3','C3');
+
+TABLE_NAME                     C CONSTRAINT_NAME                SEARCH_CONDITION               R_CONSTRAINT_NAME              DELETE_RULE                                                               
+------------------------------ - ------------------------------ ------------------------------ ------------------------------ ------------------------------                                            
+P3                             P SYS_C0015767                                                                                                                                                           
+C3                             R SYS_C0015773                                                  SYS_C0015767                   SET NULL                                                                  
+
+SQL> SELECT * FROM P3;
+
+        NO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         2 RIDDHI                                                                                                                                                                                       
+         3 SIDDHI                                                                                                                                                                                       
+
+SQL> SELECT * FROM C3;
+
+        NO        AMT                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         1      10000                                                                                                                                                                                   
+         2      20000                                                                                                                                                                                   
+         2      30000                                                                                                                                                                                   
+
+SQL> REM 3 SET NULL : IF CORRESPONDING CHILD ROW EXISTS, IT WILL FIRST UPDATE REFERENCES COLUMN WITH NULL FOR CORRESPONDING CHILD ROWS AND THEN WILL DELETE PARENT ROW.
+SQL> AS THE NAME SUGGESTS IT WILL SET NULL FOR THE CORRESPONDING CHILD ROWS AND THEN WILL DELETE THE PARENT ROW!!!!!!!!!
+SQL> DELETE P3 WHERE NO = 2;
+
+1 row deleted.
+
+SQL> SELECT * FROM P3;
+
+        NO NM                                                                                                                                                                                           
+---------- ----------                                                                                                                                                                                   
+         1 GANESH                                                                                                                                                                                       
+         3 SIDDHI                                                                                                                                                                                       
+
+SQL> SELECT * FROM C3;
+
+        NO        AMT                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+         1      10000                                                                                                                                                                                   
+                20000                                                                                                                                                                                   
+                30000                                                                                                                                                                                   
+
+SQL> SPOOL OFF

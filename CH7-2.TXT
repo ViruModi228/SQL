@@ -1,0 +1,844 @@
+SQL> 
+SQL> REM DISPLAY ALL OTHER THAN THOSE WHO GETS EITHER HIGHEST OR LOWEST SALARY FOR THEIR MANAGER       // LOGICALLY SMJNA HAI RE!!!!!!
+SQL> 
+SQL> SELECT FIRST_NAME , MANAGER_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (MANAGER_ID , SALARY) NOT IN ((SELECT MANAGER_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID),
+  4                                      (SELECT MANAGER_ID , MAX(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID));
+WHERE (MANAGER_ID , SALARY) NOT IN ((SELECT MANAGER_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID),
+                                                                                                        *
+ERROR at line 3:
+ORA-00920: invalid relational operator 
+
+
+SQL> SELECT FIRST_NAME , MANAGER_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (MANAGER_ID , SALARY) NOT IN (SELECT MANAGER_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)
+  4  OR    (MANAGER_ID , SALARY) NOT IN (SELECT MANAGER_ID , MAX(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID);
+
+FIRST_NAME MANAGER_ID     SALARY                                                
+---------- ---------- ----------                                                
+Neena             100      17000                                                
+Lex               100      17000                                                
+Bruce             103       6000                                                
+Diana             103       4200                                                
+Kevin             100       5800                                                
+Trenna            124       3500                                                
+Curtis            124       3100                                                
+Randall           124       2600                                                
+Peter             124       2500                                                
+Eleni             100      10500                                                
+Ellen             149      11000                                                
+
+FIRST_NAME MANAGER_ID     SALARY                                                
+---------- ---------- ----------                                                
+Jonathon          149       8600                                                
+Kimerely          149       7000                                                
+Jennifer          101       4400                                                
+Michael           100      13000                                                
+Shelley           101      12000                                                
+
+16 rows selected.
+
+SQL> SET LINES 150 PAGES 24
+SQL> 
+SQL> R
+  1  SELECT FIRST_NAME , MANAGER_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (MANAGER_ID , SALARY) NOT IN (SELECT MANAGER_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)
+  4* OR    (MANAGER_ID , SALARY) NOT IN (SELECT MANAGER_ID , MAX(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)
+
+FIRST_NAME MANAGER_ID     SALARY                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+Neena             100      17000                                                                                                                      
+Lex               100      17000                                                                                                                      
+Bruce             103       6000                                                                                                                      
+Diana             103       4200                                                                                                                      
+Kevin             100       5800                                                                                                                      
+Trenna            124       3500                                                                                                                      
+Curtis            124       3100                                                                                                                      
+Randall           124       2600                                                                                                                      
+Peter             124       2500                                                                                                                      
+Eleni             100      10500                                                                                                                      
+Ellen             149      11000                                                                                                                      
+Jonathon          149       8600                                                                                                                      
+Kimerely          149       7000                                                                                                                      
+Jennifer          101       4400                                                                                                                      
+Michael           100      13000                                                                                                                      
+Shelley           101      12000                                                                                                                      
+
+16 rows selected.
+
+SQL> SELECT FIRST_NAME , MANAGER_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (MANAGER_ID , SALARY) <> ALL (SELECT MANAGER_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)
+  4  OR    (MANAGER_ID , SALARY) != ALL (SELECT MANAGER_ID , MAX(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID);
+
+FIRST_NAME MANAGER_ID     SALARY                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+Neena             100      17000                                                                                                                      
+Lex               100      17000                                                                                                                      
+Bruce             103       6000                                                                                                                      
+Diana             103       4200                                                                                                                      
+Kevin             100       5800                                                                                                                      
+Trenna            124       3500                                                                                                                      
+Curtis            124       3100                                                                                                                      
+Randall           124       2600                                                                                                                      
+Peter             124       2500                                                                                                                      
+Eleni             100      10500                                                                                                                      
+Ellen             149      11000                                                                                                                      
+Jonathon          149       8600                                                                                                                      
+Kimerely          149       7000                                                                                                                      
+Jennifer          101       4400                                                                                                                      
+Michael           100      13000                                                                                                                      
+Shelley           101      12000                                                                                                                      
+
+16 rows selected.
+
+SQL> SELECT FIRST_NAME , MANAGER_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (MANAGER_ID , SALARY) <> ALL (SELECT MANAGER_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)
+  4  AND   (MANAGER_ID , SALARY) != ALL (SELECT MANAGER_ID , MAX(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID);
+
+FIRST_NAME MANAGER_ID     SALARY                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+Eleni             100      10500                                                                                                                      
+Michael           100      13000                                                                                                                      
+Randall           124       2600                                                                                                                      
+Curtis            124       3100                                                                                                                      
+Jonathon          149       8600                                                                                                                      
+
+SQL> SELECT FIRST_NAME , MANAGER_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (MANAGER_ID , SALARY) NOT IN (SELECT MANAGER_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID)
+  4  AND   (MANAGER_ID , SALARY) NOT IN (SELECT MANAGER_ID , MAX(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID);
+
+FIRST_NAME MANAGER_ID     SALARY                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+Eleni             100      10500                                                                                                                      
+Michael           100      13000                                                                                                                      
+Randall           124       2600                                                                                                                      
+Curtis            124       3100                                                                                                                      
+Jonathon          149       8600                                                                                                                      
+
+SQL> REM 20 DISPLAY ALL OTHER THAN THOSE WHO GETS HIGHEST SALARY FOR THEIR MANAGER.
+SQL> 
+SQL> SELECT FIRST_NAME , MANAGER_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (MANAGER_ID , SALARY) NOT IN (SELECT MANAGER_ID , MAX(SALARY) FROM EMPLOYEES GROUP BY MANAGER_ID);    // KHUD KIYA BE!!!! JODD!!!!!!
+
+FIRST_NAME MANAGER_ID     SALARY                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+Kevin             100       5800                                                                                                                      
+Eleni             100      10500                                                                                                                      
+Michael           100      13000                                                                                                                      
+Jennifer          101       4400                                                                                                                      
+Diana             103       4200                                                                                                                      
+Peter             124       2500                                                                                                                      
+Randall           124       2600                                                                                                                      
+Curtis            124       3100                                                                                                                      
+Kimerely          149       7000                                                                                                                      
+Jonathon          149       8600                                                                                                                      
+
+10 rows selected.
+
+SQL> REM DISPLAY THOSE WHO GETS HIGHER SALARY THAN ANY SA_REP           // HIDDEN REQUIREMENT
+SQL> 
+SQL> SELECT FIRST_NAME , JOB_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE SALARY > ANY (SELECT SALARY FROM EMPLOYEES WHERE JOB_ID = 'SA_REP');
+
+FIRST_NAME JOB_ID         SALARY                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+Steven     AD_PRES         24000                                                                                                                      
+Neena      AD_VP           17000                                                                                                                      
+Lex        AD_VP           17000                                                                                                                      
+Michael    MK_MAN          13000                                                                                                                      
+Shelley    AC_MGR          12000                                                                                                                      
+Ellen      SA_REP          11000                                                                                                                      
+Eleni      SA_MAN          10500                                                                                                                      
+Alexander  IT_PROG          9000                                                                                                                      
+Jonathon   SA_REP           8600                                                                                                                      
+William    AC_ACCOUNT       8300                                                                                                                      
+
+10 rows selected.
+
+SQL> SELECT FIRST_NAME , JOB_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE SALARY > (SELECT MIN(SALARY) FROM EMPLOYEES WHERE JOB_ID = 'SA_REP');
+
+FIRST_NAME JOB_ID         SALARY                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+Steven     AD_PRES         24000                                                                                                                      
+Neena      AD_VP           17000                                                                                                                      
+Lex        AD_VP           17000                                                                                                                      
+Alexander  IT_PROG          9000                                                                                                                      
+Eleni      SA_MAN          10500                                                                                                                      
+Ellen      SA_REP          11000                                                                                                                      
+Jonathon   SA_REP           8600                                                                                                                      
+Michael    MK_MAN          13000                                                                                                                      
+Shelley    AC_MGR          12000                                                                                                                      
+William    AC_ACCOUNT       8300                                                                                                                      
+
+10 rows selected.
+
+SQL> REM DISPLAY ALL OTHER THAN THOSE WHO GETS LOWEST SALARY FOR THEIR JOB       // FOR SUCH TYPES OF QUESTIONS ALWAYS GO FOR PAIR COMPARISION
+SQL> 
+SQL> SELECT FIRST_NAME , JOB_ID , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE (JOB_ID , SALARY) NOT IN (SELECT JOB_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY JOB_ID);
+
+FIRST_NAME JOB_ID         SALARY                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+Bruce      IT_PROG          6000                                                                                                                      
+Alexander  IT_PROG          9000                                                                                                                      
+Jonathon   SA_REP           8600                                                                                                                      
+Ellen      SA_REP          11000                                                                                                                      
+Randall    ST_CLERK         2600                                                                                                                      
+Curtis     ST_CLERK         3100                                                                                                                      
+Trenna     ST_CLERK         3500                                                                                                                      
+
+7 rows selected.
+
+SQL> SELECT JOB_ID , MIN(SALARY) FROM EMPLOYEES GROUP BY JOB_ID;
+
+JOB_ID     MIN(SALARY)                                                                                                                                
+---------- -----------                                                                                                                                
+IT_PROG           4200                                                                                                                                
+AC_MGR           12000                                                                                                                                
+AC_ACCOUNT        8300                                                                                                                                
+ST_MAN            5800                                                                                                                                
+AD_ASST           4400                                                                                                                                
+AD_VP            17000                                                                                                                                
+SA_MAN           10500                                                                                                                                
+MK_MAN           13000                                                                                                                                
+AD_PRES          24000                                                                                                                                
+SA_REP            7000                                                                                                                                
+MK_REP            6000                                                                                                                                
+ST_CLERK          2500                                                                                                                                
+
+12 rows selected.
+
+SQL> REM 2 WHEN OUR MAIN REQUIREMENT HAS SOME HIDDEN REQUIREMENT
+SQL> 
+SQL> REM DISPLAY THOSE WHO GETS HIGHER SALARY THAN Abel
+SQL> 
+SQL> SELECT LAST_NAME , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE SALARY > (SELECT SALARY FROM EMPLOYEES WHERE LAST_NAME = 'Abel');
+
+LAST_NAME      SALARY                                                                                                                                 
+---------- ----------                                                                                                                                 
+King            24000                                                                                                                                 
+Kochhar         17000                                                                                                                                 
+De Haan         17000                                                                                                                                 
+Hartstein       13000                                                                                                                                 
+Higgins         12000                                                                                                                                 
+
+SQL> SELECT SALARY FROM EMPLOYEES WHERE LAST_NAME = 'Abel';
+
+    SALARY                                                                                                                                            
+----------                                                                                                                                            
+     11000                                                                                                                                            
+
+SQL> SELECT LAST_NAME , SALARY
+  2  FROM EMPLOYEES
+  3  WHERE SALARY > (SELECT SALARY FROM EMPLOYEES WHERE LAST_NAME = 'Abel');
+
+LAST_NAME      SALARY                                                                                                                                 
+---------- ----------                                                                                                                                 
+King            24000                                                                                                                                 
+Kochhar         17000                                                                                                                                 
+De Haan         17000                                                                                                                                 
+Hartstein       13000                                                                                                                                 
+Higgins         12000                                                                                                                                 
+
+SQL> REM DISPLAY THOSE WHO WERE HIRED BEFORE Hartstein
+SQL> 
+SQL> SELECT HIRE_DATE FROM EMPLOYEES WHERE LAST_NAME = 'Hartstein';
+
+HIRE_DATE                                                                                                                                             
+---------                                                                                                                                             
+17-FEB-96                                                                                                                                             
+
+SQL> SELECT LAST_NAME , HIRE_DATE
+  2  FROM EMPLOYEES
+  3  WHERE HIRE_DATE < (SELECT HIRE_DATE FROM EMPLOYEES WHERE LAST_NAME = 'Hartstein');
+
+LAST_NAME  HIRE_DATE                                                                                                                                  
+---------- ---------                                                                                                                                  
+King       17-JUL-87                                                                                                                                  
+Kochhar    21-SEP-89                                                                                                                                  
+De Haan    13-JAN-93                                                                                                                                  
+Hunold     03-JAN-90                                                                                                                                  
+Ernst      21-MAY-91                                                                                                                                  
+Rajs       17-OCT-95                                                                                                                                  
+Whalen     17-SEP-87                                                                                                                                  
+Higgins    07-JUN-94                                                                                                                                  
+Gietz      07-JUN-94                                                                                                                                  
+
+9 rows selected.
+
+SQL> REM DISPLAY THOSE WHO GETS LOWER COMMISSION_PCT THAN Jonathon
+SQL> 
+SQL> SELECT LAST_NAME,COMMISSION_PCT FROM EMPLOYEES WHERE COMMISSION_PCT < (SELECT COMMISSION_PCT FROM EMPLOYEES WHERE LAST_NAME='Jonathon');
+
+no rows selected
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME LAST_NAME  EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID             
+----------- ---------- ---------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------             
+        100 Steven     King       SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90             
+        101 Neena      Kochhar    NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90             
+        102 Lex        De Haan    LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90             
+        103 Alexander  Hunold     AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60             
+        104 Bruce      Ernst      BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60             
+        107 Diana      Lorentz    DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60             
+        124 Kevin      Mourgos    KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50             
+        141 Trenna     Rajs       TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50             
+        142 Curtis     Davies     CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50             
+        143 Randall    Matos      RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50             
+        144 Peter      Vargas     PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50             
+        149 Eleni      Zlotkey    EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80             
+        174 Ellen      Abel       EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80             
+        176 Jonathon   Taylor     JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80             
+        178 Kimerely   Grant      KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                           
+        200 Jennifer   Whalen     JWAHLEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10             
+        201 Michael    Hartstein  MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20             
+        202 Pat        Fay        PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20             
+        205 Shelley    Higgins    SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110             
+        206 William    Gietz      WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110             
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME,COMMISSION_PCT FROM EMPLOYEES WHERE COMMISSION_PCT < (SELECT COMMISSION_PCT FROM EMPLOYEES WHERE FIRST_NAME='Jonathon');
+
+FIRST_NAME COMMISSION_PCT                                                                                                                             
+---------- --------------                                                                                                                             
+Eleni                  .2                                                                                                                             
+Kimerely              .15                                                                                                                             
+
+SQL> REM SOLVE ABOVE QUERY USING JOIN INPLACE OF SUB QUERY
+SQL> 
+SQL> SELECT O.FIRST_NAME , O.COMMISSION_PCT
+  2  FROM EMPLOYEES O
+  3  JOIN EMPLOYEES J ON J.FIRST_NAME = 'Jonathon' AND O.COMMISSION_PCT < J.COMMISSION_PCT;
+
+FIRST_NAME COMMISSION_PCT                                                                                                                             
+---------- --------------                                                                                                                             
+Eleni                  .2                                                                                                                             
+Kimerely              .15                                                                                                                             
+
+SQL> SELECT J.FIRST_NAME , J.COMMISSION_PCT // DISPLAY IF J.FIRST_NAME AND J.COMMISSON_PCT KARVAYA TOH JONATHON HI PRINT HOENGA!!!
+  2  FROM EMPLOYEES O
+  3  JOIN EMPLOYEES J ON J.FIRST_NAME = 'Jonathon' AND O.COMMISSION_PCT < J.COMMISSION_PCT;
+
+FIRST_NAME COMMISSION_PCT                                                                                                                             
+---------- --------------                                                                                                                             
+Jonathon               .3                                                                                                                             
+Jonathon               .3                                                                                                                             
+
+SQL> REM DISPLAY THOSE WHO WERE HIRED BEFORE Hartstein
+SQL> 
+SQL> SELECT O.LASTNAME,O.HIRE_DATE FROM EMPLOYEES O JOIN EMPLOYEES J ON J.LAST_NAME='Hartstein' AND O.HIRE_DATE<J.HIRE_DATE;
+SELECT O.LASTNAME,O.HIRE_DATE FROM EMPLOYEES O JOIN EMPLOYEES J ON J.LAST_NAME='Hartstein' AND O.HIRE_DATE<J.HIRE_DATE
+       *
+ERROR at line 1:
+ORA-00904: "O"."LASTNAME": invalid identifier 
+
+
+SQL> SELECT O.LAST_NAME,O.HIRE_DATE FROM EMPLOYEES O JOIN EMPLOYEES H ON H.LAST_NAME='Hartstein' AND O.HIRE_DATE<H.HIRE_DATE;
+
+LAST_NAME  HIRE_DATE                                                                                                                                  
+---------- ---------                                                                                                                                  
+King       17-JUL-87                                                                                                                                  
+Kochhar    21-SEP-89                                                                                                                                  
+De Haan    13-JAN-93                                                                                                                                  
+Hunold     03-JAN-90                                                                                                                                  
+Ernst      21-MAY-91                                                                                                                                  
+Rajs       17-OCT-95                                                                                                                                  
+Whalen     17-SEP-87                                                                                                                                  
+Higgins    07-JUN-94                                                                                                                                  
+Gietz      07-JUN-94                                                                                                                                  
+
+9 rows selected.
+
+SQL> REM DISPLAY THOSE WHO GETS HIGHER SALARY THAN Abel
+SQL> 
+SQL> REM DISPLAY THOSE WHO WORKS IN Shiping DEPARTMENT
+SQL> 
+SQL> SELECT * FROM DEPARTMENTS;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                   
+------------- ------------------------------ ---------- -----------                                                                                   
+           10 Administration                        200        1700                                                                                   
+           20 Marketing                             201        1800                                                                                   
+           50 Shiping                               124        1500                                                                                   
+           60 IT                                    103        1400                                                                                   
+           80 Sales                                 149        2500                                                                                   
+           90 Executive                             100        1700                                                                                   
+          110 Accounting                            205        1700                                                                                   
+          190 Contracting                                      1700                                                                                   
+
+8 rows selected.
+
+SQL> SELECT FIRST_NAME, DEPARTMENT_NAME FROM EMPLOYEES WHERE DEPARTMENT_ID IN (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Shiping');
+SELECT FIRST_NAME, DEPARTMENT_NAME FROM EMPLOYEES WHERE DEPARTMENT_ID IN (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Shiping')
+                   *
+ERROR at line 1:
+ORA-00904: "DEPARTMENT_NAME": invalid identifier 
+
+
+SQL> SELECT FIRST_NAME, DEPARTMENT_ID FROM EMPLOYEES WHERE DEPARTMENT_ID IN (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE DEPARTMENT_NAME='Shiping');
+
+FIRST_NAME DEPARTMENT_ID                                                                                                                              
+---------- -------------                                                                                                                              
+Kevin                 50                                                                                                                              
+Peter                 50                                                                                                                              
+Randall               50                                                                                                                              
+Curtis                50                                                                                                                              
+Trenna                50                                                                                                                              
+
+SQL> REM DISPLAY THOSE DEPARTMENT_NAME WHICH ARE LOCATED IN Toronto CITY
+SQL> 
+SQL> SELECT * FROM DEPARTMENTS;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                   
+------------- ------------------------------ ---------- -----------                                                                                   
+           10 Administration                        200        1700                                                                                   
+           20 Marketing                             201        1800                                                                                   
+           50 Shiping                               124        1500                                                                                   
+           60 IT                                    103        1400                                                                                   
+           80 Sales                                 149        2500                                                                                   
+           90 Executive                             100        1700                                                                                   
+          110 Accounting                            205        1700                                                                                   
+          190 Contracting                                      1700                                                                                   
+
+8 rows selected.
+
+SQL> SELECT * FROM LOCATIONS;
+
+LOCATION_ID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                         
+----------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                         
+       1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                         
+       1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                         
+       1700 2004 Charade Rd                          98199        Seattle                        Washington                US                         
+       1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                         
+       2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                         
+
+SQL> SELECT DEPARTMENT_NAME,LOCATION_ID FROM DEPARTMENTS WHERE LOCATION_ID IN (SELECT LOCATION_ID FROM LOCATIONS WHERE LOCATION_ID='Toronto' );
+SELECT DEPARTMENT_NAME,LOCATION_ID FROM DEPARTMENTS WHERE LOCATION_ID IN (SELECT LOCATION_ID FROM LOCATIONS WHERE LOCATION_ID='Toronto' )
+                                                                                                                              *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> SELECT DEPARTMENT_NAME,LOCATION_ID FROM DEPARTMENTS WHERE LOCATION_ID IN (SELECT LOCATION_ID FROM LOCATIONS WHERE CITY='Toronto' );
+
+DEPARTMENT_NAME                LOCATION_ID                                                                                                            
+------------------------------ -----------                                                                                                            
+Marketing                             1800                                                                                                            
+
+SQL> SELECT * FROM COUNTRIES;
+
+CO COUNTRY_NAME                              REGION_ID                                                                                                
+-- ---------------------------------------- ----------                                                                                                
+CA Canada                                            2                                                                                                
+DE Germany                                           1                                                                                                
+UK United Kingdom                                    1                                                                                                
+US United States of America                          2                                                                                                
+
+SQL> REM DISPLAY CITIES OF Canada
+SQL> 
+SQL> SELECT * FROM LOCATIONS;
+
+LOCATION_ID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                         
+----------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                         
+       1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                         
+       1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                         
+       1700 2004 Charade Rd                          98199        Seattle                        Washington                US                         
+       1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                         
+       2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                         
+
+SQL> SELECT * FROM COUNTRIES;
+
+CO COUNTRY_NAME                              REGION_ID                                                                                                
+-- ---------------------------------------- ----------                                                                                                
+CA Canada                                            2                                                                                                
+DE Germany                                           1                                                                                                
+UK United Kingdom                                    1                                                                                                
+US United States of America                          2                                                                                                
+
+SQL> SELECT COUNTRY_ID, CITY FROM LOCATIONS WHERE COUNTRY_ID IN (SELECT COUNTRY_ID FROM COUNTRIES WHERE CITY='Canada');
+
+no rows selected
+
+SQL> SELECT COUNTRY_ID, CITY FROM LOCATIONS WHERE COUNTRY_ID IN (SELECT COUNTRY_ID FROM COUNTRIES WHERE COUNTRY_NAME='Canada');
+
+CO CITY                                                                                                                                               
+-- ------------------------------                                                                                                                     
+CA Toronto                                                                                                                                            
+
+SQL> REM DISPLAY THOSE WHO GETS HIGHER COMMISSSION AMOUNT THAN Jonathon
+SQL> 
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME LAST_NAME  EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID             
+----------- ---------- ---------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------             
+        100 Steven     King       SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90             
+        101 Neena      Kochhar    NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90             
+        102 Lex        De Haan    LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90             
+        103 Alexander  Hunold     AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60             
+        104 Bruce      Ernst      BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60             
+        107 Diana      Lorentz    DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60             
+        124 Kevin      Mourgos    KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50             
+        141 Trenna     Rajs       TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50             
+        142 Curtis     Davies     CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50             
+        143 Randall    Matos      RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50             
+        144 Peter      Vargas     PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50             
+        149 Eleni      Zlotkey    EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80             
+        174 Ellen      Abel       EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80             
+        176 Jonathon   Taylor     JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80             
+        178 Kimerely   Grant      KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                           
+        200 Jennifer   Whalen     JWAHLEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10             
+        201 Michael    Hartstein  MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20             
+        202 Pat        Fay        PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20             
+        205 Shelley    Higgins    SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110             
+        206 William    Gietz      WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110             
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME,(COMMISSION_PCT*SALARY) "COMMISSION AMOUNT" FROM EMPLOYEES WHERE COMMISSION_PCT*SALARY >(SELECT (COMMISSION_PCT*SALARY) "COMMISSION AMOUNT" FROM EMPLOYEES WHERE FIRST_NAME='Jonathon');
+
+FIRST_NAME COMMISSION AMOUNT                                                                                                                          
+---------- -----------------                                                                                                                          
+Ellen                   3300                                                                                                                          
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID FROM EMPLOYEES;
+
+FIRST_NAME DEPARTMENT_ID                                                                                                                              
+---------- -------------                                                                                                                              
+Steven                90                                                                                                                              
+Neena                 90                                                                                                                              
+Lex                   90                                                                                                                              
+Alexander             60                                                                                                                              
+Bruce                 60                                                                                                                              
+Diana                 60                                                                                                                              
+Kevin                 50                                                                                                                              
+Trenna                50                                                                                                                              
+Curtis                50                                                                                                                              
+Randall               50                                                                                                                              
+Peter                 50                                                                                                                              
+Eleni                 80                                                                                                                              
+Ellen                 80                                                                                                                              
+Jonathon              80                                                                                                                              
+Kimerely                                                                                                                                              
+Jennifer              10                                                                                                                              
+Michael               20                                                                                                                              
+Pat                   20                                                                                                                              
+Shelley              110                                                                                                                              
+William              110                                                                                                                              
+
+20 rows selected.
+
+SQL> SELECT * FROM DEPARTMENTS;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                   
+------------- ------------------------------ ---------- -----------                                                                                   
+           10 Administration                        200        1700                                                                                   
+           20 Marketing                             201        1800                                                                                   
+           50 Shiping                               124        1500                                                                                   
+           60 IT                                    103        1400                                                                                   
+           80 Sales                                 149        2500                                                                                   
+           90 Executive                             100        1700                                                                                   
+          110 Accounting                            205        1700                                                                                   
+          190 Contracting                                      1700                                                                                   
+
+8 rows selected.
+
+SQL> SELECT * FROM LOCATIONS;
+
+LOCATION_ID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                         
+----------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                         
+       1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                         
+       1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                         
+       1700 2004 Charade Rd                          98199        Seattle                        Washington                US                         
+       1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                         
+       2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                         
+
+SQL> REM DISPLAY FIRST_NAME WHOSE CITY IS Seattle
+SQL> 
+SQL> REM STEP BY STEP APPROACH
+SQL> 
+SQL> SELECT LOCATION_ID FROM LOCATIONS WHERE CITY = 'Seattle';
+
+LOCATION_ID                                                                                                                                           
+-----------                                                                                                                                           
+       1700                                                                                                                                           
+
+SQL> SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE LOCATION_ID IN
+  2  (SELECT LOCATION_ID FROM LOCATIONS WHERE CITY = 'Seattle');
+
+DEPARTMENT_ID                                                                                                                                         
+-------------                                                                                                                                         
+           10                                                                                                                                         
+           90                                                                                                                                         
+          110                                                                                                                                         
+          190                                                                                                                                         
+
+
+SQL> (SELECT LOCATION_ID FROM LOCATIONS WHERE CITY = 'Seattle')
+  2  
+SQL> SELECT FIRST_NAME , DEPARTMENT_ID             // JUST FOLLOW THE SEQUENCE AS U KNOW EVERYTHING U WILL DEFINETLY BE ABLE TO DO IT!!!!!!!!!
+  2  FROM EMPLOYEES
+  3  WHERE DEPARTMENT_ID IN
+  4  (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE LOCATION_ID IN
+  5  (SELECT LOCATION_ID FROM LOCATIONS WHERE CITY = 'Seattle'));   // OPIEST USE OF SUB QUERY BOLTE!!!!!!!!!!!!!!!!         JODDD BEYYY!!!!!!
+
+SQL>> USING JOIN COMMAND // DONE BY VIRUU MODI!!!!!!
+
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES
+     JOIN DEPARTMENTS USING(DEPARTMENT_ID)
+     JOIN LOCATIONS USING(LOCATION_ID) WHERE LOCATIONS.CITY='Seattle';
+
+FIRST_NAME DEPARTMENT_ID                                                                                                                              
+---------- -------------                                                                                                                              
+Jennifer              10                                                                                                                              
+Steven                90                                                                                                                              
+Neena                 90                                                                                                                              
+Lex                   90                                                                                                                              
+Shelley              110                                                                                                                              
+William              110                                                                                                                              
+
+6 rows selected.
+
+SQL> REM DISPLAY DEPARTMENT_NAME OF COUNTRY Canada
+SQL> 
+SQL> SELECT * FROM DEPARTMENTS;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                   
+------------- ------------------------------ ---------- -----------                                                                                   
+           10 Administration                        200        1700                                                                                   
+           20 Marketing                             201        1800                                                                                   
+           50 Shiping                               124        1500                                                                                   
+           60 IT                                    103        1400                                                                                   
+           80 Sales                                 149        2500                                                                                   
+           90 Executive                             100        1700                                                                                   
+          110 Accounting                            205        1700                                                                                   
+          190 Contracting                                      1700                                                                                   
+
+8 rows selected.
+
+SQL> SELECT * FROM LOCATIONS;
+
+LOCATION_ID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                         
+----------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                         
+       1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                         
+       1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                         
+       1700 2004 Charade Rd                          98199        Seattle                        Washington                US                         
+       1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                         
+       2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                         
+
+SQL> SELECT * FROM COUNTRIES;
+
+CO COUNTRY_NAME                              REGION_ID                                                                                                
+-- ---------------------------------------- ----------                                                                                                
+CA Canada                                            2                                                                                                
+DE Germany                                           1                                                                                                
+UK United Kingdom                                    1                                                                                                
+US United States of America                          2                                                                                                
+
+SQL> SELECT DEPARTMENT_NAME FROM DEPARTMENTS WHERE LOCATION_ID IN(SELECT LOCATION_ID FROM LOCATIONS WHERE COUNTRY_ID IN (SELECT COUNTRY_ID FROM COUNTRIES WHERE COUNTRY_NAME='Canada'));
+
+DEPARTMENT_NAME                                                                                                                                       
+------------------------------                                                                                                                        
+Marketing                                                                                                                                             
+
+SQL> SELECT DEPARTMENT_NAME FROM DEPARTMENTS WHERE LOCATION_ID IN
+  2  (SELECT LOCATION_ID FROM LOCATIONS WHERE COUNTRY_ID IN
+  3  (SELECT COUNTRY_ID FROM COUNTRIES WHERE COUNTRY_NAME='Canada'));
+
+DEPARTMENT_NAME                                                                                                                                       
+------------------------------                                                                                                                        
+Marketing                                                                                                                                             
+
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                
+---------- -------------------------                                                                                                                  
+         1 Europe                                                                                                                                     
+         2 Americas                                                                                                                                   
+         3 Asia                                                                                                                                       
+         4 Middle East and Africa                                                                                                                     
+
+SQL> REM DISPLAY CITY OF America             // EASY BOLTE BEY!!!!!!!!
+SQL> 
+SQL> REM DISPLAY CITY OF Americas
+SQL> 
+SQL> SELECT CITY FROM LOCATIONS WHERE COUNTRY_ID IN(SELECT COUNTRY_ID FROM COUNTRIES WHERE REGION_ID IN(SELECT REGION_ID FROM REGIONS WHERE REGION_NAME='Americas'));
+
+CITY                                                                                                                                                  
+------------------------------                                                                                                                        
+Toronto                                                                                                                                               
+Southlake                                                                                                                                             
+South San Francisco                                                                                                                                   
+Seattle                                                                                                                                               
+
+SQL> REM DISPLAY DEPARTMENT_NAME OF Europe
+SQL> 
+SQL> SELECT DEPARTMENT_NAME FROM DEPARTMENTS
+  2  WHERE LOCATION_ID IN (SELECT LOCATION_ID FROM LOCATIONS
+  3  WHERE COUNTRY_ID  IN (SELECT COUNTRY_ID  FROM COUNTRIES
+  4  WHERE REGION_ID   IN (SELECT REGION_ID   FROM REGIONS   WHERE REGION_NAME = 'Europe')));
+
+DEPARTMENT_NAME                                                                                                                                       
+------------------------------                                                                                                                        
+Sales                                                                                                                                                 
+
+SQL> REM DISPLAY FIRST_NAME WHOSE COUNTRY_NAME IS Canada
+SQL> 
+
+SQL> SELECT FIRST_NAME, DEPARTMENT_ID FROM EMPLOYEES WHERE DEPARTMENT_ID =(SELECT DEPARTMENT_ID FROM DEPARTMENTS  WHERE LOCATION_ID IN (SELECT LOCATION_ID FROM LOCATIONS WHERE COUNTRY_ID IN (SELECT COUNTRY_ID FROM COUNTRIES WHERE COUNTRY_NAME= 'Canada')));
+
+FIRST_NAME DEPARTMENT_ID                                                                                                                              
+---------- -------------                                                                                                                              
+Michael               20                                                                                                                              
+Pat                   20                                                                                                                              
+
+SQL> REM DISPLAY FIRST_NAME WHO BELONGS TO Americas    // YE LAMBA WALA KAR DETE HAI RE !!!!!!
+SQL> 
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE DEPARTMENT_ID IN(SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE LOCATION_ID IN(SELECT LOCATION_ID IN LOCATIONS WHERE COUNTRY_ID IN(SELECT COUNTRY_ID FROM COUNTRIES WHERE REGION_ID IN(SELECT REGION_ID FROM REGIONS WHERE REGION_NAME='Americas'))));
+SELECT FIRST_NAME FROM EMPLOYEES WHERE DEPARTMENT_ID IN(SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE LOCATION_ID IN(SELECT LOCATION_ID IN LOCATIONS WHERE COUNTRY_ID IN(SELECT COUNTRY_ID FROM COUNTRIES WHERE REGION_ID IN(SELECT REGION_ID FROM REGIONS WHERE REGION_NAME='Americas'))))
+                                                                                                                                      *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES WHERE DEPARTMENT_ID IN
+    (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE LOCATION_ID IN 
+    (SELECT LOCATION_ID FROM LOCATIONS WHERE COUNTRY_ID IN
+    (SELECT COUNTRY_ID FROM COUNTRIES WHERE REGION_ID IN
+    (SELECT REGION_ID FROM REGIONS WHERE REGION_NAME = 'Americas'))));            // SYSTEMATIC WAY OF WRITING!!!!!!!!
+
+SQL> USING JOIN O WOTTTT // VIRAL MODI!!!!!!!!
+
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES 
+     JOIN DEPARTMENTS USING(DEPARTMENT_ID)
+     JOIN LOCATIONS USING(LOCATION_ID)
+     JOIN COUNTRIES USING(COUNTRY_ID)
+     JOIN REGIONS USING(REGION_ID) WHERE REGION_NAME='Americas';
+
+FIRST_NAME                                                                                                                                            
+----------                                                                                                                                            
+Jennifer                                                                                                                                              
+Michael                                                                                                                                               
+Pat                                                                                                                                                   
+Kevin                                                                                                                                                 
+Trenna                                                                                                                                                
+Curtis                                                                                                                                                
+Randall                                                                                                                                               
+Peter                                                                                                                                                 
+Alexander                                                                                                                                             
+Bruce                                                                                                                                                 
+Diana                                                                                                                                                 
+Steven                                                                                                                                                
+Neena                                                                                                                                                 
+Lex                                                                                                                                                   
+Shelley                                                                                                                                               
+William                                                                                                                                               
+
+16 rows selected.
+
+SQL> REM IF MULTI ROW SUB QUERY RETURNS ONE OF THE VALUE AS NULL AND WE USE NEGATIVE CONDITION CHECKING, IT ALWAYS RETURNS ZERO ROW.   // OP!!
+SQL> 
+SQL> REM DISPLAY NON-MANAGERS
+SQL> 
+SQL> SELECT FIRST_NAME , EMPLOYEE_ID
+  2  FROM EMPLOYEES
+  3  WHERE EMPLOYEE_ID IN (SELECT DISTINCT MANAGER_ID FROM EMPLOYEES);
+
+FIRST_NAME EMPLOYEE_ID                                                                                                                                
+---------- -----------                                                                                                                                
+Steven             100                                                                                                                                
+Lex                102                                                                                                                                
+Alexander          103                                                                                                                                
+Kevin              124                                                                                                                                
+Eleni              149                                                                                                                                
+Neena              101                                                                                                                                
+Michael            201                                                                                                                                
+Shelley            205                                                                                                                                
+
+8 rows selected.
+
+SQL> SELECT FIRST_NAME , EMPLOYEE_ID
+  2  FROM EMPLOYEES
+  3  WHERE EMPLOYEE_ID NOT IN (SELECT DISTINCT MANAGER_ID FROM EMPLOYEES);
+
+no rows selected
+
+SQL> SELECT DISTINCT MANAGER_ID FROM EMPLOYEES;
+
+MANAGER_ID                                                                                                                                            
+----------                                                                                                                                            
+                                                                                                                                                      
+       100                                                                                                                                            
+       149                                                                                                                                            
+       205                                                                                                                                            
+       102                                                                                                                                            
+       201                                                                                                                                            
+       101                                                                                                                                            
+       124                                                                                                                                            
+       103                                                                                                                                            
+
+9 rows selected.
+
+SQL> FROM EMPLOYEES
+SP2-0734: unknown command beginning "FROM EMPLO..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> SELECT FIRST_NAME , EMPLOYEE_ID
+  2  FROM EMPLOYEES
+  3  WHERE EMPLOYEE_ID NOT IN (SELECT DISTINCT MANAGER_ID FROM EMPLOYEES WHERE MANAGER_ID IS NOT NULL);   // IMPORTANT!!
+
+FIRST_NAME EMPLOYEE_ID                                                                                                                                
+---------- -----------                                                                                                                                
+Diana              107                                                                                                                                
+Jennifer           200                                                                                                                                
+William            206                                                                                                                                
+Randall            143                                                                                                                                
+Bruce              104                                                                                                                                
+Trenna             141                                                                                                                                
+Ellen              174                                                                                                                                
+Curtis             142                                                                                                                                
+Kimerely           178                                                                                                                                
+Pat                202                                                                                                                                
+Peter              144                                                                                                                                
+Jonathon           176                                                                                                                                
+
+12 rows selected.
+
+SQL> SELECT FIRST_NAME , EMPLOYEE_ID
+  2  FROM EMPLOYEES
+  3  WHERE EMPLOYEE_ID NOT IN (SELECT DISTINCT NVL(MANAGER_ID,0) FROM EMPLOYEES); // NULL KO HAM REPLACE KARGENGE TOH BHI KAAM HOJAYENGA!!!!!!! OP RE!!!!!!!
+
+FIRST_NAME EMPLOYEE_ID                                                                                                                                
+---------- -----------                                                                                                                                
+Diana              107                                                                                                                                
+Jennifer           200                                                                                                                                
+William            206                                                                                                                                
+Randall            143                                                                                                                                
+Bruce              104                                                                                                                                
+Trenna             141                                                                                                                                
+Ellen              174                                                                                                                                
+Curtis             142                                                                                                                                
+Kimerely           178                                                                                                                                
+Pat                202                                                                                                                                
+Peter              144                                                                                                                                
+Jonathon           176                                                                                                                                
+
+12 rows selected.
+
+SQL> SPOOL OFF

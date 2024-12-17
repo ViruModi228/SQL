@@ -1,0 +1,139 @@
+=============================================================|||============================================================
+                                 : TABLE 1 :
+
+
+    DETAILS FOR BE STORED             |     DATA TYPES
+                                      |
+ 1. PRODUCT_ID                        |  A. TIMESTAMP
+                                      |
+ 2. ITEM_NAME                         |  B. DATE
+                                      |
+ 3. GENDER                            |  C. NUMBER
+                                      |
+ 4. JOINDATE                          |  D. INTERVAL YEAR TO MONTH
+                                      |
+ 5. ATM TRANSACTION DATE TIME INFO.   |  E. CHAR
+                                      |
+ 6. FIXED DEPOSIT DURATION            |  F. VARCHAR2
+                                      |
+                                      |
+
+ANSWERS
+
+1-C
+2-F
+3-E
+4-B
+5-A
+6-D
+
+=============================================================|||============================================================
+                                 : TABLE 2 :
+
+
+    DETAILS TO BE STORED              |     DATA TYPES
+                                      |
+ 1. PHOTOGRAPH, SCANNED IMAGE	      |  A. TIME STAMP WITH TIME ZONE
+                                      |
+ 2. TRANSACTION TIME FOR MNC          |  B. INTERVAL DAY TO SECOND
+                                      |
+ 3. EUROPE STAY DURATION              |  C. NVARCHAR2
+                                      |
+ 4. REACHING TIME TO SINGAPORE        |  D. BFILE (TEXT OF BINARY DATA LIKE AUDIO,VIDEO)
+                                      |
+ 5. STORING DATA USING ASIAN LANGUAGE |  E. TIME STAMP WITH LOCAL TIME ZONE
+                                      |
+                                        
+ANSWERS
+
+1-D
+2-E
+3-B
+4-A
+5-C
+=============================================================|||============================================================
+
+                                  : TABLE 3 :                                        
+
+
+     DATA TYPES                       |      MAX STORAGE ALLOWED
+                                      |
+  1. CHAR                             |   A. 38
+                                      |
+  2. VARCHAR2                         |   B. 7
+                                      |
+  3. NUMBER                           |   C. 4000 
+                                      |
+  4. DATE                             |   D. 4GB
+                                      |
+  5. BFILE                            |   E. 2000
+                                      |   
+
+
+ANSWERS
+
+1-E
+2-C
+3-A
+4-B
+5-D
+
+=============================================================|||============================================================
+
+DATATYES--------
+  
+CHAR  VARCHAR/VARCHAR2  NVARCHAR2
+NUMBER
+DATE TIMESTAMP   TIMESTAMP WITH TIME ZONE   TIMESTAMP WITH LOCAL TIME ZONE           
+INTERVAL DAY TO SECOND     INTERVAL YEAR TO MONTH
+BFILE
+
+
+1)
+
+CREATE TABLE PERSONAL_INFO(
+NAME        VARCHAR(30),
+BIRTH_DATE  DATE,
+WEIGHT      NUMBER(3),
+PHOTOGRAPH  BFILE);
+
+2)
+
+CREATE TABLE FIXED_DEPOSIT(
+BANK_NAME       VARCHAR(40),
+INVESTMENT_DATE TIMESTAMP,
+YM_PERIOD       INTERVAL YEAR TO MONTH,
+DAYS_PERIOD     INTERVAL DAY TO SECOND);
+
+3)
+
+CREATE TABLE EUROPE_TOUR(
+DESTINATION     VARCHAR(20),
+REACH_DATE      TIMESTAMP WITH TIMEZONE,
+STAY_DAYS_HOURS INTERVAL DAY TO SECOND);
+
+4)
+
+CREATE TABLE DISCOVERY_SERIALS(
+SERIAL_NAME VARCHAR(20),
+EPISODE_NO  NUMBER,
+DURATION    INTERVAL DAY TO SECOND,
+VIDEO_FILE  BFILE);
+
+5)
+
+CREATE TABLE BOOK_LIBRARY(
+BOOK_NAME    VARCHAR(20),
+AUTHOR       VARCHAR(20),
+NO_OF_PAGES  NUMBER(4),
+BOOK_PDF     BFILE);
+
+6)
+
+CREATE TABLE MNC(
+CUSTOMER_NAME VARCHAR(30),
+CONTACT_NO    NUMBER(11),
+MOBILE_NO     NUMBER(10),
+BILL_AMOUNT   NUMBER);
+
+

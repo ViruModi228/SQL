@@ -1,0 +1,221 @@
+SQL> 
+SQL> CL SCR
+
+SQL> REM 1 COLUMNS 2 CONSTRAINTS
+SQL> 
+SQL> DROP TABLE D1;
+
+Table dropped.
+
+SQL> CREATE TABLE D1 AS SELECT DEPARTMENT_ID DID , DEPARTMENT_NAME DNM FROM DEPARTMENTS;
+
+Table created.
+
+SQL> DESC D1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DID                                                                                                                        NUMBER(4)
+ DNM                                                                                                               NOT NULL VARCHAR2(30)
+
+SQL> ALTER TABLE D1 ADD MID NUMBER(2);
+
+Table altered.
+
+SQL> DESC D1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DID                                                                                                                        NUMBER(4)
+ DNM                                                                                                               NOT NULL VARCHAR2(30)
+ MID                                                                                                                        NUMBER(2)
+
+SQL> ALTER TABLE D1 RENAME COLUMN DNM TO DNAME;
+
+Table altered.
+
+SQL> DESC D1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DID                                                                                                                        NUMBER(4)
+ DNAME                                                                                                             NOT NULL VARCHAR2(30)
+ MID                                                                                                                        NUMBER(2)
+
+SQL> ALTER TABLE D1 DROP COLUMN MID;
+
+Table altered.
+
+SQL> DESC D1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DID                                                                                                                        NUMBER(4)
+ DNAME                                                                                                             NOT NULL VARCHAR2(30)
+
+SQL> ALTER TABLE D1 ADD PRIMARY KEY(DID);
+
+Table altered.
+
+SQL> ALTER TABLE D1 ADD PRIMARY KEY(DNAME);
+ALTER TABLE D1 ADD PRIMARY KEY(DNAME)
+                   *
+ERROR at line 1:
+ORA-02260: table can have only one primary key 
+
+
+SQL> ALTER TABLE D1 DROP PRIMARY KEY;
+
+Table altered.
+
+SQL> ALTER TABLE D1 ADD UNIQUE(DID);
+
+Table altered.
+
+SQL> ALTER TABLE D1 MODIFY DNAME CHECK (DNAME = UPPER(DNAME));
+ALTER TABLE D1 MODIFY DNAME CHECK (DNAME = UPPER(DNAME))
+*
+ERROR at line 1:
+ORA-02293: cannot validate (SCOTT.) - check constraint violated 
+
+
+SQL> SELECT * FROM D1;
+
+       DID DNAME                                                                                                                                                                                        
+---------- ------------------------------                                                                                                                                                               
+        10 Administration                                                                                                                                                                               
+        20 Marketing                                                                                                                                                                                    
+        50 Shiping                                                                                                                                                                                      
+        60 IT                                                                                                                                                                                           
+        80 Sales                                                                                                                                                                                        
+        90 Executive                                                                                                                                                                                    
+       110 Accounting                                                                                                                                                                                   
+       190 Contracting                                                                                                                                                                                  
+
+8 rows selected.
+
+SQL> UPDATE D1 SET DNAME = UPPER(DNAME);
+
+8 rows updated.
+
+SQL> SELECT * FROM D1;
+
+       DID DNAME                                                                                                                                                                                        
+---------- ------------------------------                                                                                                                                                               
+        10 ADMINISTRATION                                                                                                                                                                               
+        20 MARKETING                                                                                                                                                                                    
+        50 SHIPING                                                                                                                                                                                      
+        60 IT                                                                                                                                                                                           
+        80 SALES                                                                                                                                                                                        
+        90 EXECUTIVE                                                                                                                                                                                    
+       110 ACCOUNTING                                                                                                                                                                                   
+       190 CONTRACTING                                                                                                                                                                                  
+
+8 rows selected.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> ALTER TABLE D1 MODIFY DNAME CHECK (DNAME = UPPER(DNAME));
+
+Table altered.
+
+SQL> INSERT INTO D1 VALUES (200,'Networking');
+INSERT INTO D1 VALUES (200,'Networking')
+*
+ERROR at line 1:
+ORA-02290: check constraint (SCOTT.SYS_C0016044) violated 
+
+
+SQL> DROP TABLE E1;
+
+Table dropped.
+
+SQL> CREATE TABLE E1 AS SELECT EMPLOYEE_ID EID , FIRST_NAME ENM , MANAGER_ID MID FROM EMPLOYEES;
+
+Table created.
+
+SQL> SELECT * FROM E1;
+
+       EID ENM               MID                                                                                                                                                                        
+---------- ---------- ----------                                                                                                                                                                        
+       100 Steven                                                                                                                                                                                       
+       101 Neena             100                                                                                                                                                                        
+       102 Lex               100                                                                                                                                                                        
+       103 Alexander         102                                                                                                                                                                        
+       104 Bruce             103                                                                                                                                                                        
+       107 Diana             103                                                                                                                                                                        
+       124 Kevin             100                                                                                                                                                                        
+       141 Trenna            124                                                                                                                                                                        
+       142 Curtis            124                                                                                                                                                                        
+       143 Randall           124                                                                                                                                                                        
+       144 Peter             124                                                                                                                                                                        
+       149 Eleni             100                                                                                                                                                                        
+       174 Ellen             149                                                                                                                                                                        
+       176 Jonathon          149                                                                                                                                                                        
+       178 Kimerely          149                                                                                                                                                                        
+       200 Jennifer          101                                                                                                                                                                        
+       201 Michael           100                                                                                                                                                                        
+       202 Pat               201                                                                                                                                                                        
+       205 Shelley           101                                                                                                                                                                        
+       206 William           205                                                                                                                                                                        
+
+20 rows selected.
+
+SQL> ALTER TABLE E1 ADD PRIMARY KEY(EID);
+
+Table altered.
+
+SQL> ALTER TABLE E1 MODIFY MID REFERENCES E1(EID);
+
+Table altered.
+
+SQL> INSERT INTO E1 VALUES (300,'GANESH',400);
+INSERT INTO E1 VALUES (300,'GANESH',400)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.SYS_C0016047) violated - parent key not found 
+
+
+SQL> SELECT CONSTRAINT_NAME , CONSTRAINT_TYPE FROM USER_CONSTRAINTS WHERE TABLE_NAME = 'E1';
+
+CONSTRAINT_NAME                                                                                                                  C                                                                      
+-------------------------------------------------------------------------------------------------------------------------------- -                                                                      
+SYS_C0016047                                                                                                                     R                                                                      
+SYS_C0016045                                                                                                                     C                                                                      
+SYS_C0016046                                                                                                                     P                                                                      
+
+SQL> ALTER TABLE E1 DROP CONSTRAINT SYS_C0016047;
+
+Table altered.
+
+SQL> ALTER TABLE E1 DROP CONSTRAINT SYS_C0016046;
+
+Table altered.
+
+SQL> ALTER TABLE E1 DROP CONSTRAINT SYS_C0016045;
+
+Table altered.
+
+SQL> SELECT CONSTRAINT_NAME , CONSTRAINT_TYPE FROM USER_CONSTRAINTS WHERE TABLE_NAME = 'E1';
+
+no rows selected
+
+SQL> ALTER TABLE E1 ADD PRIMARY KEY(EID);
+
+Table altered.
+
+SQL> SELECT CONSTRAINT_NAME , CONSTRAINT_TYPE FROM USER_CONSTRAINTS WHERE TABLE_NAME = 'E1';
+
+CONSTRAINT_NAME                                                                                                                  C                                                                      
+-------------------------------------------------------------------------------------------------------------------------------- -                                                                      
+SYS_C0016048                                                                                                                     P                                                                      
+
+SQL> ALTER TABLE E1 RENAME CONSTRAINT SYS_C0016048 TO SCOTT_E1_EID_PK;
+
+Table altered.
+
+SQL> SELECT CONSTRAINT_NAME , CONSTRAINT_TYPE FROM USER_CONSTRAINTS WHERE TABLE_NAME = 'E1';
+
+CONSTRAINT_NAME                                                                                                                  C                                                                      
+-------------------------------------------------------------------------------------------------------------------------------- -                                                                      
+SCOTT_E1_EID_PK                                                                                                                  P                                                                      
+
+SQL> SPOOL OFF

@@ -1,0 +1,752 @@
+SQL> 
+SQL> SELECT SYSDATE , TO_CHAR(SYSDATE,'SSSSS') FROM DUAL;
+
+SYSDATE   TO_CH                                                                 
+--------- -----                                                                 
+19-JAN-22 61569                                                                 
+
+SQL> REM 36 DISPLAY DATE IN SPECIFIED FORMAT : 56789         // CHAPTER 4 BOLTE!!!!!!!!
+SQL>  
+SQL> SELECT * FROM EMPLOYEES WHERE ROWNUM = 1;
+
+EMPLOYEE_ID FIRST_NAME LAST_NAME  EMAIL      PHONE_NUMBER         HIRE_DATE     
+----------- ---------- ---------- ---------- -------------------- ---------     
+JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                   
+---------- ---------- -------------- ---------- -------------                   
+        100 Steven     King       SKING      515.123.4567         17-JUL-87     
+AD_PRES         24000                                      90                   
+                                                                                
+
+SQL> SET LINES 200 PAGES 24
+SQL> 
+SQL> R
+  1* SELECT * FROM EMPLOYEES WHERE ROWNUM = 1
+
+EMPLOYEE_ID FIRST_NAME LAST_NAME  EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                               
+----------- ---------- ---------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                               
+        100 Steven     King       SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                               
+
+SQL> CL SCR
+
+SQL> REM SUMMARY FUNCTIONS :        SUMMARY/GROUP/AGGREGATE/MULTI-ROW FUNCTIONS!!!!!!!!!!  SUMMARY FUNCTIONS ARE GROUP AGGREGATE MULTI-ROW FUNCTIONS
+SQL> 
+SQL> REM SUMMARY/GROUP/AGGREGATE/MULTI ROW FUNCTIONS :		// GROUP BY CHAPTER OR WOTTTT!!!!!!!
+SQL> 
+SQL> REM LIST OF SUMMARY FUNCTIONS : MIN MAX COUNT SUM AVG         // 5 IMPORTANT FUNCTIONS
+SQL> 
+SQL> REM GROUP BY CLAUSE
+SQL> 
+SQL> REM HAVING CLAUSE
+SQL> 
+SQL> REM NESTED SUMMARY ITEMS
+SQL> 
+SQL> REM PCM : PIVOTE/CROSS TAB/MATRIX REPORT
+SQL> 
+SQL> REM SINGLE ROW FUNCTION : IT WORKS ON SINGLE ROW AT A TIME
+SQL> 
+SQL> REM SINGLE ROW FUNCTION : NO. OF INPUT ROWS ARE ALWAYS EQUIVALENT TO NO. OF OUTPUT ROWS
+SQL> 
+SQL> SELECT FIRST_NAME , LENGTH(FIRST_NAME) FROM EMPLOYEES;
+
+FIRST_NAME LENGTH(FIRST_NAME)                                                                                                                                                                           
+---------- ------------------                                                                                                                                                                           
+Steven                      6                                                                                                                                                                           
+Neena                       5                                                                                                                                                                           
+Lex                         3                                                                                                                                                                           
+Alexander                   9                                                                                                                                                                           
+Bruce                       5                                                                                                                                                                           
+Diana                       5                                                                                                                                                                           
+Kevin                       5                                                                                                                                                                           
+Trenna                      6                                                                                                                                                                           
+Curtis                      6                                                                                                                                                                           
+Randall                     7                                                                                                                                                                           
+Peter                       5                                                                                                                                                                           
+Eleni                       5                                                                                                                                                                           
+Ellen                       5                                                                                                                                                                           
+Jonathon                    8                                                                                                                                                                           
+Kimerely                    8                                                                                                                                                                           
+Jennifer                    8                                                                                                                                                                           
+Michael                     7                                                                                                                                                                           
+Pat                         3                                                                                                                                                                           
+Shelley                     7                                                                                                                                                                           
+William                     7                                                                                                                                                                           
+
+20 rows selected.
+
+SQL> REM MULTI ROW FUNCTION : TAKES MULTIPLE ROWS AS INPUT AND MAY RETURN SINGLE OR MULTIPLE ROWS           //OP LINE SSLY!!!!!!!!!!!!   IMP LINE!!!
+SQL> 
+SQL> REM IF WE USE SUMMARY FUNCTION WITHOUT GROUP BY CLAUSE, IT RETURNS SINGLE ROW   // OP WITHOUT GROUP BY !!!!!!!
+SQL> 
+SQL> REM IF WE USE SUMMARY FUNCTION WITH GROUP BY CLAUSE, IT RETURNS MULTIPLE ROWS      // WITH GROUP BY CLAUSE IT RETURNS MULTIPLE ROWS
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT SALRAY FROM EMPLOYEES;
+SELECT SALRAY FROM EMPLOYEES
+       *
+ERROR at line 1:
+ORA-00904: "SALRAY": invalid identifier 
+
+
+SQL> SELECT SALARY FROM EMPLOYEES;
+
+    SALARY                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+     24000                                                                                                                                                                                              
+     17000                                                                                                                                                                                              
+     17000                                                                                                                                                                                              
+      9000                                                                                                                                                                                              
+      6000                                                                                                                                                                                              
+      4200                                                                                                                                                                                              
+      5800                                                                                                                                                                                              
+      3500                                                                                                                                                                                              
+      3100                                                                                                                                                                                              
+      2600                                                                                                                                                                                              
+      2500                                                                                                                                                                                              
+     10500                                                                                                                                                                                              
+     11000                                                                                                                                                                                              
+      8600                                                                                                                                                                                              
+      7000                                                                                                                                                                                              
+      4400                                                                                                                                                                                              
+     13000                                                                                                                                                                                              
+      6000                                                                                                                                                                                              
+     12000                                                                                                                                                                                              
+      8300                                                                                                                                                                                              
+
+20 rows selected.
+
+SQL> SELECT SALARY FROM EMPLOYEES ORDER BY 1;
+
+    SALARY                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      2500                                                                                                                                                                                              
+      2600                                                                                                                                                                                              
+      3100                                                                                                                                                                                              
+      3500                                                                                                                                                                                              
+      4200                                                                                                                                                                                              
+      4400                                                                                                                                                                                              
+      5800                                                                                                                                                                                              
+      6000                                                                                                                                                                                              
+      6000                                                                                                                                                                                              
+      7000                                                                                                                                                                                              
+      8300                                                                                                                                                                                              
+      8600                                                                                                                                                                                              
+      9000                                                                                                                                                                                              
+     10500                                                                                                                                                                                              
+     11000                                                                                                                                                                                              
+     12000                                                                                                                                                                                              
+     13000                                                                                                                                                                                              
+     17000                                                                                                                                                                                              
+     17000                                                                                                                                                                                              
+     24000                                                                                                                                                                                              
+
+20 rows selected.
+
+SQL> SELECT MIN(SALARY) FROM EMPLOYEES;        // WITHOUT GROUP BY CLAUSE USE KIYA TOH SINGLE ROW HI RETURN HUI!
+
+MIN(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+       2500                                                                                                                                                                                             
+
+SQL> SELECT MAX(SALARY) FROM EMPLOYEES;
+
+MAX(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+      24000                                                                                                                                                                                             
+
+SQL> SELECT COUNT(SALARY) FROM EMPLOYEES;
+
+COUNT(SALARY)                                                                                                                                                                                           
+-------------                                                                                                                                                                                           
+           20                                                                                                                                                                                           
+
+SQL> REM NULLS ARE IGNORED BY ALL SUMMARY FUNCTIONS, EXCEPT COUNT(*)     // OP BOLTE !!!!! COUNT(*) COUNTS NULL VALUES ALSO!!!!!!!
+SQL> 
+SQL> REM WE CAN USE COUNT FUNCTION IN TWO WAYS : 1 COUNT(EXPRESSION) 2 COUNT(*)
+SQL> 
+SQL> REM COUNT(EXPRESSION) : IT WILL IGNORE NULL VALUES // ONLY COUNT(*) COUNTS THE NULL VALUES
+SQL> 
+SQL> REM COUNT(*) : IT WILL COUNT NULL VALUES		// OP BEY!!!
+SQL> 
+SQL> SELECT SUM(SALARY) FROM EMPLOYEES;
+
+SUM(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+     175500                                                                                                                                                                                             
+
+SQL> SELECT AVG(SALARY) FROM EMPLOYEES;
+
+AVG(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+       8775                                                                                                                                                                                             
+
+SQL> SELECT SUM(SALARY)/COUNT(SALARY) FROM EMPLOYEES;
+
+SUM(SALARY)/COUNT(SALARY)                                                                                                                                                                               
+-------------------------                                                                                                                                                                               
+                     8775                                                                                                                                                                               
+
+SQL> 
+SQL> SELECT COMMISSION_PCT FROM EMPLOYEES;
+
+COMMISSION_PCT                                                                                                                                                                                          
+--------------                                                                                                                                                                                          
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+            .2                                                                                                                                                                                          
+            .3                                                                                                                                                                                          
+            .3                                                                                                                                                                                          
+           .15                                                                                                                                                                                          
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        
+
+20 rows selected.
+
+SQL> SELECT COUNT(COMMISSION_PCT) FROM EMPLOYEES;   // PERFECT EXAMPLE OF DIFF BETWEEN COUNT(PARAMETER) AND COUNT(*) YES DEFINITELY PERFECT
+
+COUNT(COMMISSION_PCT)                                                                                                                                                                                   
+---------------------                                                                                                                                                                                   
+                    4                                                                                                                                                                                   
+
+SQL> SELECT COUNT(*) FROM EMPLOYEES;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        20                                                                                                                                                                                              
+
+SQL> SELECT COUNT(DISTINCT COMMISSION_PCT) FROM EMPLOYEES;
+
+COUNT(DISTINCTCOMMISSION_PCT)                                                                                                                                                                           
+-----------------------------                                                                                                                                                                           
+                            3                                                                                                                                                                           
+
+SQL> REM WE CAN USE UNIQUE/DISTINCT AS PREFIX IN ALL SUMMARY FUNCTIONS FOR EXPRESSION/INPUT/ARGUMENT
+SQL> 
+SQL> SELECT JOB_ID FROM EMPLOYEES;
+
+JOB_ID                                                                                                                                                                                                  
+----------                                                                                                                                                                                              
+AD_PRES                                                                                                                                                                                                 
+AD_VP                                                                                                                                                                                                   
+AD_VP                                                                                                                                                                                                   
+IT_PROG                                                                                                                                                                                                 
+IT_PROG                                                                                                                                                                                                 
+IT_PROG                                                                                                                                                                                                 
+ST_MAN                                                                                                                                                                                                  
+ST_CLERK                                                                                                                                                                                                
+ST_CLERK                                                                                                                                                                                                
+ST_CLERK                                                                                                                                                                                                
+ST_CLERK                                                                                                                                                                                                
+SA_MAN                                                                                                                                                                                                  
+SA_REP                                                                                                                                                                                                  
+SA_REP                                                                                                                                                                                                  
+SA_REP                                                                                                                                                                                                  
+AD_ASST                                                                                                                                                                                                 
+MK_MAN                                                                                                                                                                                                  
+MK_REP                                                                                                                                                                                                  
+AC_MGR                                                                                                                                                                                                  
+AC_ACCOUNT                                                                                                                                                                                              
+
+20 rows selected.
+
+SQL> SELECT COUNT(JOB_ID), COUNT(UNIQUE JOB_ID) , COUNT(*) FROM EMPLOYEES;
+
+COUNT(JOB_ID) COUNT(UNIQUEJOB_ID)   COUNT(*)                                                                                                                                                            
+------------- ------------------- ----------                                                                                                                                                            
+           20                  12         20                                                                                                                                                            
+
+SQL> SELECT DEPARTMENT_ID FROM EMPLOYEES ORDER BY 1;
+
+DEPARTMENT_ID                                                                                                                                                                                           
+-------------                                                                                                                                                                                           
+           10                                                                                                                                                                                           
+           20                                                                                                                                                                                           
+           20                                                                                                                                                                                           
+           50                                                                                                                                                                                           
+           50                                                                                                                                                                                           
+           50                                                                                                                                                                                           
+           50                                                                                                                                                                                           
+           50                                                                                                                                                                                           
+           60                                                                                                                                                                                           
+           60                                                                                                                                                                                           
+           60                                                                                                                                                                                           
+           80                                                                                                                                                                                           
+           80                                                                                                                                                                                           
+           80                                                                                                                                                                                           
+           90                                                                                                                                                                                           
+           90                                                                                                                                                                                           
+           90                                                                                                                                                                                           
+          110                                                                                                                                                                                           
+          110                                                                                                                                                                                           
+                                                                                                                                                                                                        
+
+20 rows selected.
+
+SQL> SELECT COUNT(DEPARTMENT_ID), COUNT(UNIQUE DEPARTMENT_ID) , COUNT(*) FROM EMPLOYEES;
+
+COUNT(DEPARTMENT_ID) COUNT(UNIQUEDEPARTMENT_ID)   COUNT(*)         // NULL HAS BEEN IGNORED BY COUNT(DEPARTMENT_ID)  (CONTRACTING WALA BE!!!!!!)                                                                                                                                   
+-------------------- -------------------------- ----------                                                                                                                                              
+                  19                          7         20                                                                                                                                              
+
+SQL> SELECT DEPARTMENT_ID , MANAGER_ID FROM EMPLOYEES ORDER BY 1,2;
+
+DEPARTMENT_ID MANAGER_ID                                                                                                                                                                                
+------------- ----------                                                                                                                                                                                
+           10        101                                                                                                                                                                                
+           20        100                                                                                                                                                                                
+           20        201                                                                                                                                                                                
+           50        100                                                                                                                                                                                
+           50        124                                                                                                                                                                                
+           50        124                                                                                                                                                                                
+           50        124                                                                                                                                                                                
+           50        124                                                                                                                                                                                
+           60        102                                                                                                                                                                                
+           60        103                                                                                                                                                                                
+           60        103                                                                                                                                                                                
+           80        100                                                                                                                                                                                
+           80        149                                                                                                                                                                                
+           80        149                                                                                                                                                                                
+           90        100                                                                                                                                                                                
+           90        100                                                                                                                                                                                
+           90                                                                                                                                                                                           
+          110        101                                                                                                                                                                                
+          110        205                                                                                                                                                                                
+                     149                                                                                                                                                                                
+
+20 rows selected.
+
+SQL> SELECT COUNT(DEPARTMENT_ID||MANAGER_ID) , COUNT(DISTINCT DEPARTMENT_ID||MANAGER_ID) , COUNT(*) FROM EMPLOYEES ORDER BY 1,2;
+
+COUNT(DEPARTMENT_ID||MANAGER_ID) COUNT(DISTINCTDEPARTMENT_ID||MANAGER_ID)   COUNT(*)                                                                                                                    
+-------------------------------- ---------------------------------------- ----------                                                                                                                    
+                              20                                       14         20                                                                                                                    
+
+SQL> SELECT COUNT(DEPARTMENT_ID+MANAGER_ID) , COUNT(DISTINCT DEPARTMENT_ID+MANAGER_ID) , COUNT(*) FROM EMPLOYEES ORDER BY 1,2;   // 149 AND 90 CANNOT BE ADDED WITH NULL !!!!!
+
+COUNT(DEPARTMENT_ID+MANAGER_ID) COUNT(DISTINCTDEPARTMENT_ID+MANAGER_ID)   COUNT(*)                                                                                                                      
+------------------------------- --------------------------------------- ----------                                                                                                                      
+                             18                                      12         20                                                                                                                      
+
+SQL> SELECT AVG(COMMISSION_PCT) FROM DUAL;
+SELECT AVG(COMMISSION_PCT) FROM DUAL
+           *
+ERROR at line 1:
+ORA-00904: "COMMISSION_PCT": invalid identifier 
+
+
+SQL> SELECT AVG(COMMISSION_PCT) FROM EMPLOYEE;
+SELECT AVG(COMMISSION_PCT) FROM EMPLOYEE
+                                *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT AVG(COMMISSION_PCT) FROM EMPLOYEES;
+
+AVG(COMMISSION_PCT)                                                                                                                                                                                     
+-------------------                                                                                                                                                                                     
+              .2375                                                                                                                                                                                     
+
+SQL> SELECT SUM(COMMISSION_PCT)/COUNT(COMMISSION_PCT) FROM EMPLOYEES;
+
+SUM(COMMISSION_PCT)/COUNT(COMMISSION_PCT)                                                                                                                                                               
+-----------------------------------------                                                                                                                                                               
+                                    .2375                                                                                                                                                               
+
+SQL> SELECT SUM(COMMISSION_PCT)/COUNT(*) FROM EMPLOYEES;
+
+SUM(COMMISSION_PCT)/COUNT(*)                                                                                                                                                                            
+----------------------------                                                                                                                                                                            
+                       .0475                                                                                                                                                                            
+
+SQL> SELECT SALARY FROM EMPLOYEES ORDER BY 1;
+
+    SALARY                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      2500                                                                                                                                                                                              
+      2600                                                                                                                                                                                              
+      3100                                                                                                                                                                                              
+      3500                                                                                                                                                                                              
+      4200                                                                                                                                                                                              
+      4400                                                                                                                                                                                              
+      5800                                                                                                                                                                                              
+      6000                                                                                                                                                                                              
+      6000                                                                                                                                                                                              
+      7000                                                                                                                                                                                              
+      8300                                                                                                                                                                                              
+      8600                                                                                                                                                                                              
+      9000                                                                                                                                                                                              
+     10500                                                                                                                                                                                              
+     11000                                                                                                                                                                                              
+     12000                                                                                                                                                                                              
+     13000                                                                                                                                                                                              
+     17000                                                                                                                                                                                              
+     17000                                                                                                                                                                                              
+     24000                                                                                                                                                                                              
+
+20 rows selected.
+
+SQL> SELECT SUM(SALARY) - SUM(DISTINCT SALARY) FROM EMPLOYEES;     // OP!!!!!!!!!!
+
+SUM(SALARY)-SUM(DISTINCTSALARY)                                                                                                                                                                         
+-------------------------------                                                                                                                                                                         
+                          23000                                                                                                                                                                         
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES;
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+21-SEP-89                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+16-NOV-99                                                                                                                                                                                               
+17-OCT-95                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+17-SEP-87                                                                                                                                                                                               
+17-FEB-96                                                                                                                                                                                               
+17-AUG-97                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+
+20 rows selected.
+
+SQL> SELECT HIRE_DATE FROM EMPLOYEES ORDER BY 1;
+
+HIRE_DATE                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+17-SEP-87                                                                                                                                                                                               
+21-SEP-89                                                                                                                                                                                               
+03-JAN-90                                                                                                                                                                                               
+21-MAY-91                                                                                                                                                                                               
+13-JAN-93                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+07-JUN-94                                                                                                                                                                                               
+17-OCT-95                                                                                                                                                                                               
+17-FEB-96                                                                                                                                                                                               
+11-MAY-96                                                                                                                                                                                               
+29-JAN-97                                                                                                                                                                                               
+17-AUG-97                                                                                                                                                                                               
+15-MAR-98                                                                                                                                                                                               
+24-MAR-98                                                                                                                                                                                               
+09-JUL-98                                                                                                                                                                                               
+07-FEB-99                                                                                                                                                                                               
+24-MAY-99                                                                                                                                                                                               
+16-NOV-99                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+
+20 rows selected.
+
+SQL> SELECT MIN(HIRE_DATE) FROM EMPLOYEES;          // EARLIEST DATE IS MINIMUM
+
+MIN(HIRE_                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+17-JUL-87                                                                                                                                                                                               
+
+SQL> SELECT MAX(HIRE_DATE) FROM EMPLOYEES;          // LATEST DATE IS MAXIMUM
+
+MAX(HIRE_                                                                                                                                                                                               
+---------                                                                                                                                                                                               
+29-JAN-00                                                                                                                                                                                               
+
+SQL> SELECT COUNT(HIRE_DATE) FROM EMPLOYEES;
+
+COUNT(HIRE_DATE)                                                                                                                                                                                        
+----------------                                                                                                                                                                                        
+              20                                                                                                                                                                                        
+
+SQL> SELECT SUM(HIRE_DATE) FROM EMPLOYEES;
+SELECT SUM(HIRE_DATE) FROM EMPLOYEES
+           *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected NUMBER got DATE 
+
+
+SQL> SELECT AVG(HIRE_DATE) FROM EMPLOYEES;
+SELECT AVG(HIRE_DATE) FROM EMPLOYEES
+           *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected NUMBER got DATE 
+
+
+SQL> SELECT FIRST_NAME FROM EMPLOYEES ORDER BY 1;
+
+FIRST_NAME                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+Alexander                                                                                                                                                                                               
+Bruce                                                                                                                                                                                                   
+Curtis                                                                                                                                                                                                  
+Diana                                                                                                                                                                                                   
+Eleni                                                                                                                                                                                                   
+Ellen                                                                                                                                                                                                   
+Jennifer                                                                                                                                                                                                
+Jonathon                                                                                                                                                                                                
+Kevin                                                                                                                                                                                                   
+Kimerely                                                                                                                                                                                                
+Lex                                                                                                                                                                                                     
+Michael                                                                                                                                                                                                 
+Neena                                                                                                                                                                                                   
+Pat                                                                                                                                                                                                     
+Peter                                                                                                                                                                                                   
+Randall                                                                                                                                                                                                 
+Shelley                                                                                                                                                                                                 
+Steven                                                                                                                                                                                                  
+Trenna                                                                                                                                                                                                  
+William                                                                                                                                                                                                 
+
+20 rows selected.
+
+SQL> SELECT MIN(FIRST_NAME) FROM EMPLOYEES;
+
+MIN(FIRST_                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+Alexander                                                                                                                                                                                               
+
+SQL> SELECT MAX(FIRST_NAME) FROM EMPLOYEES;
+
+MAX(FIRST_                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+William                                                                                                                                                                                                 
+
+SQL> SELECT COUNT(FIRST_NAME) FROM EMPLOYEES;
+
+COUNT(FIRST_NAME)                                                                                                                                                                                       
+-----------------                                                                                                                                                                                       
+               20                                                                                                                                                                                       
+
+SQL> SELECT SUM(FIRST_NAME) FROM EMPLOYEES;
+SELECT SUM(FIRST_NAME) FROM EMPLOYEES
+           *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> SELECT AVG(FIRST_NAME) FROM EMPLOYEES;
+SELECT AVG(FIRST_NAME) FROM EMPLOYEES
+           *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> REM FOR DATE AND CHARACTER INPUTS, SUM AND AVG WILL NOT WORK.   // TO BE NOTED !!
+SQL> 
+SQL> SELECT COUNT(*) FROM EMPLOYEES;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        20                                                                                                                                                                                              
+
+SQL> REM HOW MANY EMPLOYEES ARE WORKING IN DEPARTMENT 50
+SQL> 
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE DEPARTMENT_ID = 50;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         5                                                                                                                                                                                              
+
+SQL> REM HOW MANY EMPLOYEES ARE GETTING SALARY LESS THAN OR EQUALS TO 6000
+SQL> 
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE SALARY <= 6000;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         9                                                                                                                                                                                              
+
+SQL> REM WHAT IS THE TOTAL AMOUNT COMPANY PAYS TO IT_PROG
+SQL> 
+SQL> SELECT SUM(SALARY) FROM EMPLOYEES WHERE JOB_ID = 'IT_PROG';
+
+SUM(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+      19200                                                                                                                                                                                             
+
+SQL> REM WHAT IS THE AVERAGE SALARY PAID TO THOSE WHO REPORTS TO 100
+SQL> 
+SQL> SELECT AVG(SALARY) FROM EMPLOYEES WHERE MANAGER_ID = 100;
+
+AVG(SALARY)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+      12660                                                                                                                                                                                             
+
+SQL> REM HOW MANY NO. OF EMPLOYEES REPORTS TO 124
+SQL> 
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE MANAGER_ID = 124;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         4                                                                                                                                                                                              
+
+SQL> REM HOW MANY NO. OF EMPLOYEES WERE HIRED IN YEAR 95 TO 99.
+SQL> 
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE HIRE_DATE BETWEEN '01-JAN-95' AND '31-DEC-99';
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        11                                                                                                                                                                                              
+
+SQL> REM HOW MANY NO. OF EMPLOYEES WERE HIRED IN QUARTER 4 OF ANY YEAR.      // JODD BOLTE ! " SELECT COUNT(*) FROM EMPLOYEES WHERE TO_CHAR(HIRE_DATE,'Q')=4; " !!!!!!!
+SQL> 
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE HIRE_DATE LIKE '__-OCT-__' OR HI OR HIRE_DATE LIKE '__-NOV-__' OR HIRE_DATE LIKE '__-DEC-__';
+SELECT COUNT(*) FROM EMPLOYEES WHERE HIRE_DATE LIKE '__-OCT-__' OR HI OR HIRE_DATE LIKE '__-NOV-__' OR HIRE_DATE LIKE '__-DEC-__'
+                                                                      *
+ERROR at line 1:
+ORA-00920: invalid relational operator 
+
+
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE HIRE_DATE LIKE '__-OCT-__' OR HIRE_DATE LIKE '__-NOV-__' OR HIRE_DATE LIKE '__-DEC-__';  // THIS IS ALSO A WAY!!!!!!!
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         2                                                                                                                                                                                              
+
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE HIRE_DATE LIKE '%OCT%' OR HIRE_DATE LIKE '%NOV%' OR HIRE_DATE LIKE '%DEC%';
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         2                                                                                                                                                                                              
+
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE TO_CHAR(HIRE_DATE,'Q') = 4;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         2                                                                                                                                                                                              
+
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE TO_CHAR(HIRE_DATE,'MM') IN (10,11,12);    // THIS IS ALSO NICEE BOLTE!!!!
+
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         2                                                                                                                                                                                              
+
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE TO_CHAR(HIRE_DATE,'MM') BETWEEN 10 AND 12;
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         2                                                                                                                                                                                              
+
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE SUBSTR(HIRE_DATE,4,3) IN ('OCT','NOV','DEC');  // SUBSTR TOH BHAI OVER POWERED HAI RE!!!!!!!!!
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         2                                                                                                                                                                                              
+
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE SUBSTR(HIRE_DATE,4,3) =ANY ('OCT','NOV','DEC');
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         2                                                                                                                                                                                              
+
+SQL> SELECT COUNT(*) FROM EMPLOYEES WHERE SUBSTR(HIRE_DATE,4,3) =SOME ('OCT','NOV','DEC');
+
+  COUNT(*)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+         2                                                                                                                                                                                              
+
+SQL> SELECT COUNT(DISTINCT *) FROM DUAL;
+SELECT COUNT(DISTINCT *) FROM DUAL
+                      *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> SELECT COUNT(DISTINCT *) FROM EMPLOYEES;
+SELECT COUNT(DISTINCT *) FROM EMPLOYEES
+                      *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> SELECT MIN(SALRAY) , MAX(SALARY) FROM EMPLOYEES;
+SELECT MIN(SALRAY) , MAX(SALARY) FROM EMPLOYEES
+           *
+ERROR at line 1:
+ORA-00904: "SALRAY": invalid identifier 
+
+
+SQL> SELECT MIN(SALARY) , MAX(SALARY) FROM EMPLOYEES;
+
+MIN(SALARY) MAX(SALARY)                                                                                                                                                                                 
+----------- -----------                                                                                                                                                                                 
+       2500       24000                                                                                                                                                                                 
+
+SQL> REM DISPLAY DIFFERENCE OF HIGHEST AND LOWEST SALARY
+SQL> 
+SQL> SELECT MAX(SALARY) - MIN(SALARY) DIFFERENCE FROM EMPLOYEES;
+
+DIFFERENCE                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+     21500                                                                                                                                                                                              
+
+SQL> SELECT COUNT(DEPARTMENT_ID || EMAIL || HIRE_DATE) FROM EMPLOYEES;
+
+COUNT(DEPARTMENT_ID||EMAIL||HIRE_DATE)                                                                                                                                                                  
+--------------------------------------                                                                                                                                                                  
+                                    20                                                                                                                                                                  
+
+SQL> SELECT DEPARTMENT_ID || EMAIL || HIRE_DATE FROM EMPLOYEES;
+
+DEPARTMENT_ID||EMAIL||HIRE_DATE                                                                                                                                                                         
+--------------------------------------------------------------------                                                                                                                                    
+90SKING17-JUL-87                                                                                                                                                                                        
+90NKOCHHAR21-SEP-89                                                                                                                                                                                     
+90LDEHAAN13-JAN-93                                                                                                                                                                                      
+60AHUNOLD03-JAN-90                                                                                                                                                                                      
+60BERNST21-MAY-91                                                                                                                                                                                       
+60DLORENTZ07-FEB-99                                                                                                                                                                                     
+50KMOURGOS16-NOV-99                                                                                                                                                                                     
+50TRAJS17-OCT-95                                                                                                                                                                                        
+50CDAVIES29-JAN-97                                                                                                                                                                                      
+50RMATOS15-MAR-98                                                                                                                                                                                       
+50PVARGAS09-JUL-98                                                                                                                                                                                      
+80EZLOTKEY29-JAN-00                                                                                                                                                                                     
+80EABEL11-MAY-96                                                                                                                                                                                        
+80JTAYLOR24-MAR-98                                                                                                                                                                                      
+KGRANT24-MAY-99                                                                                                                                                                                         
+10JWAHLEN17-SEP-87                                                                                                                                                                                      
+20MHARTSTE17-FEB-96                                                                                                                                                                                     
+20PFAY17-AUG-97                                                                                                                                                                                         
+110SHIGGINS07-JUN-94                                                                                                                                                                                    
+110WGIETZ07-JUN-94                                                                                                                                                                                      
+
+20 rows selected.
+
+SQL> SELECT SUM(SALARY || COMMISSION_PCT) FROM EMPLOYEES;
+
+SUM(SALARY||COMMISSION_PCT)                                                                                                                                                                             
+---------------------------                                                                                                                                                                             
+                  175500.95                                                                                                                                                                             
+
+SQL> SELECT COUNT(SALARY || COMMISSION_PCT) FROM EMPLOYEES;
+
+COUNT(SALARY||COMMISSION_PCT)                                                                                                                                                                           
+-----------------------------                                                                                                                                                                           
+                           20                                                                                                                                                                           
+
+SQL> SELECT COUNT(SALARY - COMMISSION_PCT) FROM EMPLOYEES;
+
+COUNT(SALARY-COMMISSION_PCT)                                                                                                                                                                            
+----------------------------                                                                                                                                                                            
+                           4                                                                                                                                                                            
+
+SQL> SPOOL OFF

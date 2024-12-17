@@ -1,0 +1,670 @@
+SQL> 
+SQL> REM INNER JOIN IS REQUIRED IN BELOW CASES :           // MOST IMP BOLTE!!!!!!!!
+SQL> 
+SQL> REM 1 WHEN BOTH TABLES HAS MULTIPLE COMMON COLUMNS, BUT WE WANT TO COMPARE SOME OF THEM  // CAN BE DONE THROUGH USING AND ON SYNTAX
+SQL> 
+SQL> REM 2 WHEN BOTH TABLES HAS DIFFERENT COLUMN NAMES, BUT THEIR DATA TYPE AND VALUES ARE SIMILAR  // CAN BE DONE THROUGH ON SYNTAX ONLY
+SQL> 
+SQL> REM 3 WHEN BOTH TABLES HAS DIFFERENT COLUMN NAMES AND RELATED DATA STORED NOT SIMILAR DATA    // CAN BE DONE THROUGH ON SYNTAX ONLY
+SQL>  
+SQL> 
+SQL> REM 2 WHEN BOTH TABLES HAS DIFFERENT COLUMN NAMES, BUT THEIR DATA TYPE AND VALUES ARE SIMILAR
+SQL> 
+SQL> SELECT * FROM DEPARTMENTS;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+8 rows selected.
+
+SQL> SELECT * FROM LOCATIONS;
+
+LOCATION_ID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                                                                           
+----------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                                                                           
+       1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                                                                           
+       1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                                                                           
+       1700 2004 Charade Rd                          98199        Seattle                        Washington                US                                                                           
+       1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                                                                           
+       2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                                                                           
+
+SQL> ALTER TABLE LOCATIONS RENAME COLUMN LOCATION_ID TO LID;
+
+Table altered.
+
+SQL> SELECT * FROM DEPARTMENTS;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+8 rows selected.
+
+SQL> SELECT * FROM LOCATIONS;
+
+       LID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                                                                            
+---------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                                                                            
+      1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                                                                            
+      1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                                                                            
+      1700 2004 Charade Rd                          98199        Seattle                        Washington                US                                                                            
+      1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                                                                            
+      2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                                                                            
+
+SQL> SELECT DEPARTMENT_NAME , CITY
+  2  FROM DEPARTMENTS
+  3  NATURAL JOIN LOCATIONS;
+
+DEPARTMENT_NAME                CITY                                                                                                                                                                     
+------------------------------ ------------------------------                                                                                                                                           
+Administration                 Southlake                                                                                                                                                                
+Marketing                      Southlake                                                                                                                                                                
+Shiping                        Southlake                                                                                                                                                                
+IT                             Southlake                                                                                                                                                                
+Sales                          Southlake                                                                                                                                                                
+Executive                      Southlake                                                                                                                                                                
+Accounting                     Southlake                                                                                                                                                                
+Contracting                    Southlake                                                                                                                                                                
+Administration                 South San Francisco                                                                                                                                                      
+Marketing                      South San Francisco                                                                                                                                                      
+Shiping                        South San Francisco                                                                                                                                                      
+IT                             South San Francisco                                                                                                                                                      
+Sales                          South San Francisco                                                                                                                                                      
+Executive                      South San Francisco                                                                                                                                                      
+Accounting                     South San Francisco                                                                                                                                                      
+Contracting                    South San Francisco                                                                                                                                                      
+Administration                 Seattle                                                                                                                                                                  
+Marketing                      Seattle                                                                                                                                                                  
+Shiping                        Seattle                                                                                                                                                                  
+IT                             Seattle                                                                                                                                                                  
+Sales                          Seattle                                                                                                                                                                  
+
+DEPARTMENT_NAME                CITY                                                                                                                                                                     
+------------------------------ ------------------------------                                                                                                                                           
+Executive                      Seattle                                                                                                                                                                  
+Accounting                     Seattle                                                                                                                                                                  
+Contracting                    Seattle                                                                                                                                                                  
+Administration                 Toronto                                                                                                                                                                  
+Marketing                      Toronto                                                                                                                                                                  
+Shiping                        Toronto                                                                                                                                                                  
+IT                             Toronto                                                                                                                                                                  
+Sales                          Toronto                                                                                                                                                                  
+Executive                      Toronto                                                                                                                                                                  
+Accounting                     Toronto                                                                                                                                                                  
+Contracting                    Toronto                                                                                                                                                                  
+Administration                 Oxford                                                                                                                                                                   
+Marketing                      Oxford                                                                                                                                                                   
+Shiping                        Oxford                                                                                                                                                                   
+IT                             Oxford                                                                                                                                                                   
+Sales                          Oxford                                                                                                                                                                   
+Executive                      Oxford                                                                                                                                                                   
+Accounting                     Oxford                                                                                                                                                                   
+Contracting                    Oxford                                                                                                                                                                   
+
+40 rows selected.
+
+SQL> SELECT DEPARTMENT_NAME , CITY
+  2  FROM DEPARTMENTS
+  3  INNER JOIN LOCATIONS ON LID = LOCATION_ID;    // HERE QUALIFIATION IS NOT MANDATORY AS BOTH COLUMN NAMES ARE DIFFERENT  !!!!!      JODDDDDDDD!!!!!!!!
+
+DEPARTMENT_NAME                CITY                                                                                                                                                                     
+------------------------------ ------------------------------                                                                                                                                           
+Administration                 Seattle                                                                                                                                                                  
+Marketing                      Toronto                                                                                                                                                                  
+Shiping                        South San Francisco                                                                                                                                                      
+IT                             Southlake                                                                                                                                                                
+Sales                          Oxford                                                                                                                                                                   
+Executive                      Seattle                                                                                                                                                                  
+Accounting                     Seattle                                                                                                                                                                  
+Contracting                    Seattle                                                                                                                                                                  
+
+8 rows selected.
+
+SQL> REM 2 WHEN BOTH TABLES HAS DIFFERENT COLUMN NAMES, BUT THEIR DATA TYPE AND VALUES ARE SIMILAR (RESULT CAN BE ACHIEVED USING ONLY 'ON' CLAUSE)
+SQL> 
+SQL> REM 3 WHEN BOTH TABLES HAS DIFFERENT COLUMN NAMES AND RELATED DATA STORED NOT SIMILAR DATA (RESULT CAN BE ACHIEVED USING ONLY 'ON' CLAUSE)
+SQL> 
+SQL> SELECT FIRST_NAME , SALARY FROM EMPLOYEES;
+
+FIRST_NAME     SALARY                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+Steven          24000                                                                                                                                                                                   
+Neena           17000                                                                                                                                                                                   
+Lex             17000                                                                                                                                                                                   
+Alexander        9000                                                                                                                                                                                   
+Bruce            6000                                                                                                                                                                                   
+Diana            4200                                                                                                                                                                                   
+Kevin            5800                                                                                                                                                                                   
+Trenna           3500                                                                                                                                                                                   
+Curtis           3100                                                                                                                                                                                   
+Randall          2600                                                                                                                                                                                   
+Peter            2500                                                                                                                                                                                   
+Eleni           10500                                                                                                                                                                                   
+Ellen           11000                                                                                                                                                                                   
+Jonathon         8600                                                                                                                                                                                   
+Kimerely         7000                                                                                                                                                                                   
+Jennifer         4400                                                                                                                                                                                   
+Michael         13000                                                                                                                                                                                   
+Pat              6000                                                                                                                                                                                   
+Shelley         12000                                                                                                                                                                                   
+William          8300                                                                                                                                                                                   
+
+20 rows selected.
+
+SQL> SELECT * FROM JOB_GRADES;
+
+GRA LOWEST_SAL HIGHEST_SAL                                                                                                                                                                              
+--- ---------- -----------                                                                                                                                                                              
+A         1000        2999                                                                                                                                                                              
+B         3000        5999                                                                                                                                                                              
+C         6000        9999                                                                                                                                                                              
+D        10000       14999                                                                                                                                                                              
+E        15000       24999                                                                                                                                                                              
+F        25000       40000                                                                                                                                                                              
+
+6 rows selected.
+
+SQL> SELECT FIRST_NAME , SALARY , GRADE_LEVEL
+  2  FROM EMPLOYEES
+  3  JOIN JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL;
+
+FIRST_NAME     SALARY GRA                                                                                                                                                                               
+---------- ---------- ---                                                                                                                                                                               
+Peter            2500 A                                                                                                                                                                                 
+Randall          2600 A                                                                                                                                                                                 
+Curtis           3100 B                                                                                                                                                                                 
+Trenna           3500 B                                                                                                                                                                                 
+Diana            4200 B                                                                                                                                                                                 
+Jennifer         4400 B                                                                                                                                                                                 
+Kevin            5800 B                                                                                                                                                                                 
+Bruce            6000 C                                                                                                                                                                                 
+Pat              6000 C                                                                                                                                                                                 
+Kimerely         7000 C                                                                                                                                                                                 
+William          8300 C                                                                                                                                                                                 
+Jonathon         8600 C                                                                                                                                                                                 
+Alexander        9000 C                                                                                                                                                                                 
+Eleni           10500 D                                                                                                                                                                                 
+Ellen           11000 D                                                                                                                                                                                 
+Shelley         12000 D                                                                                                                                                                                 
+Michael         13000 D                                                                                                                                                                                 
+Neena           17000 E                                                                                                                                                                                 
+Lex             17000 E                                                                                                                                                                                 
+Steven          24000 E                                                                                                                                                                                 
+
+20 rows selected.
+
+SQL>REM DISPLAY GRADE LEVEL IN WHICH NO EMPLOYEES GET THE SALARY
+
+SQL> SELECT GRADE_LEVEL FROM EMPLOYEES
+     RIGHT JOIN JOB_GRADES ON SALARY BETWEEN LOWEST_SAL AND HIGHEST_SAL WHERE FIRST_NAME IS NULL;    //JODDD BOLTE!!!!!!!! OUTER JOIN O WOTTT!
+ 
+     GRADE_LEVEL
+------------------------
+         F
+
+
+SQL> SELECT * FROM LOCATIONS;
+
+       LID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                                                                            
+---------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                                                                            
+      1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                                                                            
+      1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                                                                            
+      1700 2004 Charade Rd                          98199        Seattle                        Washington                US                                                                            
+      1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                                                                            
+      2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                                                                            
+
+SQL> SELECT * FROM JOBS;
+
+JOB_ID     JOB_TITLE                           MIN_SALARY MAX_SALARY                                                                                                                                    
+---------- ----------------------------------- ---------- ----------                                                                                                                                    
+AD_PRES    President                                20000      40000                                                                                                                                    
+AD_VP      Administration Vice President            15000      30000                                                                                                                                    
+AD_ASST    Administration Assistant                  3000       6000                                                                                                                                    
+AC_MGR     Accounting Manager                        8200      16000                                                                                                                                    
+AC_ACCOUNT Public Accountant                         4200       9000                                                                                                                                    
+SA_MAN     Sales Manager                            10000      20000                                                                                                                                    
+SA_REP     Sales Representative                      6000      12000                                                                                                                                    
+ST_MAN     Stock Manager                             5500       8500                                                                                                                                    
+ST_CLERK   Stock Clerk                               2000       5000                                                                                                                                    
+IT_PROG    Programmer                                4000      10000                                                                                                                                    
+MK_MAN     Marketing Manager                         9000      15000                                                                                                                                    
+MK_REP     Marketing Representative                  4000       9000                                                                                                                                    
+
+12 rows selected.
+
+SQL> ALTER TABLE JOBS RENAME COLUMN JOB_ID TO JID;
+
+Table altered.
+
+SQL> SELECT FIRST_NAME , JOB_ID FROM EMPLOYEES;
+
+FIRST_NAME JOB_ID                                                                                                                                                                                       
+---------- ----------                                                                                                                                                                                   
+Steven     AD_PRES                                                                                                                                                                                      
+Neena      AD_VP                                                                                                                                                                                        
+Lex        AD_VP                                                                                                                                                                                        
+Alexander  IT_PROG                                                                                                                                                                                      
+Bruce      IT_PROG                                                                                                                                                                                      
+Diana      IT_PROG                                                                                                                                                                                      
+Kevin      ST_MAN                                                                                                                                                                                       
+Trenna     ST_CLERK                                                                                                                                                                                     
+Curtis     ST_CLERK                                                                                                                                                                                     
+Randall    ST_CLERK                                                                                                                                                                                     
+Peter      ST_CLERK                                                                                                                                                                                     
+Eleni      SA_MAN                                                                                                                                                                                       
+Ellen      SA_REP                                                                                                                                                                                       
+Jonathon   SA_REP                                                                                                                                                                                       
+Kimerely   SA_REP                                                                                                                                                                                       
+Jennifer   AD_ASST                                                                                                                                                                                      
+Michael    MK_MAN                                                                                                                                                                                       
+Pat        MK_REP                                                                                                                                                                                       
+Shelley    AC_MGR                                                                                                                                                                                       
+William    AC_ACCOUNT                                                                                                                                                                                   
+
+20 rows selected.
+
+SQL> SELECT * FROM JOBS;
+
+JID        JOB_TITLE                           MIN_SALARY MAX_SALARY                                                                                                                                    
+---------- ----------------------------------- ---------- ----------                                                                                                                                    
+AD_PRES    President                                20000      40000                                                                                                                                    
+AD_VP      Administration Vice President            15000      30000                                                                                                                                    
+AD_ASST    Administration Assistant                  3000       6000                                                                                                                                    
+AC_MGR     Accounting Manager                        8200      16000                                                                                                                                    
+AC_ACCOUNT Public Accountant                         4200       9000                                                                                                                                    
+SA_MAN     Sales Manager                            10000      20000                                                                                                                                    
+SA_REP     Sales Representative                      6000      12000                                                                                                                                    
+ST_MAN     Stock Manager                             5500       8500                                                                                                                                    
+ST_CLERK   Stock Clerk                               2000       5000                                                                                                                                    
+IT_PROG    Programmer                                4000      10000                                                                                                                                    
+MK_MAN     Marketing Manager                         9000      15000                                                                                                                                    
+MK_REP     Marketing Representative                  4000       9000                                                                                                                                    
+
+12 rows selected.
+
+SQL> SELECT FIRST_NAME,JOB_ID,JOB_TITLE FROM EMPLOYEES JOIN JOBS  ON JOB_ID=JID;
+
+FIRST_NAME JOB_ID     JOB_TITLE                                                                                                                                                                         
+---------- ---------- -----------------------------------                                                                                                                                               
+William    AC_ACCOUNT Public Accountant                                                                                                                                                                 
+Shelley    AC_MGR     Accounting Manager                                                                                                                                                                
+Jennifer   AD_ASST    Administration Assistant                                                                                                                                                          
+Steven     AD_PRES    President                                                                                                                                                                         
+Lex        AD_VP      Administration Vice President                                                                                                                                                     
+Neena      AD_VP      Administration Vice President                                                                                                                                                     
+Alexander  IT_PROG    Programmer                                                                                                                                                                        
+Bruce      IT_PROG    Programmer                                                                                                                                                                        
+Diana      IT_PROG    Programmer                                                                                                                                                                        
+Michael    MK_MAN     Marketing Manager                                                                                                                                                                 
+Pat        MK_REP     Marketing Representative                                                                                                                                                          
+Eleni      SA_MAN     Sales Manager                                                                                                                                                                     
+Ellen      SA_REP     Sales Representative                                                                                                                                                              
+Kimerely   SA_REP     Sales Representative                                                                                                                                                              
+Jonathon   SA_REP     Sales Representative                                                                                                                                                              
+Randall    ST_CLERK   Stock Clerk                                                                                                                                                                       
+Curtis     ST_CLERK   Stock Clerk                                                                                                                                                                       
+Trenna     ST_CLERK   Stock Clerk                                                                                                                                                                       
+Peter      ST_CLERK   Stock Clerk                                                                                                                                                                       
+Kevin      ST_MAN     Stock Manager                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> REM E D L C R
+SQL> 
+SQL> REM FIRST_NAME , DEPARTMENT_NAME , CITY
+SQL> 
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY         // IN THIS RESULT OF CROSS JOIN IS DEVELOPED WHEN NATURAL JOIN IS USED AT END.. IF WE PROJECT LOCATION_ID COLUMN PROBLEM WILL GET                                         																       SOLVED!!!!
+  2  FROM EMPLOYEES
+  3  INNER JOIN DEPARTMENTS USING (DEPARTMENT_ID)
+  4  NATURAL JOIN LOCATIONS;
+
+FIRST_NAME DEPARTMENT_NAME                CITY                                                                                                                                                          
+---------- ------------------------------ ------------------------------                                                                                                                                
+Steven     Executive                      Southlake                                                                                                                                                     
+Steven     Executive                      South San Francisco                                                                                                                                           
+Steven     Executive                      Seattle                                                                                                                                                       
+Steven     Executive                      Toronto                                                                                                                                                       
+Steven     Executive                      Oxford                                                                                                                                                        
+Neena      Executive                      Southlake                                                                                                                                                     
+Neena      Executive                      South San Francisco                                                                                                                                           
+Neena      Executive                      Seattle                                                                                                                                                       
+Neena      Executive                      Toronto                                                                                                                                                       
+Neena      Executive                      Oxford                                                                                                                                                        
+Lex        Executive                      Southlake                                                                                                                                                     
+Lex        Executive                      South San Francisco                                                                                                                                           
+Lex        Executive                      Seattle                                                                                                                                                       
+Lex        Executive                      Toronto                                                                                                                                                       
+Lex        Executive                      Oxford                                                                                                                                                        
+Alexander  IT                             Southlake                                                                                                                                                     
+Alexander  IT                             South San Francisco                                                                                                                                           
+Alexander  IT                             Seattle                                                                                                                                                       
+Alexander  IT                             Toronto                                                                                                                                                       
+Alexander  IT                             Oxford                                                                                                                                                        
+Bruce      IT                             Southlake                                                                                                                                                     
+
+FIRST_NAME DEPARTMENT_NAME                CITY                                                                                                                                                          
+---------- ------------------------------ ------------------------------                                                                                                                                
+Bruce      IT                             South San Francisco                                                                                                                                           
+Bruce      IT                             Seattle                                                                                                                                                       
+Bruce      IT                             Toronto                                                                                                                                                       
+Bruce      IT                             Oxford                                                                                                                                                        
+Diana      IT                             Southlake                                                                                                                                                     
+Diana      IT                             South San Francisco                                                                                                                                           
+Diana      IT                             Seattle                                                                                                                                                       
+Diana      IT                             Toronto                                                                                                                                                       
+Diana      IT                             Oxford                                                                                                                                                        
+Kevin      Shiping                        Southlake                                                                                                                                                     
+Kevin      Shiping                        South San Francisco                                                                                                                                           
+Kevin      Shiping                        Seattle                                                                                                                                                       
+Kevin      Shiping                        Toronto                                                                                                                                                       
+Kevin      Shiping                        Oxford                                                                                                                                                        
+Trenna     Shiping                        Southlake                                                                                                                                                     
+Trenna     Shiping                        South San Francisco                                                                                                                                           
+Trenna     Shiping                        Seattle                                                                                                                                                       
+Trenna     Shiping                        Toronto                                                                                                                                                       
+Trenna     Shiping                        Oxford                                                                                                                                                        
+Curtis     Shiping                        Southlake                                                                                                                                                     
+Curtis     Shiping                        South San Francisco                                                                                                                                           
+
+FIRST_NAME DEPARTMENT_NAME                CITY                                                                                                                                                          
+---------- ------------------------------ ------------------------------                                                                                                                                
+Curtis     Shiping                        Seattle                                                                                                                                                       
+Curtis     Shiping                        Toronto                                                                                                                                                       
+Curtis     Shiping                        Oxford                                                                                                                                                        
+Randall    Shiping                        Southlake                                                                                                                                                     
+Randall    Shiping                        South San Francisco                                                                                                                                           
+Randall    Shiping                        Seattle                                                                                                                                                       
+Randall    Shiping                        Toronto                                                                                                                                                       
+Randall    Shiping                        Oxford                                                                                                                                                        
+Peter      Shiping                        Southlake                                                                                                                                                     
+Peter      Shiping                        South San Francisco                                                                                                                                           
+Peter      Shiping                        Seattle                                                                                                                                                       
+Peter      Shiping                        Toronto                                                                                                                                                       
+Peter      Shiping                        Oxford                                                                                                                                                        
+Eleni      Sales                          Southlake                                                                                                                                                     
+Eleni      Sales                          South San Francisco                                                                                                                                           
+Eleni      Sales                          Seattle                                                                                                                                                       
+Eleni      Sales                          Toronto                                                                                                                                                       
+Eleni      Sales                          Oxford                                                                                                                                                        
+Ellen      Sales                          Southlake                                                                                                                                                     
+Ellen      Sales                          South San Francisco                                                                                                                                           
+Ellen      Sales                          Seattle                                                                                                                                                       
+
+FIRST_NAME DEPARTMENT_NAME                CITY                                                                                                                                                          
+---------- ------------------------------ ------------------------------                                                                                                                                
+Ellen      Sales                          Toronto                                                                                                                                                       
+Ellen      Sales                          Oxford                                                                                                                                                        
+Jonathon   Sales                          Southlake                                                                                                                                                     
+Jonathon   Sales                          South San Francisco                                                                                                                                           
+Jonathon   Sales                          Seattle                                                                                                                                                       
+Jonathon   Sales                          Toronto                                                                                                                                                       
+Jonathon   Sales                          Oxford                                                                                                                                                        
+Jennifer   Administration                 Southlake                                                                                                                                                     
+Jennifer   Administration                 South San Francisco                                                                                                                                           
+Jennifer   Administration                 Seattle                                                                                                                                                       
+Jennifer   Administration                 Toronto                                                                                                                                                       
+Jennifer   Administration                 Oxford                                                                                                                                                        
+Michael    Marketing                      Southlake                                                                                                                                                     
+Michael    Marketing                      South San Francisco                                                                                                                                           
+Michael    Marketing                      Seattle                                                                                                                                                       
+Michael    Marketing                      Toronto                                                                                                                                                       
+Michael    Marketing                      Oxford                                                                                                                                                        
+Pat        Marketing                      Southlake                                                                                                                                                     
+Pat        Marketing                      South San Francisco                                                                                                                                           
+Pat        Marketing                      Seattle                                                                                                                                                       
+Pat        Marketing                      Toronto                                                                                                                                                       
+
+FIRST_NAME DEPARTMENT_NAME                CITY                                                                                                                                                          
+---------- ------------------------------ ------------------------------                                                                                                                                
+Pat        Marketing                      Oxford                                                                                                                                                        
+Shelley    Accounting                     Southlake                                                                                                                                                     
+Shelley    Accounting                     South San Francisco                                                                                                                                           
+Shelley    Accounting                     Seattle                                                                                                                                                       
+Shelley    Accounting                     Toronto                                                                                                                                                       
+Shelley    Accounting                     Oxford                                                                                                                                                        
+William    Accounting                     Southlake                                                                                                                                                     
+William    Accounting                     South San Francisco                                                                                                                                           
+William    Accounting                     Seattle                                                                                                                                                       
+William    Accounting                     Toronto                                                                                                                                                       
+William    Accounting                     Oxford                                                                                                                                                        
+
+95 rows selected.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME
+  2  FROM EMPLOYEES
+  3  INNER JOIN DEPARTMENTS USING (DEPARTMENT_ID);
+
+FIRST_NAME DEPARTMENT_NAME                                                                                                                                                                              
+---------- ------------------------------                                                                                                                                                               
+Jennifer   Administration                                                                                                                                                                               
+Michael    Marketing                                                                                                                                                                                    
+Pat        Marketing                                                                                                                                                                                    
+Kevin      Shiping                                                                                                                                                                                      
+Peter      Shiping                                                                                                                                                                                      
+Randall    Shiping                                                                                                                                                                                      
+Curtis     Shiping                                                                                                                                                                                      
+Trenna     Shiping                                                                                                                                                                                      
+Diana      IT                                                                                                                                                                                           
+Bruce      IT                                                                                                                                                                                           
+Alexander  IT                                                                                                                                                                                           
+Ellen      Sales                                                                                                                                                                                        
+Eleni      Sales                                                                                                                                                                                        
+Jonathon   Sales                                                                                                                                                                                        
+Lex        Executive                                                                                                                                                                                    
+Steven     Executive                                                                                                                                                                                    
+Neena      Executive                                                                                                                                                                                    
+William    Accounting                                                                                                                                                                                   
+Shelley    Accounting                                                                                                                                                                                   
+
+19 rows selected.
+
+SQL> SELECT * FROM LOCATIONS;
+
+       LID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                                                                            
+---------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                                                                            
+      1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                                                                            
+      1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                                                                            
+      1700 2004 Charade Rd                          98199        Seattle                        Washington                US                                                                            
+      1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                                                                            
+      2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                                                                            
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY , LOCATION_ID
+  2  
+SQL> 
+SQL> 
+SQL> ALTER TABLE LOCATIONS RENAME COLUMN LID TO LOCATION_ID;
+
+Table altered.
+
+SQL> ALTER TABLE JOBS RENAME JID TO JOB_ID;
+ALTER TABLE JOBS RENAME JID TO JOB_ID
+                        *
+ERROR at line 1:
+ORA-14155: missing PARTITION, PARTITIONS, SUBPARTITION, or SUBPARTITIONS keyword 
+
+
+SQL> ALTER TABLE JOBS RENAME COLUMN JID TO JOB_ID;
+
+Table altered.
+
+SQL> SELECT FIRST_NAME , DEPARTMENT_NAME , CITY , LOCATION_ID      // IF LOCATION_ID IS PROJECTED THAN THE RESULT WILL COME!!
+  2  FROM EMPLOYEES
+  3  INNER JOIN DEPARTMENTS USING (DEPARTMENT_ID)
+  4  NATURAL JOIN LOCATIONS;
+
+FIRST_NAME DEPARTMENT_NAME                CITY                           LOCATION_ID                                                                                                                    
+---------- ------------------------------ ------------------------------ -----------                                                                                                                    
+Diana      IT                             Southlake                             1400                                                                                                                    
+Bruce      IT                             Southlake                             1400                                                                                                                    
+Alexander  IT                             Southlake                             1400                                                                                                                    
+Kevin      Shiping                        South San Francisco                   1500                                                                                                                    
+Peter      Shiping                        South San Francisco                   1500                                                                                                                    
+Randall    Shiping                        South San Francisco                   1500                                                                                                                    
+Curtis     Shiping                        South San Francisco                   1500                                                                                                                    
+Trenna     Shiping                        South San Francisco                   1500                                                                                                                    
+Jennifer   Administration                 Seattle                               1700                                                                                                                    
+Lex        Executive                      Seattle                               1700                                                                                                                    
+Steven     Executive                      Seattle                               1700                                                                                                                    
+Neena      Executive                      Seattle                               1700                                                                                                                    
+William    Accounting                     Seattle                               1700                                                                                                                    
+Shelley    Accounting                     Seattle                               1700                                                                                                                    
+Michael    Marketing                      Toronto                               1800                                                                                                                    
+Pat        Marketing                      Toronto                               1800                                                                                                                    
+Ellen      Sales                          Oxford                                2500                                                                                                                    
+Eleni      Sales                          Oxford                                2500                                                                                                                    
+Jonathon   Sales                          Oxford                                2500                                                                                                                    
+
+19 rows selected.
+
+SQL> REM FIRST_NAME , DEPARTMENT_NAME , COUNTRY_NAME  // DISPLAY ALL THE COMMON COLUMNS IN ORDER TO GET THE RESULT WHEN WE
+SQL> 													//USE NATURAL JOIN WITH INNER JOIN!!!!!! OP!!!
+SQL> SELECT FIRST_NAME,DEPARTMENT_NAME,COUNTRY_NAME,LOCATION_ID,COUNTRY_ID FROM EMPLOYEES JOIN DEPARTMENTS USING (DEPARTMENT_ID) NATURAL JOIN LOCATIONS NATURAL JOIN COUNTRIES;
+
+FIRST_NAME DEPARTMENT_NAME                COUNTRY_NAME                             LOCATION_ID CO                                                                                                       
+---------- ------------------------------ ---------------------------------------- ----------- --                                                                                                       
+Michael    Marketing                      Canada                                          1800 CA                                                                                                       
+Pat        Marketing                      Canada                                          1800 CA                                                                                                       
+Ellen      Sales                          United Kingdom                                  2500 UK                                                                                                       
+Eleni      Sales                          United Kingdom                                  2500 UK                                                                                                       
+Jonathon   Sales                          United Kingdom                                  2500 UK                                                                                                       
+Diana      IT                             United States of America                        1400 US                                                                                                       
+Bruce      IT                             United States of America                        1400 US                                                                                                       
+Alexander  IT                             United States of America                        1400 US                                                                                                       
+Kevin      Shiping                        United States of America                        1500 US                                                                                                       
+Peter      Shiping                        United States of America                        1500 US                                                                                                       
+Randall    Shiping                        United States of America                        1500 US                                                                                                       
+Curtis     Shiping                        United States of America                        1500 US                                                                                                       
+Trenna     Shiping                        United States of America                        1500 US                                                                                                       
+Jennifer   Administration                 United States of America                        1700 US                                                                                                       
+Lex        Executive                      United States of America                        1700 US                                                                                                       
+Steven     Executive                      United States of America                        1700 US                                                                                                       
+Neena      Executive                      United States of America                        1700 US                                                                                                       
+William    Accounting                     United States of America                        1700 US                                                                                                       
+Shelley    Accounting                     United States of America                        1700 US                                                                                                       
+
+19 rows selected.
+
+SQL> SELECT FIRST_NAME,DEPARTMENT_NAME,COUNTRY_NAME,LOCATION_ID,COUNTRY_ID FROM EMPLOYEES INNER JOIN DEPARTMENTS USING(DEPARTMENT_ID) NATURAL JOIN LOCATIONS NATURAL JOIN COUNTRIES;
+
+FIRST_NAME DEPARTMENT_NAME                COUNTRY_NAME                             LOCATION_ID CO                                                                                                       
+---------- ------------------------------ ---------------------------------------- ----------- --                                                                                                       
+Michael    Marketing                      Canada                                          1800 CA                                                                                                       
+Pat        Marketing                      Canada                                          1800 CA                                                                                                       
+Ellen      Sales                          United Kingdom                                  2500 UK                                                                                                       
+Eleni      Sales                          United Kingdom                                  2500 UK                                                                                                       
+Jonathon   Sales                          United Kingdom                                  2500 UK                                                                                                       
+Diana      IT                             United States of America                        1400 US                                                                                                       
+Bruce      IT                             United States of America                        1400 US                                                                                                       
+Alexander  IT                             United States of America                        1400 US                                                                                                       
+Kevin      Shiping                        United States of America                        1500 US                                                                                                       
+Peter      Shiping                        United States of America                        1500 US                                                                                                       
+Randall    Shiping                        United States of America                        1500 US                                                                                                       
+Curtis     Shiping                        United States of America                        1500 US                                                                                                       
+Trenna     Shiping                        United States of America                        1500 US                                                                                                       
+Jennifer   Administration                 United States of America                        1700 US                                                                                                       
+Lex        Executive                      United States of America                        1700 US                                                                                                       
+Steven     Executive                      United States of America                        1700 US                                                                                                       
+Neena      Executive                      United States of America                        1700 US                                                                                                       
+William    Accounting                     United States of America                        1700 US                                                                                                       
+Shelley    Accounting                     United States of America                        1700 US                                                                                                       
+
+19 rows selected.
+
+SQL> REM DEVELOP ABOVE RESULT USING 'USING' CLAUSE           // DONE BE OR WOTTT!!!!!!!
+SQL> 
+SQL> REM DEVELOP ABOVE RESULT USING 'ON' CLAUSE
+SQL> 
+SQL> REM DEVELOP ABOVE RESULT USING 'USING' AND 'ON' CLAUSE
+SQL> 
+SQL> SELECT FIRST_NAME,DEPARTMENT_NAME,COUNTRY_NAME FROM EMPLOYEES JOIN DEPARTMENTS USING (DEPARTMENT_ID) JOIN LOCATIONS USING(LOCATION_ID) JOIN COUNTRIES USING (COUNTRY_ID);
+
+FIRST_NAME DEPARTMENT_NAME                COUNTRY_NAME                                                                                                                                                  
+---------- ------------------------------ ----------------------------------------                                                                                                                      
+Michael    Marketing                      Canada                                                                                                                                                        
+Pat        Marketing                      Canada                                                                                                                                                        
+Ellen      Sales                          United Kingdom                                                                                                                                                
+Eleni      Sales                          United Kingdom                                                                                                                                                
+Jonathon   Sales                          United Kingdom                                                                                                                                                
+Diana      IT                             United States of America                                                                                                                                      
+Bruce      IT                             United States of America                                                                                                                                      
+Alexander  IT                             United States of America                                                                                                                                      
+Kevin      Shiping                        United States of America                                                                                                                                      
+Peter      Shiping                        United States of America                                                                                                                                      
+Randall    Shiping                        United States of America                                                                                                                                      
+Curtis     Shiping                        United States of America                                                                                                                                      
+Trenna     Shiping                        United States of America                                                                                                                                      
+Jennifer   Administration                 United States of America                                                                                                                                      
+Lex        Executive                      United States of America                                                                                                                                      
+Steven     Executive                      United States of America                                                                                                                                      
+Neena      Executive                      United States of America                                                                                                                                      
+William    Accounting                     United States of America                                                                                                                                      
+Shelley    Accounting                     United States of America                                                                                                                                      
+
+19 rows selected.
+
+SQL> SELECT FIRST_NAME,DEPARTMENT_NAME,COUNTRY_NAME FROM EMPLOYEES JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID JOIN LOCATIONS ON DEPARTMENTS.LOCATION_ID=LOCATIONS.LOCATION_ID JOIN COUNTRIES ON  LOCATIONS.COUNTRY_ID=COUNTRIES.COUNTRY_ID;
+
+FIRST_NAME DEPARTMENT_NAME                COUNTRY_NAME                                                                                                                                                  
+---------- ------------------------------ ----------------------------------------                                                                                                                      
+Michael    Marketing                      Canada                                                                                                                                                        
+Pat        Marketing                      Canada                                                                                                                                                        
+Ellen      Sales                          United Kingdom                                                                                                                                                
+Eleni      Sales                          United Kingdom                                                                                                                                                
+Jonathon   Sales                          United Kingdom                                                                                                                                                
+Diana      IT                             United States of America                                                                                                                                      
+Bruce      IT                             United States of America                                                                                                                                      
+Alexander  IT                             United States of America                                                                                                                                      
+Kevin      Shiping                        United States of America                                                                                                                                      
+Peter      Shiping                        United States of America                                                                                                                                      
+Randall    Shiping                        United States of America                                                                                                                                      
+Curtis     Shiping                        United States of America                                                                                                                                      
+Trenna     Shiping                        United States of America                                                                                                                                      
+Jennifer   Administration                 United States of America                                                                                                                                      
+Lex        Executive                      United States of America                                                                                                                                      
+Steven     Executive                      United States of America                                                                                                                                      
+Neena      Executive                      United States of America                                                                                                                                      
+William    Accounting                     United States of America                                                                                                                                      
+Shelley    Accounting                     United States of America                                                                                                                                      
+
+19 rows selected.
+
+SQL> SELECT FIRST_NAME,DEPARTMENT_NAME,COUNTRY_NAME FROM EMPLOYEES JOIN DEPARTMENTS ON EMPLOYEES.DEPARTMENT_ID=DEPARTMENTS.DEPARTMENT_ID JOIN LOCATIONS USING(LOCATION_ID) JOIN COUNTRIES USING (COUNTRY_ID);
+
+FIRST_NAME DEPARTMENT_NAME                COUNTRY_NAME                                                                                                                                                  
+---------- ------------------------------ ----------------------------------------                                                                                                                      
+Michael    Marketing                      Canada                                                                                                                                                        
+Pat        Marketing                      Canada                                                                                                                                                        
+Ellen      Sales                          United Kingdom                                                                                                                                                
+Eleni      Sales                          United Kingdom                                                                                                                                                
+Jonathon   Sales                          United Kingdom                                                                                                                                                
+Diana      IT                             United States of America                                                                                                                                      
+Bruce      IT                             United States of America                                                                                                                                      
+Alexander  IT                             United States of America                                                                                                                                      
+Kevin      Shiping                        United States of America                                                                                                                                      
+Peter      Shiping                        United States of America                                                                                                                                      
+Randall    Shiping                        United States of America                                                                                                                                      
+Curtis     Shiping                        United States of America                                                                                                                                      
+Trenna     Shiping                        United States of America                                                                                                                                      
+Jennifer   Administration                 United States of America                                                                                                                                      
+Lex        Executive                      United States of America                                                                                                                                      
+Steven     Executive                      United States of America                                                                                                                                      
+Neena      Executive                      United States of America                                                                                                                                      
+William    Accounting                     United States of America                                                                                                                                      
+Shelley    Accounting                     United States of America                                                                                                                                      
+
+19 rows selected.
+
+SQL> SPOOL OFF

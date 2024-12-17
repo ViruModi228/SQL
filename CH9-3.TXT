@@ -1,0 +1,121 @@
+SQL> 
+SQL> CL SCR
+
+SQL> REM READ CONSISTENCY , CONCURRENCY , LOCKING , DEAD LOCK          // IMPORTANT THING IN CASE OF DATA HANDLING IN INDUSTRY!!!!!!!!!!!
+SQL> 
+SQL> SHOW USER
+USER is "SCOTT"
+SQL> GRANT ALL ON EMPLOYEES TO HR;
+
+Grant succeeded.
+
+SQL> GRANT ALL ON REGIONS TO HR;
+
+Grant succeeded.
+
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> CREATE TABLE R1 AS SELECT * FROM REGIONS;
+CREATE TABLE R1 AS SELECT * FROM REGIONS
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> DROP TABLE R1;
+
+Table dropped.
+
+SQL> CREATE TABLE R1 AS SELECT * FROM REGIONS;
+
+Table created.
+
+SQL> GRANT ALL ON R1 TO HR;
+
+Grant succeeded.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> UPDATE R1 SET REGION_NAME =UPPER(REGION_NAME) WHERE REGION_ID IN (1,2);
+
+2 rows updated.                         // COMMIT NAHI KARA HAI ABHI TK
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 EUROPE                                                                                                                                                                                       
+         2 AMERICAS                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 EUROPE                                                                                                                                                                                       
+         2 AMERICAS                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> UPDATE R1 SET REGION_NAME =UPPER(REGION_NAME) WHERE REGION_ID IN (3);
+UPDATE R1 SET REGION_NAME =UPPER(REGION_NAME) WHERE REGION_ID IN (3)
+                                 *
+ERROR at line 1:
+ORA-00060: deadlock detected while waiting for resource          // DUSRE KISI USER NE DML STATEMENT LIKHA HONGA AND COMMIT NAHI KIYA TOH DEADLOCK DETECT HOGYA HAI!!!
+
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 EUROPE                                                                                                                                                                                       
+         2 AMERICAS                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 EUROPE                                                                                                                                                                                       
+         2 AMERICAS                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> UPDATE R1 SET REGION_NAME =UPPER(REGION_NAME) WHERE REGION_ID IN (3);
+
+1 row updated.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 europe                                                                                                                                                                                       
+         2 AMERICAS                                                                                                                                                                                     
+         3 ASIA                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SPOOL OFF

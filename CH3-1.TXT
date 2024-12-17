@@ -1,0 +1,594 @@
+SQL> 
+SQL> REM FUNCTIONS
+SQL> 
+SQL> SELECT POWER(5,2) FROM DUAL;
+
+POWER(5,2)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        25                                                                                                                                                                                              
+
+SQL> REM TYPES OF FUNCTIONS : 1 SINGLE ROW 2 MULTI ROW                               // TWO TYPES OF FUNCTIONS I.E SINGLE ROW AND MULTI ROW
+SQL> 
+SQL> REM SINGLE ROW/SCALAR FUNCTIONS
+SQL> 
+SQL> REM MULTI ROW/GROUP/AGGREGATE/SUMMARY FUNCTION     Chapter 5 Bolte Re!
+SQL> 
+SQL> REM DUAL IS A DUMMY TABLE        // IMPORTANT
+SQL> 
+SQL> REM DUAL HAS SINGLE ROW AND SINGLE COLUMN
+SQL> 
+SQL> REM DUAL TABLE IS GENERALLY USED TO DISPLAY SOMETHING WHICH IS NOT STORED IN ANY TABLE
+SQL> 
+SQL> 
+SQL> REM TYPES OF SINGLE ROW FUNCTIONS : 1 CHARACTER 2 NUMBER 3 DATE 4 CONVERSION 5 GENERAL 6 TIMESTAMP AND INTERVAL   // GENERAL AND CONVERSION IN CHAPTER 4
+SQL> 
+SQL> REM CHAPTER 3 : 1 CHARACTER 2 NUMBER 3 DATE
+SQL> 
+SQL> REM CHAPTER 4 : 4 CONVERSION 5 GENERAL
+SQL> 
+SQL> REM CHAPTER 5 : MULTI ROW/SUMMARY/GROUP/AGGREGATE
+SQL> 
+SQL> REM CHAPTER 19 : 6 TIMESTAMP AND INTERVAL
+SQL> 
+SQL> REM CHARACTER (14) , NUMBER (7) , DATE (8) , CONVERSION (3) , GENERAL (7) , TIMESTAMP AND INTERVAL (11)
+SQL> 
+SQL> REM 50 SINGLE ROW FUNCTIONS
+SQL> 
+SQL> REM 5 MULTI ROW FUNCTIONS
+SQL> 
+SQL> REM TYPES OF CHARACTER FUNCTIONS : 1 CASE MANIPULATION 2 CHARACTER MANIPULATION      
+SQL> 
+SQL> REM MANIPULATION : ANY TYPE OF CHANGES
+SQL> 
+SQL> REM LIST OF CASE MANIPULATION FUNCTIONS : 1 UPPER 2 LOWER 3 INITCAP (INITIAL CAPITAL/PROPER CASE/CAMEL CASE) // CASE 
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT FIRST_NAME , UPPER(FIRST_NAME) FROM EMPLOYEES;
+
+FIRST_NAME UPPER(FIRS                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+Steven     STEVEN                                                                                                                                                                                       
+Neena      NEENA                                                                                                                                                                                        
+Lex        LEX                                                                                                                                                                                          
+Alexander  ALEXANDER                                                                                                                                                                                    
+Bruce      BRUCE                                                                                                                                                                                        
+Diana      DIANA                                                                                                                                                                                        
+Kevin      KEVIN                                                                                                                                                                                        
+Trenna     TRENNA                                                                                                                                                                                       
+Curtis     CURTIS                                                                                                                                                                                       
+Randall    RANDALL                                                                                                                                                                                      
+Peter      PETER                                                                                                                                                                                        
+Eleni      ELENI                                                                                                                                                                                        
+Ellen      ELLEN                                                                                                                                                                                        
+Jonathon   JONATHON                                                                                                                                                                                     
+Kimerely   KIMERELY                                                                                                                                                                                     
+Jennifer   JENNIFER                                                                                                                                                                                     
+Michael    MICHAEL                                                                                                                                                                                      
+Pat        PAT                                                                                                                                                                                          
+Shelley    SHELLEY                                                                                                                                                                                      
+William    WILLIAM                                                                                                                                                                                      
+
+20 rows selected.
+
+SQL> SELECT EMAIL , LOWER(EMAIL) FROM EMPLOYEES;
+
+EMAIL      LOWER(EMAI                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+SKING      sking                                                                                                                                                                                        
+NKOCHHAR   nkochhar                                                                                                                                                                                     
+LDEHAAN    ldehaan                                                                                                                                                                                      
+AHUNOLD    ahunold                                                                                                                                                                                      
+BERNST     bernst                                                                                                                                                                                       
+DLORENTZ   dlorentz                                                                                                                                                                                     
+KMOURGOS   kmourgos                                                                                                                                                                                     
+TRAJS      trajs                                                                                                                                                                                        
+CDAVIES    cdavies                                                                                                                                                                                      
+RMATOS     rmatos                                                                                                                                                                                       
+PVARGAS    pvargas                                                                                                                                                                                      
+EZLOTKEY   ezlotkey                                                                                                                                                                                     
+EABEL      eabel                                                                                                                                                                                        
+JTAYLOR    jtaylor                                                                                                                                                                                      
+KGRANT     kgrant                                                                                                                                                                                       
+JWAHLEN    jwahlen                                                                                                                                                                                      
+MHARTSTE   mhartste                                                                                                                                                                                     
+PFAY       pfay                                                                                                                                                                                         
+SHIGGINS   shiggins                                                                                                                                                                                     
+WGIETZ     wgietz                                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> SELECT EMAIL , LOWER(EMAIL) EMAIL FROM EMPLOYEES;
+
+EMAIL      EMAIL                                                                                                                                                                                        
+---------- ----------                                                                                                                                                                                   
+SKING      sking                                                                                                                                                                                        
+NKOCHHAR   nkochhar                                                                                                                                                                                     
+LDEHAAN    ldehaan                                                                                                                                                                                      
+AHUNOLD    ahunold                                                                                                                                                                                      
+BERNST     bernst                                                                                                                                                                                       
+DLORENTZ   dlorentz                                                                                                                                                                                     
+KMOURGOS   kmourgos                                                                                                                                                                                     
+TRAJS      trajs                                                                                                                                                                                        
+CDAVIES    cdavies                                                                                                                                                                                      
+RMATOS     rmatos                                                                                                                                                                                       
+PVARGAS    pvargas                                                                                                                                                                                      
+EZLOTKEY   ezlotkey                                                                                                                                                                                     
+EABEL      eabel                                                                                                                                                                                        
+JTAYLOR    jtaylor                                                                                                                                                                                      
+KGRANT     kgrant                                                                                                                                                                                       
+JWAHLEN    jwahlen                                                                                                                                                                                      
+MHARTSTE   mhartste                                                                                                                                                                                     
+PFAY       pfay                                                                                                                                                                                         
+SHIGGINS   shiggins                                                                                                                                                                                     
+WGIETZ     wgietz                                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> SELECT EMAIL , INITCAP(EMAIL) FROM EMPLOYEES;
+
+EMAIL      INITCAP(EM                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+SKING      Sking                                                                                                                                                                                        
+NKOCHHAR   Nkochhar                                                                                                                                                                                     
+LDEHAAN    Ldehaan                                                                                                                                                                                      
+AHUNOLD    Ahunold                                                                                                                                                                                      
+BERNST     Bernst                                                                                                                                                                                       
+DLORENTZ   Dlorentz                                                                                                                                                                                     
+KMOURGOS   Kmourgos                                                                                                                                                                                     
+TRAJS      Trajs                                                                                                                                                                                        
+CDAVIES    Cdavies                                                                                                                                                                                      
+RMATOS     Rmatos                                                                                                                                                                                       
+PVARGAS    Pvargas                                                                                                                                                                                      
+EZLOTKEY   Ezlotkey                                                                                                                                                                                     
+EABEL      Eabel                                                                                                                                                                                        
+JTAYLOR    Jtaylor                                                                                                                                                                                      
+KGRANT     Kgrant                                                                                                                                                                                       
+JWAHLEN    Jwahlen                                                                                                                                                                                      
+MHARTSTE   Mhartste                                                                                                                                                                                     
+PFAY       Pfay                                                                                                                                                                                         
+SHIGGINS   Shiggins                                                                                                                                                                                     
+WGIETZ     Wgietz                                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> SELECT INITCAP('AMar akbaR ANthoNY') FROM DUAL;  // INITCAP MEANS FIRST LETTER WILL BE CAPITAL AND ALL OTHER WILL BE SMALL
+
+INITCAP('AMARAKBAR                                                                                                                                                                                      
+------------------                                                                                                                                                                                      
+Amar Akbar Anthony                                                                                                                                                                                      
+
+SQL> REM TYPES OF CHARACTERS : 1 ALPHABETS (A-Z,a-z) , 2 DIGITS (0-9) , 3 SPECIAL CHARACTERS : ~!@#$%^&*()_+{}	|:"<>?[ ]\;',.
+SQL> 
+SQL> REM INITCAP CONSIDERES EACH SPECIAL CHARACTER AS WORD SEPARATOR
+SQL> 
+SQL> SELECT INITCAP('AMar_akbaR*ANthoNY') FROM DUAL;
+
+INITCAP('AMAR_AKBA                                                                                                                                                                                      
+------------------                                                                                                                                                                                      
+Amar_Akbar*Anthony                                                                                                                                                                                      
+
+SQL> SELECT INITCAP('AMar6akbaR8ANthoNY') FROM DUAL;   // NO WORD SEPARATOR IS THERE
+
+INITCAP('AMAR6AKBA                                                                                                                                                                                      
+------------------                                                                                                                                                                                      
+Amar6akbar8anthony                                                                                                                                                                                      
+
+SQL> SELECT INITCAP('aMar6akbaR8ANthoNY') FROM DUAL;
+
+INITCAP('AMAR6AKBA                                                                                                                                                                                      
+------------------                                                                                                                                                                                      
+Amar6akbar8anthony                                                                                                                                                                                      
+
+SQL> SELECT INITCAP('9aMar6akbaR8ANthoNY') FROM DUAL;
+
+INITCAP('9AMAR6AKBA                                                                                                                                                                                     
+-------------------                                                                                                                                                                                     
+9amar6akbar8anthony                                                                                                                                                                                     
+
+SQL> SELECT INITCAP(' aMar6akbaR8ANthoNY') FROM DUAL;
+
+INITCAP('AMAR6AKBAR                                                                                                                                                                                     
+-------------------                                                                                                                                                                                     
+ Amar6akbar8anthony                                                                                                                                                                                     
+
+SQL> REM WE CAN NEST FUNCTIONS UPTO ANY LEVEL.
+SQL> 
+SQL> REM INNER FUNCTION GETS EXECUTED FIRST, IT'S RESULT WILL BE USED BY OUTER FUNCTION AS ARGUMENT/INPUT/PARAMETER
+SQL> 
+SQL> SELECT EMAIL FROM EMPLOYEES;
+
+EMAIL                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+SKING                                                                                                                                                                                                   
+NKOCHHAR                                                                                                                                                                                                
+LDEHAAN                                                                                                                                                                                                 
+AHUNOLD                                                                                                                                                                                                 
+BERNST                                                                                                                                                                                                  
+DLORENTZ                                                                                                                                                                                                
+KMOURGOS                                                                                                                                                                                                
+TRAJS                                                                                                                                                                                                   
+CDAVIES                                                                                                                                                                                                 
+RMATOS                                                                                                                                                                                                  
+PVARGAS                                                                                                                                                                                                 
+EZLOTKEY                                                                                                                                                                                                
+EABEL                                                                                                                                                                                                   
+JTAYLOR                                                                                                                                                                                                 
+KGRANT                                                                                                                                                                                                  
+JWAHLEN                                                                                                                                                                                                 
+MHARTSTE                                                                                                                                                                                                
+PFAY                                                                                                                                                                                                    
+SHIGGINS                                                                                                                                                                                                
+WGIETZ                                                                                                                                                                                                  
+
+20 rows selected.
+
+SQL> SELECT EMAIL , UPPER(LOWER(INITCAP(EMAIL))) FROM EMPLOYEES;
+
+EMAIL      UPPER(LOWE                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+SKING      SKING                                                                                                                                                                                        
+NKOCHHAR   NKOCHHAR                                                                                                                                                                                     
+LDEHAAN    LDEHAAN                                                                                                                                                                                      
+AHUNOLD    AHUNOLD                                                                                                                                                                                      
+BERNST     BERNST                                                                                                                                                                                       
+DLORENTZ   DLORENTZ                                                                                                                                                                                     
+KMOURGOS   KMOURGOS                                                                                                                                                                                     
+TRAJS      TRAJS                                                                                                                                                                                        
+CDAVIES    CDAVIES                                                                                                                                                                                      
+RMATOS     RMATOS                                                                                                                                                                                       
+PVARGAS    PVARGAS                                                                                                                                                                                      
+EZLOTKEY   EZLOTKEY                                                                                                                                                                                     
+EABEL      EABEL                                                                                                                                                                                        
+JTAYLOR    JTAYLOR                                                                                                                                                                                      
+KGRANT     KGRANT                                                                                                                                                                                       
+JWAHLEN    JWAHLEN                                                                                                                                                                                      
+MHARTSTE   MHARTSTE                                                                                                                                                                                     
+PFAY       PFAY                                                                                                                                                                                         
+SHIGGINS   SHIGGINS                                                                                                                                                                                     
+WGIETZ     WGIETZ                                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> SELECT EMAIL , LOWER(UPPER(INITCAP(EMAIL))) FROM EMPLOYEES;
+
+EMAIL      LOWER(UPPE                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+SKING      sking                                                                                                                                                                                        
+NKOCHHAR   nkochhar                                                                                                                                                                                     
+LDEHAAN    ldehaan                                                                                                                                                                                      
+AHUNOLD    ahunold                                                                                                                                                                                      
+BERNST     bernst                                                                                                                                                                                       
+DLORENTZ   dlorentz                                                                                                                                                                                     
+KMOURGOS   kmourgos                                                                                                                                                                                     
+TRAJS      trajs                                                                                                                                                                                        
+CDAVIES    cdavies                                                                                                                                                                                      
+RMATOS     rmatos                                                                                                                                                                                       
+PVARGAS    pvargas                                                                                                                                                                                      
+EZLOTKEY   ezlotkey                                                                                                                                                                                     
+EABEL      eabel                                                                                                                                                                                        
+JTAYLOR    jtaylor                                                                                                                                                                                      
+KGRANT     kgrant                                                                                                                                                                                       
+JWAHLEN    jwahlen                                                                                                                                                                                      
+MHARTSTE   mhartste                                                                                                                                                                                     
+PFAY       pfay                                                                                                                                                                                         
+SHIGGINS   shiggins                                                                                                                                                                                     
+WGIETZ     wgietz                                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> SELECT EMAIL , INITCAP(LOWER(UPPER(EMAIL))) FROM EMPLOYEES;
+
+EMAIL      INITCAP(LO                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+SKING      Sking                                                                                                                                                                                        
+NKOCHHAR   Nkochhar                                                                                                                                                                                     
+LDEHAAN    Ldehaan                                                                                                                                                                                      
+AHUNOLD    Ahunold                                                                                                                                                                                      
+BERNST     Bernst                                                                                                                                                                                       
+DLORENTZ   Dlorentz                                                                                                                                                                                     
+KMOURGOS   Kmourgos                                                                                                                                                                                     
+TRAJS      Trajs                                                                                                                                                                                        
+CDAVIES    Cdavies                                                                                                                                                                                      
+RMATOS     Rmatos                                                                                                                                                                                       
+PVARGAS    Pvargas                                                                                                                                                                                      
+EZLOTKEY   Ezlotkey                                                                                                                                                                                     
+EABEL      Eabel                                                                                                                                                                                        
+JTAYLOR    Jtaylor                                                                                                                                                                                      
+KGRANT     Kgrant                                                                                                                                                                                       
+JWAHLEN    Jwahlen                                                                                                                                                                                      
+MHARTSTE   Mhartste                                                                                                                                                                                     
+PFAY       Pfay                                                                                                                                                                                         
+SHIGGINS   Shiggins                                                                                                                                                                                     
+WGIETZ     Wgietz                                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> REM LIST OF CHARACTER FUNCTIONS : CONCAT LPAD RPAD LTRIM RTRIM TRIM LENGTH TRANSLATE REPLACE SUBSTR INSTR
+
+SQL> REM "CONCAT LPAD RPAD LTRIM RTRIM TRIM SUBSTR INSTR LENGTH REPLACE TRANSLATE"
+
+SQL> SELECT FIRST_NAME , LAST_NAME FROM EMPLOYEES;
+
+FIRST_NAME LAST_NAME                                                                                                                                                                                    
+---------- ----------                                                                                                                                                                                   
+Steven     King                                                                                                                                                                                         
+Neena      Kochhar                                                                                                                                                                                      
+Lex        De Haan                                                                                                                                                                                      
+Alexander  Hunold                                                                                                                                                                                       
+Bruce      Ernst                                                                                                                                                                                        
+Diana      Lorentz                                                                                                                                                                                      
+Kevin      Mourgos                                                                                                                                                                                      
+Trenna     Rajs                                                                                                                                                                                         
+Curtis     Davies                                                                                                                                                                                       
+Randall    Matos                                                                                                                                                                                        
+Peter      Vargas                                                                                                                                                                                       
+Eleni      Zlotkey                                                                                                                                                                                      
+Ellen      Abel                                                                                                                                                                                         
+Jonathon   Taylor                                                                                                                                                                                       
+Kimerely   Grant                                                                                                                                                                                        
+Jennifer   Whalen                                                                                                                                                                                       
+Michael    Hartstein                                                                                                                                                                                    
+Pat        Fay                                                                                                                                                                                          
+Shelley    Higgins                                                                                                                                                                                      
+William    Gietz                                                                                                                                                                                        
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME || LAST_NAME FULLNAME FROM EMPLOYEES; // '||' IS  A CONCATANATION OPERATOR
+
+FULLNAME                                                                                                                                                                                                
+--------------------                                                                                                                                                                                    
+StevenKing                                                                                                                                                                                              
+NeenaKochhar                                                                                                                                                                                            
+LexDe Haan                                                                                                                                                                                              
+AlexanderHunold                                                                                                                                                                                         
+BruceErnst                                                                                                                                                                                              
+DianaLorentz                                                                                                                                                                                            
+KevinMourgos                                                                                                                                                                                            
+TrennaRajs                                                                                                                                                                                              
+CurtisDavies                                                                                                                                                                                            
+RandallMatos                                                                                                                                                                                            
+PeterVargas                                                                                                                                                                                             
+EleniZlotkey                                                                                                                                                                                            
+EllenAbel                                                                                                                                                                                               
+JonathonTaylor                                                                                                                                                                                          
+KimerelyGrant                                                                                                                                                                                           
+JenniferWhalen                                                                                                                                                                                          
+MichaelHartstein                                                                                                                                                                                        
+PatFay                                                                                                                                                                                                  
+ShelleyHiggins                                                                                                                                                                                          
+WilliamGietz                                                                                                                                                                                            
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME || ' ' || LAST_NAME FULLNAME FROM EMPLOYEES;
+
+FULLNAME                                                                                                                                                                                                
+---------------------                                                                                                                                                                                   
+Steven King                                                                                                                                                                                             
+Neena Kochhar                                                                                                                                                                                           
+Lex De Haan                                                                                                                                                                                             
+Alexander Hunold                                                                                                                                                                                        
+Bruce Ernst                                                                                                                                                                                             
+Diana Lorentz                                                                                                                                                                                           
+Kevin Mourgos                                                                                                                                                                                           
+Trenna Rajs                                                                                                                                                                                             
+Curtis Davies                                                                                                                                                                                           
+Randall Matos                                                                                                                                                                                           
+Peter Vargas                                                                                                                                                                                            
+Eleni Zlotkey                                                                                                                                                                                           
+Ellen Abel                                                                                                                                                                                              
+Jonathon Taylor                                                                                                                                                                                         
+Kimerely Grant                                                                                                                                                                                          
+Jennifer Whalen                                                                                                                                                                                         
+Michael Hartstein                                                                                                                                                                                       
+Pat Fay                                                                                                                                                                                                 
+Shelley Higgins                                                                                                                                                                                         
+William Gietz                                                                                                                                                                                           
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME || LAST_NAME FULLNAME , CONCAT(FIRST_NAME , LAST_NAME) FROM EMPLOYEES; // CONCAT() TAKES TWO ARGUMENTS
+
+FULLNAME             CONCAT(FIRST_NAME,LA                                                                                                                                                               
+-------------------- --------------------                                                                                                                                                               
+StevenKing           StevenKing                                                                                                                                                                         
+NeenaKochhar         NeenaKochhar                                                                                                                                                                       
+LexDe Haan           LexDe Haan                                                                                                                                                                         
+AlexanderHunold      AlexanderHunold                                                                                                                                                                    
+BruceErnst           BruceErnst                                                                                                                                                                         
+DianaLorentz         DianaLorentz                                                                                                                                                                       
+KevinMourgos         KevinMourgos                                                                                                                                                                       
+TrennaRajs           TrennaRajs                                                                                                                                                                         
+CurtisDavies         CurtisDavies                                                                                                                                                                       
+RandallMatos         RandallMatos                                                                                                                                                                       
+PeterVargas          PeterVargas                                                                                                                                                                        
+EleniZlotkey         EleniZlotkey                                                                                                                                                                       
+EllenAbel            EllenAbel                                                                                                                                                                          
+JonathonTaylor       JonathonTaylor                                                                                                                                                                     
+KimerelyGrant        KimerelyGrant                                                                                                                                                                      
+JenniferWhalen       JenniferWhalen                                                                                                                                                                     
+MichaelHartstein     MichaelHartstein                                                                                                                                                                   
+PatFay               PatFay                                                                                                                                                                             
+ShelleyHiggins       ShelleyHiggins                                                                                                                                                                     
+WilliamGietz         WilliamGietz                                                                                                                                                                       
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME || ' ' || LAST_NAME FULLNAME , CONCAT(FIRST_NAME,' ',LAST_NAME) FROM EMPLOYEES;
+SELECT FIRST_NAME || ' ' || LAST_NAME FULLNAME , CONCAT(FIRST_NAME,' ',LAST_NAME) FROM EMPLOYEES
+                                                 *
+ERROR at line 1:
+ORA-00909: invalid number of arguments 
+
+SQL>REM CONCAT FUNNTION ONLY TAKES TWO PARAMETERS.
+
+SQL> SELECT FIRST_NAME || ' ' || LAST_NAME FULLNAME , CONCAT(FIRST_NAME || ' ',LAST_NAME) FROM EMPLOYEES; // NESTING OF CONCAT FUNCTION AND CONCAT OPERATOR CAN BE DONE
+
+FULLNAME              CONCAT(FIRST_NAME||''                                                                                                                                                             
+--------------------- ---------------------                                                                                                                                                             
+Steven King           Steven King                                                                                                                                                                       
+Neena Kochhar         Neena Kochhar                                                                                                                                                                     
+Lex De Haan           Lex De Haan                                                                                                                                                                       
+Alexander Hunold      Alexander Hunold                                                                                                                                                                  
+Bruce Ernst           Bruce Ernst                                                                                                                                                                       
+Diana Lorentz         Diana Lorentz                                                                                                                                                                     
+Kevin Mourgos         Kevin Mourgos                                                                                                                                                                     
+Trenna Rajs           Trenna Rajs                                                                                                                                                                       
+Curtis Davies         Curtis Davies                                                                                                                                                                     
+Randall Matos         Randall Matos                                                                                                                                                                     
+Peter Vargas          Peter Vargas                                                                                                                                                                      
+Eleni Zlotkey         Eleni Zlotkey                                                                                                                                                                     
+Ellen Abel            Ellen Abel                                                                                                                                                                        
+Jonathon Taylor       Jonathon Taylor                                                                                                                                                                   
+Kimerely Grant        Kimerely Grant                                                                                                                                                                    
+Jennifer Whalen       Jennifer Whalen                                                                                                                                                                   
+Michael Hartstein     Michael Hartstein                                                                                                                                                                 
+Pat Fay               Pat Fay                                                                                                                                                                           
+Shelley Higgins       Shelley Higgins                                                                                                                                                                   
+William Gietz         William Gietz                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME || ' ' || LAST_NAME FULLNAME , CONCAT(FIRST_NAME,' ' || LAST_NAME) FROM EMPLOYEES;
+
+FULLNAME              CONCAT(FIRST_NAME,''|                                                                                                                                                             
+--------------------- ---------------------                                                                                                                                                             
+Steven King           Steven King                                                                                                                                                                       
+Neena Kochhar         Neena Kochhar                                                                                                                                                                     
+Lex De Haan           Lex De Haan                                                                                                                                                                       
+Alexander Hunold      Alexander Hunold                                                                                                                                                                  
+Bruce Ernst           Bruce Ernst                                                                                                                                                                       
+Diana Lorentz         Diana Lorentz                                                                                                                                                                     
+Kevin Mourgos         Kevin Mourgos                                                                                                                                                                     
+Trenna Rajs           Trenna Rajs                                                                                                                                                                       
+Curtis Davies         Curtis Davies                                                                                                                                                                     
+Randall Matos         Randall Matos                                                                                                                                                                     
+Peter Vargas          Peter Vargas                                                                                                                                                                      
+Eleni Zlotkey         Eleni Zlotkey                                                                                                                                                                     
+Ellen Abel            Ellen Abel                                                                                                                                                                        
+Jonathon Taylor       Jonathon Taylor                                                                                                                                                                   
+Kimerely Grant        Kimerely Grant                                                                                                                                                                    
+Jennifer Whalen       Jennifer Whalen                                                                                                                                                                   
+Michael Hartstein     Michael Hartstein                                                                                                                                                                 
+Pat Fay               Pat Fay                                                                                                                                                                           
+Shelley Higgins       Shelley Higgins                                                                                                                                                                   
+William Gietz         William Gietz                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME || ' ' || LAST_NAME FULLNAME , CONCAT(FIRST_NAME,CONCAT(' ', LAST_NAME)) FROM EMPLOYEES;
+
+FULLNAME              CONCAT(FIRST_NAME,CON                                                                                                                                                             
+--------------------- ---------------------                                                                                                                                                             
+Steven King           Steven King                                                                                                                                                                       
+Neena Kochhar         Neena Kochhar                                                                                                                                                                     
+Lex De Haan           Lex De Haan                                                                                                                                                                       
+Alexander Hunold      Alexander Hunold                                                                                                                                                                  
+Bruce Ernst           Bruce Ernst                                                                                                                                                                       
+Diana Lorentz         Diana Lorentz                                                                                                                                                                     
+Kevin Mourgos         Kevin Mourgos                                                                                                                                                                     
+Trenna Rajs           Trenna Rajs                                                                                                                                                                       
+Curtis Davies         Curtis Davies                                                                                                                                                                     
+Randall Matos         Randall Matos                                                                                                                                                                     
+Peter Vargas          Peter Vargas                                                                                                                                                                      
+Eleni Zlotkey         Eleni Zlotkey                                                                                                                                                                     
+Ellen Abel            Ellen Abel                                                                                                                                                                        
+Jonathon Taylor       Jonathon Taylor                                                                                                                                                                   
+Kimerely Grant        Kimerely Grant                                                                                                                                                                    
+Jennifer Whalen       Jennifer Whalen                                                                                                                                                                   
+Michael Hartstein     Michael Hartstein                                                                                                                                                                 
+Pat Fay               Pat Fay                                                                                                                                                                           
+Shelley Higgins       Shelley Higgins                                                                                                                                                                   
+William Gietz         William Gietz                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> SELECT FIRST_NAME || ' ' || LAST_NAME FULLNAME , CONCAT(CONCAT(FIRST_NAME,' '), LAST_NAME) FROM EMPLOYEES; // INNER FUNCTION GETS EXECUTED FIRST
+
+FULLNAME              CONCAT(CONCAT(FIRST_N                                                                                                                                                             
+--------------------- ---------------------                                                                                                                                                             
+Steven King           Steven King                                                                                                                                                                       
+Neena Kochhar         Neena Kochhar                                                                                                                                                                     
+Lex De Haan           Lex De Haan                                                                                                                                                                       
+Alexander Hunold      Alexander Hunold                                                                                                                                                                  
+Bruce Ernst           Bruce Ernst                                                                                                                                                                       
+Diana Lorentz         Diana Lorentz                                                                                                                                                                     
+Kevin Mourgos         Kevin Mourgos                                                                                                                                                                     
+Trenna Rajs           Trenna Rajs                                                                                                                                                                       
+Curtis Davies         Curtis Davies                                                                                                                                                                     
+Randall Matos         Randall Matos                                                                                                                                                                     
+Peter Vargas          Peter Vargas                                                                                                                                                                      
+Eleni Zlotkey         Eleni Zlotkey                                                                                                                                                                     
+Ellen Abel            Ellen Abel                                                                                                                                                                        
+Jonathon Taylor       Jonathon Taylor                                                                                                                                                                   
+Kimerely Grant        Kimerely Grant                                                                                                                                                                    
+Jennifer Whalen       Jennifer Whalen                                                                                                                                                                   
+Michael Hartstein     Michael Hartstein                                                                                                                                                                 
+Pat Fay               Pat Fay                                                                                                                                                                           
+Shelley Higgins       Shelley Higgins                                                                                                                                                                   
+William Gietz         William Gietz                                                                                                                                                                     
+
+20 rows selected.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME LAST_NAME  EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                               
+----------- ---------- ---------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                               
+        100 Steven     King       SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                               
+        101 Neena      Kochhar    NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                               
+        102 Lex        De Haan    LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                               
+        103 Alexander  Hunold     AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                               
+        104 Bruce      Ernst      BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                               
+        107 Diana      Lorentz    DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                               
+        124 Kevin      Mourgos    KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                               
+        141 Trenna     Rajs       TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                               
+        142 Curtis     Davies     CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                               
+        143 Randall    Matos      RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                               
+        144 Peter      Vargas     PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                               
+        149 Eleni      Zlotkey    EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                               
+        174 Ellen      Abel       EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                               
+        176 Jonathon   Taylor     JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                               
+        178 Kimerely   Grant      KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                             
+        200 Jennifer   Whalen     JWAHLEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                               
+        201 Michael    Hartstein  MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                               
+        202 Pat        Fay        PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                               
+        205 Shelley    Higgins    SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                               
+        206 William    Gietz      WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                               
+
+20 rows selected.
+
+SQL> REM Steven 17-JUL-87 SKING 24000
+
+SQL> SELECT CONCAT(FIRST_NAME || '  ',CONCAT(HIRE_DATE || '  ',CONCAT(EMAIL || '  ',SALARY))) // INNER TO OUTER EXECUTION TAKES PLACE!
+
+SQL> select CONCAT(FIRST_NAME || '  ',CONCAT(HIRE_DATE || '  ',CONCAT(EMAIL || '  ',SALARY)))
+  2  from employees;
+
+CONCAT(FIRST_NAME||'',CONCAT(HIRE_DATE||'',CONCAT(EMAIL||'',SALARY)))                                                                                                                                   
+------------------------------------------------------------------------------------                                                                                                                    
+Steven  17-JUL-87  SKING  24000                                                                                                                                                                         
+Neena  21-SEP-89  NKOCHHAR  17000                                                                                                                                                                       
+Lex  13-JAN-93  LDEHAAN  17000                                                                                                                                                                          
+Alexander  03-JAN-90  AHUNOLD  9000                                                                                                                                                                     
+Bruce  21-MAY-91  BERNST  6000                                                                                                                                                                          
+Diana  07-FEB-99  DLORENTZ  4200                                                                                                                                                                        
+Kevin  16-NOV-99  KMOURGOS  5800                                                                                                                                                                        
+Trenna  17-OCT-95  TRAJS  3500                                                                                                                                                                          
+Curtis  29-JAN-97  CDAVIES  3100                                                                                                                                                                        
+Randall  15-MAR-98  RMATOS  2600                                                                                                                                                                        
+Peter  09-JUL-98  PVARGAS  2500                                                                                                                                                                         
+Eleni  29-JAN-00  EZLOTKEY  10500                                                                                                                                                                       
+Ellen  11-MAY-96  EABEL  11000                                                                                                                                                                          
+Jonathon  24-MAR-98  JTAYLOR  8600                                                                                                                                                                      
+Kimerely  24-MAY-99  KGRANT  7000                                                                                                                                                                       
+Jennifer  17-SEP-87  JWAHLEN  4400                                                                                                                                                                      
+Michael  17-FEB-96  MHARTSTE  13000                                                                                                                                                                     
+Pat  17-AUG-97  PFAY  6000                                                                                                                                                                              
+Shelley  07-JUN-94  SHIGGINS  12000                                                                                                                                                                     
+William  07-JUN-94  WGIETZ  8300                                                                                                                                                                        
+
+20 rows selected.
+
+SQL> SPOOL OFF

@@ -1,0 +1,1247 @@
+SQL> 
+SQL> CL SCR
+
+SQL> REM CHAPTER 1 - 8 : SELECT ...                   
+SQL>  
+SQL> REM CHAPTER 9 : DML + TCL + DDL                   // DML + TCL + DDL
+SQL> 
+SQL> REM DML : DATA MANIPULATION LANAUGE       // IMPORTANT ONE!!!!!!
+SQL> 
+SQL> REM MANIPULATION : ANY TYPE OF CHANGES IN DATA
+SQL> 
+SQL> REM DML : DATA MANIPULATION LANAUGE : INSERT UPDATE DELETE       MERGE          // DML HAS 4 OPERATIONS I.E INSERT,UPDATE,DELETE AND LAST ONE WHICH IS COMBINATION OF ALL I.E MERGE
+SQL> 
+SQL> REM INSERT : TO ADD NEW ROWS TO THE EXISTING TABLE  // OP!
+SQL> 
+SQL> REM UPDATE : TO UPDATE/MODIFY/EDIT/CHANGE EXISTING ROW VALUES/DATA // OP!!
+SQL> 
+SQL> REM DELETE: TO REMOVE/DELETE EXISTING ROWS OF TABLE  //OP!!!!
+SQL> 
+SQL> REM TCL : TRANSACTION CONTROL LANGUAGE
+SQL> 
+SQL> REM TRANSACTION : BUNCH/GROUP OF DML STATEMENTS                 // TCL IS BASICALLY A GROUP OF DML STATEMENTS
+SQL> 
+SQL> REM ANY CHANGES DONE BY EXECUTING DML STATEMENTS ARE ONLY LIMITED TO MEMORY/RAM
+SQL> 
+SQL> REM TCL : TRANSACTION CONTROL LANGUAGE : COMMIT , ROLLBACK , SAVEPOINT
+SQL> 
+SQL> REM COMMIT : TO SAVE THE CHANGES OF CURRENT TRANSACTION IN TABLE/DATABASE/HARDDISK
+SQL> 
+SQL> REM ROLLBACK : TO UNDO THE CHANGES DONE IN CURRENT TRANSACTION FROM MEMORY.
+SQL> 
+SQL> REM SAVEPOINT : TO BREAK TRANSACTION INTO PARTS. SO AFTERWARDS WE CAN PARTIALLY UNDO AND SAVE THE CHANGES OF TRANSACTION.
+SQL> 
+SQL> DROP TABLE R1;
+
+Table dropped.
+
+SQL> CREATE TABLE R1 AS SELECT * FROM REGIONS WHERE ROWNUM = 0;     // CHAPTER 10 MAI AAYENGA!! " CREATE TABE R1 AS SELECT * FROM REGIONS!! "!!!!!!
+
+Table created.
+
+SQL> DESC REGIONS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGION_ID                                                                                                         NOT NULL NUMBER
+ REGION_NAME                                                                                                                VARCHAR2(25)
+
+SQL> DESC R1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGION_ID                                                                                                         NOT NULL NUMBER
+ REGION_NAME                                                                                                                VARCHAR2(25)
+
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT * FROM R1;
+
+no rows selected
+
+SQL> DROP TABLE R1 PURGE;       // PURGE IS FOR PERMANANTLY DELETING THE TABLE // LIVE SQL PAR YE SB COMMANDS ACHE SE NAHI CHALTE PURGE LIKE!!!
+
+Table dropped.
+
+SQL> CREATE TABLE R1 AS SELECT * FROM REGIONS;
+
+Table created.
+
+SQL> DESC REGIONS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGION_ID                                                                                                         NOT NULL NUMBER
+ REGION_NAME                                                                                                                VARCHAR2(25)
+
+SQL> DESC R1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGION_ID                                                                                                         NOT NULL NUMBER
+ REGION_NAME                                                                                                                VARCHAR2(25)
+
+SQL> SELECT * FROM REGIONS;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> REM TABLE = 4 ROWS , MEMORY = 0 ROWS
+SQL> 
+SQL> INSERT INTO R1 VALUES (5,'Australia');
+
+1 row created.
+
+SQL> REM TABLE = 4 ROWS , MEMORY = 1 ROWS 
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 Australia                                                                                                                                                                                    
+
+SQL> INSERT INTO R1 VALUES (6,'Antarctica');
+
+1 row created.
+
+SQL> REM TABLE = 4 ROWS , MEMORY = 2 ROWS
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 Australia                                                                                                                                                                                    
+         6 Antarctica                                                                                                                                                                                   
+
+6 rows selected.
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> REM TABLE = 4 ROWS , MEMORY = 0 ROWS    // OP!!!!!!!!!
+SQL> 
+SQL> REM TRANSACTION STARTS WITH FIRST DML STATEMENT       // THIS IS SOMETHING IMPORTANT !!!!!!!!
+SQL> 
+SQL> REM TRANSACTION ENDS WITH COMMIT/ROLLBACK/DDL/DCL STATEMENT   // TRANSACTION ALWAYS ENDS WITH A ROLLBACK,COMMIT,DDL,DCL STATEMENT
+SQL> 
+SQL> REM TABLE = 4 ROWS , MEMORY = 0 ROWS
+SQL> 
+SQL> INSERT INTO R1 VALUES (5,'Australia');
+
+1 row created.
+
+SQL> REM TABLE = 4 ROWS , MEMORY = 1 ROWS
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 Australia                                                                                                                                                                                    
+
+SQL> INSERT INTO R1 VALUES (6,'Antarctica');
+
+1 row created.
+
+SQL> REM TABLE = 4 ROWS , MEMORY = 2 ROWS
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 Australia                                                                                                                                                                                    
+         6 Antarctica                                                                                                                                                                                   
+
+6 rows selected.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> REM TABLE = 6 ROWS , MEMORY = 0 ROWS
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 Australia                                                                                                                                                                                    
+         6 Antarctica                                                                                                                                                                                   
+
+6 rows selected.
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 Australia                                                                                                                                                                                    
+         6 Antarctica                                                                                                                                                                                   
+
+6 rows selected.
+
+SQL> DELETE R1 WHERE REGION_ID IN (5,6);                   // FROM KEYWORD IS OPTIONAL  !! DELETE FROM R1 WHERE REGION_ID IN (5,6) 
+
+2 rows deleted.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> REM TABLE = 4 ROWS , MEMORY = 0 ROWS
+SQL> 
+SQL> INSERT INTO R1 VALUES (5,'Australia');
+
+1 row created.
+
+SQL> 
+SQL> REM TABLE = 4 ROWS , MEMORY = 1 ROWS
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 Australia                                                                                                                                                                                    
+
+SQL> SAVEPOINT A;
+
+Savepoint created.
+
+SQL> INSERT INTO R1 VALUES (6,'Antarctica');
+
+1 row created.
+
+SQL> REM TABLE = 4 ROWS , MEMORY = 2 ROWS
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 Australia                                                                                                                                                                                    
+         6 Antarctica                                                                                                                                                                                   
+
+6 rows selected.
+
+SQL> REM POSSIBILITIES : 1 COMMIT 2 ROLLBACK 3 ROLLBACK TO A + COMMIT   // OP ONE!!!!!!
+SQL> 
+SQL> ROLLBACK TO A;					// ROLLBACK TO A + COMMIT SAVES ALL THE CHANGES DONE BEFORE SAVEPOINT A AND UNDO ALL THE CHANGES DONE AFTER SAVEPOINT A
+
+Rollback complete.
+
+SQL> REM TABLE = 4 ROWS , MEMORY = 1 ROWS
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 Australia                                                                                                                                                                                    
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 Australia                                                                                                                                                                                    
+
+SQL> REM TABLE = 5 ROWS , MEMORY = 0 ROWS
+SQL> 
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 Australia                                                                                                                                                                                    
+
+SQL> REM DML :           // IT HAS 4 TYPES ---.1)INSERT 2)UPDATE 3)DELETE 4)MERGE (MIXTURE OF INSERT,UPDATE AND DELETE)
+SQL> 
+SQL> REM TYPES OF INSERT STATEMENT : 1 INSERT ... VALUES 2 INSERT ... SUB QUERY
+SQL> 
+SQL> REM INSERT ... VALUES : IT CAN INSERT SINGLE ROW PER SINGLE EXECUTION           // OP POINT
+SQL> 
+SQL> REM INSERT ... SUB QUERY : IT CAN INSERT ZERO , ONE , MULTIPLE OR ALL ROWS RETURNED BY SUB QUERY.
+SQL> 
+SQL> 
+SQL> TRUNCATE TABLE D1;
+TRUNCATE TABLE D1
+               *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> CREATE TABLE D1 AS SELECT * FROM DEPARTMENTS WHERE 1 = 2;
+
+Table created.
+
+SQL> DESC E1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ FIRST_NAME                                                                                                                 VARCHAR2(10)
+ JOB_ID                                                                                                            NOT NULL VARCHAR2(10)
+ SALARY                                                                                                                     NUMBER(8,2)
+
+SQL> DESC D1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DEPARTMENT_ID                                                                                                              NUMBER(4)
+ DEPARTMENT_NAME                                                                                                   NOT NULL VARCHAR2(30)
+ MANAGER_ID                                                                                                                 NUMBER(6)
+ LOCATION_ID                                                                                                                NUMBER(4)
+
+SQL> SELECT * FROM D1;
+
+no rows selected
+
+SQL> INSERT INTO D1 VALUES (10,'ACC',105,1500);
+
+1 row created.
+
+SQL> INSERT INTO D1 VALUES (20,'RES',108);
+INSERT INTO D1 VALUES (20,'RES',108)
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> INSERT INTO D1 VALUES (20,'RES',108,NULL);         // NULL , DEFAULT AND ' ' VALUES CAN BE GIVEN .. BUT VALUE CAN'T BE EMPTY 
+
+1 row created.
+
+SQL> INSERT INTO D1 VALUES (20,'RES',108,'');
+
+1 row created.
+
+SQL> INSERT INTO D1 VALUES (20,'RES',108,DEFAULT); // OP!!!!!!
+
+1 row created.
+
+SQL> INSERT INTO D1 VALUES (20,'RES',108,);
+INSERT INTO D1 VALUES (20,'RES',108,)
+                                    *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> INSERT INTO D1 VALUES (20,NULL,108,1600);
+INSERT INTO D1 VALUES (20,NULL,108,1600)
+                          *
+ERROR at line 1:
+ORA-01400: cannot insert NULL into ("SCOTT"."D1"."DEPARTMENT_NAME") 
+
+
+SQL> DESC D1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ DEPARTMENT_ID                                                                                                              NUMBER(4)
+ DEPARTMENT_NAME                                                                                                   NOT NULL VARCHAR2(30)
+ MANAGER_ID                                                                                                                 NUMBER(6)
+ LOCATION_ID                                                                                                                NUMBER(4)
+
+SQL> INSERT INTO D1 (DEPARTMENT_NAME , LOCATION_ID) VALUES ('SALES',1600); // "INSERT INTO D1(DEPARTMENT_NAME,LOCATION_ID) VALUES ('SALES',1600)" SPECIFIC COLUMNS HAVE BEEN PROJECTED
+
+1 row created.
+
+SQL> INSERT INTO D1 (DEPARTMENT_NAME , LOCATION_ID) VALUES (INITCAP('SALES'),500*3);
+
+1 row created.
+
+SQL> INSERT INTO D1 (DEPARTMENT_NAME , LOCATION_ID) VALUES (INITCAP('SALES'),(SELECT LOCATION_ID FROM LOCATIONS WHERE CITY = 'Toronto'));
+
+1 row created.
+
+SQL> REM WHEN WE USE SUB QUERY INSIDE VALUES CLAUSE, IT MUST BE SCALAR SUB QUERY.  // OBVIOUSLY!!!!!!
+SQL> 
+SQL> REM SCALAR SUB QUERY RETURNS SINGLE VALUE I.E SINGLE COLUMN AND SINGLE ROW ONLY
+SQL> 
+SQL> INSERT INTO D1 (DEPARTMENT_NAME , LOCATION_ID) VALUES (SELECT 'HI' , LOCATION_ID FROM LOCATIONS WHERE CITY = 'Toronto'));
+INSERT INTO D1 (DEPARTMENT_NAME , LOCATION_ID) VALUES (SELECT 'HI' , LOCATION_ID FROM LOCATIONS WHERE CITY = 'Toronto'))
+                                                       *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> INSERT INTO D1 (DEPARTMENT_NAME , LOCATION_ID) VALUES (SELECT 'HI' , LOCATION_ID FROM LOCATIONS WHERE CITY = 'Toronto');
+INSERT INTO D1 (DEPARTMENT_NAME , LOCATION_ID) VALUES (SELECT 'HI' , LOCATION_ID FROM LOCATIONS WHERE CITY = 'Toronto')
+                                                       *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> INSERT INTO D1 (DEPARTMENT_NAME , LOCATION_ID) VALUES ((SELECT 'HI' , LOCATION_ID FROM LOCATIONS WHERE CITY = 'Toronto'));
+INSERT INTO D1 (DEPARTMENT_NAME , LOCATION_ID) VALUES ((SELECT 'HI' , LOCATION_ID FROM LOCATIONS WHERE CITY = 'Toronto'))
+                                               *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> REM AS VALUES WE CAN USE LITERALS , NULL , '' , DEFAULT , EXPRESSION , FUNCTION , SCALAR SUB QUERY
+SQL> 
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 ACC                                   105        1500                                                                                                                                     
+           20 RES                                   108                                                                                                                                                 
+           20 RES                                   108                                                                                                                                                 
+           20 RES                                   108                                                                                                                                                 
+              SALES                                            1600                                                                                                                                     
+              Sales                                            1500                                                                                                                                     
+              Sales                                            1800                                                                                                                                     
+
+7 rows selected.
+
+SQL> INSERT INTO D1 SELECT * FROM REGIONS;       // CAN'T BE DONE
+INSERT INTO D1 SELECT * FROM REGIONS
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS;
+
+8 rows created.
+
+SQL> SELECT * FROM DEPARTMENTS;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+8 rows selected.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 ACC                                   105        1500                                                                                                                                     
+           20 RES                                   108                                                                                                                                                 
+           20 RES                                   108                                                                                                                                                 
+           20 RES                                   108                                                                                                                                                 
+              SALES                                            1600                                                                                                                                     
+              Sales                                            1500                                                                                                                                     
+              Sales                                            1800                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+15 rows selected.
+
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS WHERE DEPARTMENT_ID > 80;
+
+3 rows created.
+
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS WHERE DEPARTMENT_ID = 80;
+
+1 row created.
+
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS WHERE DEPARTMENT_ID < 0;
+
+0 rows created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 ACC                                   105        1500                                                                                                                                     
+           20 RES                                   108                                                                                                                                                 
+           20 RES                                   108                                                                                                                                                 
+           20 RES                                   108                                                                                                                                                 
+              SALES                                            1600                                                                                                                                     
+              Sales                                            1500                                                                                                                                     
+              Sales                                            1800                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+
+19 rows selected.
+
+SQL> INSERT INTO D1 (DEPARTMENT_ID , DEPARTMENT_NAME) SELECT * FROM REGIONS;   // THIS IS SYNTACTICALLY OK BUT LOGICALLY IS DAMM WRONG!!!!!!
+
+4 rows created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 ACC                                   105        1500                                                                                                                                     
+           20 RES                                   108                                                                                                                                                 
+           20 RES                                   108                                                                                                                                                 
+           20 RES                                   108                                                                                                                                                 
+              SALES                                            1600                                                                                                                                     
+              Sales                                            1500                                                                                                                                     
+              Sales                                            1800                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+            1 Europe                                                                                                                                                                                    
+            2 Americas                                                                                                                                                                                  
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+            3 Asia                                                                                                                                                                                      
+            4 Middle East and Africa                                                                                                                                                                    
+
+23 rows selected.
+
+SQL> REM UPDATE
+SQL> 
+SQL> SAVEPOINT A;
+
+Savepoint created.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 ACC                                   105        1500                                                                                                                                     
+           20 RES                                   108                                                                                                                                                 
+           20 RES                                   108                                                                                                                                                 
+           20 RES                                   108                                                                                                                                                 
+              SALES                                            1600                                                                                                                                     
+              Sales                                            1500                                                                                                                                     
+              Sales                                            1800                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+            1 Europe                                                                                                                                                                                    
+            2 Americas                                                                                                                                                                                  
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+            3 Asia                                                                                                                                                                                      
+            4 Middle East and Africa                                                                                                                                                                    
+
+23 rows selected.
+
+SQL> UPDATE D1 SET LOCATION_ID = 9999;   // UPDATE IS A KEYWORD AND SET SHOULD BE USED WITH UPDATE!!
+
+23 rows updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 ACC                                   105        9999                                                                                                                                     
+           20 RES                                   108        9999                                                                                                                                     
+           20 RES                                   108        9999                                                                                                                                     
+           20 RES                                   108        9999                                                                                                                                     
+              SALES                                            9999                                                                                                                                     
+              Sales                                            9999                                                                                                                                     
+              Sales                                            9999                                                                                                                                     
+           10 Administration                        200        9999                                                                                                                                     
+           20 Marketing                             201        9999                                                                                                                                     
+           50 Shiping                               124        9999                                                                                                                                     
+           60 IT                                    103        9999                                                                                                                                     
+           80 Sales                                 149        9999                                                                                                                                     
+           90 Executive                             100        9999                                                                                                                                     
+          110 Accounting                            205        9999                                                                                                                                     
+          190 Contracting                                      9999                                                                                                                                     
+           90 Executive                             100        9999                                                                                                                                     
+          110 Accounting                            205        9999                                                                                                                                     
+          190 Contracting                                      9999                                                                                                                                     
+           80 Sales                                 149        9999                                                                                                                                     
+            1 Europe                                           9999                                                                                                                                     
+            2 Americas                                         9999                                                                                                                                     
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+            3 Asia                                             9999                                                                                                                                     
+            4 Middle East and Africa                           9999                                                                                                                                     
+
+23 rows selected.
+
+SQL> ROLLBACK TO A;
+
+Rollback complete.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 ACC                                   105        1500                                                                                                                                     
+           20 RES                                   108                                                                                                                                                 
+           20 RES                                   108                                                                                                                                                 
+           20 RES                                   108                                                                                                                                                 
+              SALES                                            1600                                                                                                                                     
+              Sales                                            1500                                                                                                                                     
+              Sales                                            1800                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+            1 Europe                                                                                                                                                                                    
+            2 Americas                                                                                                                                                                                  
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+            3 Asia                                                                                                                                                                                      
+            4 Middle East and Africa                                                                                                                                                                    
+
+23 rows selected.
+
+SQL> UPDATE D1 SET LOCATION_ID = 9999 WHERE LOCATION_ID IS NULL;
+
+7 rows updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 ACC                                   105        1500                                                                                                                                     
+           20 RES                                   108        9999                                                                                                                                     
+           20 RES                                   108        9999                                                                                                                                     
+           20 RES                                   108        9999                                                                                                                                     
+              SALES                                            1600                                                                                                                                     
+              Sales                                            1500                                                                                                                                     
+              Sales                                            1800                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+            1 Europe                                           9999                                                                                                                                     
+            2 Americas                                         9999                                                                                                                                     
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+            3 Asia                                             9999                                                                                                                                     
+            4 Middle East and Africa                           9999                                                                                                                                     
+
+23 rows selected.
+
+SQL> UPDATE D1 SET DEPARTMENT_NAME = LOWER(DEPARTMENT_NAME);
+
+23 rows updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 acc                                   105        1500                                                                                                                                     
+           20 res                                   108        9999                                                                                                                                     
+           20 res                                   108        9999                                                                                                                                     
+           20 res                                   108        9999                                                                                                                                     
+              sales                                            1600                                                                                                                                     
+              sales                                            1500                                                                                                                                     
+              sales                                            1800                                                                                                                                     
+           10 administration                        200        1700                                                                                                                                     
+           20 marketing                             201        1800                                                                                                                                     
+           50 shiping                               124        1500                                                                                                                                     
+           60 it                                    103        1400                                                                                                                                     
+           80 sales                                 149        2500                                                                                                                                     
+           90 executive                             100        1700                                                                                                                                     
+          110 accounting                            205        1700                                                                                                                                     
+          190 contracting                                      1700                                                                                                                                     
+           90 executive                             100        1700                                                                                                                                     
+          110 accounting                            205        1700                                                                                                                                     
+          190 contracting                                      1700                                                                                                                                     
+           80 sales                                 149        2500                                                                                                                                     
+            1 europe                                           9999                                                                                                                                     
+            2 americas                                         9999                                                                                                                                     
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+            3 asia                                             9999                                                                                                                                     
+            4 middle east and africa                           9999                                                                                                                                     
+
+23 rows selected.
+
+SQL> UPDATE D1 SET DEPARTMENT_ID = ROWNUM * 10;
+
+23 rows updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 acc                                   105        1500                                                                                                                                     
+           20 res                                   108        9999                                                                                                                                     
+           30 res                                   108        9999                                                                                                                                     
+           40 res                                   108        9999                                                                                                                                     
+           50 sales                                            1600                                                                                                                                     
+           60 sales                                            1500                                                                                                                                     
+           70 sales                                            1800                                                                                                                                     
+           80 administration                        200        1700                                                                                                                                     
+           90 marketing                             201        1800                                                                                                                                     
+          100 shiping                               124        1500                                                                                                                                     
+          110 it                                    103        1400                                                                                                                                     
+          120 sales                                 149        2500                                                                                                                                     
+          130 executive                             100        1700                                                                                                                                     
+          140 accounting                            205        1700                                                                                                                                     
+          150 contracting                                      1700                                                                                                                                     
+          160 executive                             100        1700                                                                                                                                     
+          170 accounting                            205        1700                                                                                                                                     
+          180 contracting                                      1700                                                                                                                                     
+          190 sales                                 149        2500                                                                                                                                     
+          200 europe                                           9999                                                                                                                                     
+          210 americas                                         9999                                                                                                                                     
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+          220 asia                                             9999                                                                                                                                     
+          230 middle east and africa                           9999                                                                                                                                     
+
+23 rows selected.
+
+SQL> UPDATE D1 SET DEPARTMENT_NAME = UPPER(DEPARTMENT_NAME) , MANAGER_ID = 555 WHERE MANAGER_ID IS NULL;
+
+9 rows updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 acc                                   105        1500                                                                                                                                     
+           20 res                                   108        9999                                                                                                                                     
+           30 res                                   108        9999                                                                                                                                     
+           40 res                                   108        9999                                                                                                                                     
+           50 SALES                                 555        1600                                                                                                                                     
+           60 SALES                                 555        1500                                                                                                                                     
+           70 SALES                                 555        1800                                                                                                                                     
+           80 administration                        200        1700                                                                                                                                     
+           90 marketing                             201        1800                                                                                                                                     
+          100 shiping                               124        1500                                                                                                                                     
+          110 it                                    103        1400                                                                                                                                     
+          120 sales                                 149        2500                                                                                                                                     
+          130 executive                             100        1700                                                                                                                                     
+          140 accounting                            205        1700                                                                                                                                     
+          150 CONTRACTING                           555        1700                                                                                                                                     
+          160 executive                             100        1700                                                                                                                                     
+          170 accounting                            205        1700                                                                                                                                     
+          180 CONTRACTING                           555        1700                                                                                                                                     
+          190 sales                                 149        2500                                                                                                                                     
+          200 EUROPE                                555        9999                                                                                                                                     
+          210 AMERICAS                              555        9999                                                                                                                                     
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+          220 ASIA                                  555        9999                                                                                                                                     
+          230 MIDDLE EAST AND AFRICA                555        9999                                                                                                                                     
+
+23 rows selected.
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM D1;
+
+no rows selected
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM D1;
+
+no rows selected
+
+SQL> INSERT INTO D1 SELECT * FROM DEPARTMENTS;
+
+8 rows created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        1700                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 Sales                                 149        2500                                                                                                                                     
+           90 Executive                             100        1700                                                                                                                                     
+          110 Accounting                            205        1700                                                                                                                                     
+          190 Contracting                                      1700                                                                                                                                     
+
+8 rows selected.
+
+SQL> UPDATE D1 SET DEPARTMENT_NAME = CASE WHEN DEPARTMENT_ID IN (60,80,90) THEN UPPER(DEPARTMENT_NAME) ELSE DEPARTMENT_NAME END , LOCATION_ID = CASE WHEN LOCATION_ID = 1700 THEN 7100 ELSE 1700 END;
+
+SQL> UPDATE D1 SET DEPARTMENT_NAME = CASE WHEN DEPARTMENT_ID IN (70,80,90) THEN LOWER(DEPARTMENT_NAME) ELSE DEPARTMENT_NAME END,     // VIRU MODI!!!!
+     LOCATION_ID = CASE WHEN LOCATION_ID IN 1700 THEN 7100 ELSE LOCATION_ID END;
+
+8 rows updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        7100                                                                                                                                     
+           20 Marketing                             201        1700                                                                                                                                     
+           50 Shiping                               124        1700                                                                                                                                     
+           60 IT                                    103        1700                                                                                                                                     
+           80 SALES                                 149        1700                                                                                                                                     
+           90 EXECUTIVE                             100        7100                                                                                                                                     
+          110 Accounting                            205        7100                                                                                                                                     
+          190 Contracting                                      7100                                                                                                                                     
+
+8 rows selected.
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> UPDATE D1 SET DEPARTMENT_NAME = CASE WHEN DEPARTMENT_ID IN (60,80,90) THEN UPPER(DEPARTMENT_NAME) ELSE DEPARTMENT_NAME END , LOCATION_ID = CASE WHEN LOCATION_ID = 1700 THEN 7100 ELSE LOCATION_ID END;
+
+8 rows updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        7100                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 SALES                                 149        2500                                                                                                                                     
+           90 EXECUTIVE                             100        7100                                                                                                                                     
+          110 Accounting                            205        7100                                                                                                                                     
+          190 Contracting                                      7100                                                                                                                                     
+
+8 rows selected.
+
+SQL> UPDATE D1 SET MANAGER_ID = (SELECT EMPLOYEE_ID FROM EMPLOYEES WHERE FIRST_NAME = 'Steven');   // THIS IS ALSO OP!!!!!
+
+8 rows updated.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> UPDATE D1 SET DEPARTMENT_NAME = CASE WHEN DEPARTMENT_ID IN (60,80,90) THEN UPPER(DEPARTMENT_NAME) ELSE DEPARTMENT_NAME END , LOCATION_ID = CASE WHEN LOCATION_ID = 1700 THEN 7100 ELSE LOCATION_ID END;
+
+8 rows updated.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> UPDATE D1 SET MANAGER_ID = (SELECT EMPLOYEE_ID FROM EMPLOYEES WHERE FIRST_NAME = 'Steven') WHERE MANAGER_ID IS NULL;
+
+1 row updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        7100                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 SALES                                 149        2500                                                                                                                                     
+           90 EXECUTIVE                             100        7100                                                                                                                                     
+          110 Accounting                            205        7100                                                                                                                                     
+          190 Contracting                           100        7100                                                                                                                                     
+
+8 rows selected.
+
+SQL> UPDATE D1 SET DEPARTMENT_NAME = UPPER(DEPARTMENT_NAME) WHERE MANAGER_ID = (SELECT EMPLOYEE_ID FROM EMPLOYEES WHERE FIRST_NAME = 'Kevin');
+
+1 row updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        7100                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 SHIPING                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 SALES                                 149        2500                                                                                                                                     
+           90 EXECUTIVE                             100        7100                                                                                                                                     
+          110 Accounting                            205        7100                                                                                                                                     
+          190 Contracting                           100        7100                                                                                                                                     
+
+8 rows selected.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME LAST_NAME  EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                               
+----------- ---------- ---------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                               
+        100 Steven     King       SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                               
+        101 Neena      Kochhar    NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                               
+        102 Lex        De Haan    LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                               
+        103 Alexander  Hunold     AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                               
+        104 Bruce      Ernst      BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                               
+        107 Diana      Lorentz    DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                               
+        124 Kevin      Mourgos    KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                               
+        141 Trenna     Rajs       TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                               
+        142 Curtis     Davies     CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                               
+        143 Randall    Matos      RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                               
+        144 Peter      Vargas     PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                               
+        149 Eleni      Zlotkey    EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                               
+        174 Ellen      Abel       EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                               
+        176 Jonathon   Taylor     JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                               
+        178 Kimerely   Grant      KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                             
+        200 Jennifer   Whalen     JWAHLEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                               
+        201 Michael    Hartstein  MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                               
+        202 Pat        Fay        PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                               
+        205 Shelley    Higgins    SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                               
+        206 William    Gietz      WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                               
+
+20 rows selected.
+
+SQL> UPDATE D1 SET DEPARTMENT_NAME = UPPER(DEPARTMENT_NAME) WHERE MANAGER_ID = (SELECT EMPLOYEE_ID FROM EMPLOYEES WHERE FIRST_NAME IN ('Jennifer','Michael'));
+UPDATE D1 SET DEPARTMENT_NAME = UPPER(DEPARTMENT_NAME) WHERE MANAGER_ID = (SELECT EMPLOYEE_ID FROM EMPLOYEES WHERE FIRST_NAME IN ('Jennifer','Michael'))
+                                                                           *
+ERROR at line 1:
+ORA-01427: single-row subquery returns more than one row 
+
+
+SQL> UPDATE D1 SET DEPARTMENT_NAME = UPPER(DEPARTMENT_NAME) WHERE MANAGER_ID = ANY (SELECT EMPLOYEE_ID FROM EMPLOYEES WHERE FIRST_NAME IN ('Jennifer','Michael'));
+									      |||||
+SQL> UPDATE D1 SET DEPARTMENT_NAME = UPPER(DEPARTMENT_NAME) WHERE MANAGER_ID   IN (SELECT EMPLOYEE_ID FROM EMPLOYEES WHERE FIRST_NAME IN ('Jennifer','Michael'));
+
+2 rows updated.
+
+SQL> SELECT * FROM EMPLOYEES;
+
+EMPLOYEE_ID FIRST_NAME LAST_NAME  EMAIL      PHONE_NUMBER         HIRE_DATE JOB_ID         SALARY COMMISSION_PCT MANAGER_ID DEPARTMENT_ID                                                               
+----------- ---------- ---------- ---------- -------------------- --------- ---------- ---------- -------------- ---------- -------------                                                               
+        100 Steven     King       SKING      515.123.4567         17-JUL-87 AD_PRES         24000                                      90                                                               
+        101 Neena      Kochhar    NKOCHHAR   515.123.4568         21-SEP-89 AD_VP           17000                       100            90                                                               
+        102 Lex        De Haan    LDEHAAN    515.123.4569         13-JAN-93 AD_VP           17000                       100            90                                                               
+        103 Alexander  Hunold     AHUNOLD    590.423.4567         03-JAN-90 IT_PROG          9000                       102            60                                                               
+        104 Bruce      Ernst      BERNST     590.423.4568         21-MAY-91 IT_PROG          6000                       103            60                                                               
+        107 Diana      Lorentz    DLORENTZ   590.423.5567         07-FEB-99 IT_PROG          4200                       103            60                                                               
+        124 Kevin      Mourgos    KMOURGOS   650.123.5234         16-NOV-99 ST_MAN           5800                       100            50                                                               
+        141 Trenna     Rajs       TRAJS      650.121.8009         17-OCT-95 ST_CLERK         3500                       124            50                                                               
+        142 Curtis     Davies     CDAVIES    650.121.2994         29-JAN-97 ST_CLERK         3100                       124            50                                                               
+        143 Randall    Matos      RMATOS     650.121.2874         15-MAR-98 ST_CLERK         2600                       124            50                                                               
+        144 Peter      Vargas     PVARGAS    650.121.2004         09-JUL-98 ST_CLERK         2500                       124            50                                                               
+        149 Eleni      Zlotkey    EZLOTKEY   011.44.1344.429018   29-JAN-00 SA_MAN          10500             .2        100            80                                                               
+        174 Ellen      Abel       EABEL      011.44.1644.429267   11-MAY-96 SA_REP          11000             .3        149            80                                                               
+        176 Jonathon   Taylor     JTAYLOR    011.44.1644.429265   24-MAR-98 SA_REP           8600             .3        149            80                                                               
+        178 Kimerely   Grant      KGRANT     011.44.1644.429263   24-MAY-99 SA_REP           7000            .15        149                                                                             
+        200 Jennifer   Whalen     JWAHLEN    515.123.4444         17-SEP-87 AD_ASST          4400                       101            10                                                               
+        201 Michael    Hartstein  MHARTSTE   515.123.5555         17-FEB-96 MK_MAN          13000                       100            20                                                               
+        202 Pat        Fay        PFAY       603.123.6666         17-AUG-97 MK_REP           6000                       201            20                                                               
+        205 Shelley    Higgins    SHIGGINS   515.123.8080         07-JUN-94 AC_MGR          12000                       101           110                                                               
+        206 William    Gietz      WGIETZ     515.123.8181         07-JUN-94 AC_ACCOUNT       8300                       205           110                                                               
+
+20 rows selected.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 ADMINISTRATION                        200        7100                                                                                                                                     
+           20 MARKETING                             201        1800                                                                                                                                     
+           50 SHIPING                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 SALES                                 149        2500                                                                                                                                     
+           90 EXECUTIVE                             100        7100                                                                                                                                     
+          110 Accounting                            205        7100                                                                                                                                     
+          190 Contracting                           100        7100                                                                                                                                     
+
+8 rows selected.
+
+SQL> UPDATE D1 SET (DEPARTMENT_ID , DEPARTMENT_NAME) = SELECT * FROM REGIONS WHERE REGION_ID = 4;
+UPDATE D1 SET (DEPARTMENT_ID , DEPARTMENT_NAME) = SELECT * FROM REGIONS WHERE REGION_ID = 4
+                                                  *
+ERROR at line 1:
+ORA-01767: UPDATE ... SET expression must be a subquery 
+
+
+SQL> UPDATE D1 SET (DEPARTMENT_ID , DEPARTMENT_NAME) = (SELECT * FROM REGIONS WHERE REGION_ID = 4);
+
+8 rows updated.
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        7100                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 SALES                                 149        2500                                                                                                                                     
+           90 EXECUTIVE                             100        7100                                                                                                                                     
+          110 Accounting                            205        7100                                                                                                                                     
+          190 Contracting                                      7100                                                                                                                                     
+
+8 rows selected.
+
+SQL> UPDATE D1 SET (DEPARTMENT_ID , DEPARTMENT_NAME) = (SELECT * FROM REGIONS WHERE REGION_ID = 4) WHERE MANAGER_ID = 201;
+
+1 row updated.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        7100                                                                                                                                     
+            4 Middle East and Africa                201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 SALES                                 149        2500                                                                                                                                     
+           90 EXECUTIVE                             100        7100                                                                                                                                     
+          110 Accounting                            205        7100                                                                                                                                     
+          190 Contracting                                      7100                                                                                                                                     
+
+8 rows selected.
+
+SQL> REM DELETE :
+SQL> 
+SQL> DELETE D1;
+
+8 rows deleted.
+
+SQL> REM DELETE :
+SQL> 
+SQL> SELECT * FROM D1;
+
+no rows selected
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           10 Administration                        200        7100                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           50 Shiping                               124        1500                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 SALES                                 149        2500                                                                                                                                     
+           90 EXECUTIVE                             100        7100                                                                                                                                     
+          110 Accounting                            205        7100                                                                                                                                     
+          190 Contracting                                      7100                                                                                                                                     
+
+8 rows selected.
+
+SQL> DELETE D1 WHERE MANAGER_ID IS NULL;
+
+1 row deleted.
+
+SQL> DELETE D1 WHERE LOCATION_ID = 7100;
+
+3 rows deleted.
+
+SQL> DELETE D1 WHERE MANAGER_ID = (SELECT EMPLOYEE_ID FROM EMPLOYEES WHERE FIRST_NAME = 'Kevin');
+
+1 row deleted.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 SALES                                 149        2500                                                                                                                                     
+
+SQL> SELECT * FROM LOCATIONS;
+
+LOCATION_ID STREET_ADRESS                            POSTAL_CODE  CITY                           STATE_PROVINCE            CO                                                                           
+----------- ---------------------------------------- ------------ ------------------------------ ------------------------- --                                                                           
+       1400 2014 Jabberwocky Rd                      26192        Southlake                      Texas                     US                                                                           
+       1500 2011 Interiors Blvd                      99236        South San Francisco            California                US                                                                           
+       1700 2004 Charade Rd                          98199        Seattle                        Washington                US                                                                           
+       1800 460 Bloor St. W.                         ON M5S 1X8   Toronto                        Ontario                   CA                                                                           
+       2500 Magdalen Centre, The Oxford Science Park OX9 9ZB      Oxford                         Oxford                    UK                                                                           
+
+SQL> SELECT * FROM COUNTRIES;
+
+CO COUNTRY_NAME                              REGION_ID                                                                                                                                                  
+-- ---------------------------------------- ----------                                                                                                                                                  
+CA Canada                                            2                                                                                                                                                  
+DE Germany                                           1                                                                                                                                                  
+UK United Kingdom                                    1                                                                                                                                                  
+US United States of America                          2                                                                                                                                                  
+
+SQL> DELETE D1
+  2  WHERE LOCATION_ID IN (SELECT LOCATION_ID FROM LOCATIONS
+  3  WHERE COUNTRY_ID IN (SELECT COUNTRY_ID FROM COUNTRIES WHERE COUNTRY_NAME ='Canada'))
+  4  
+SQL> SAVEPOINT A;
+
+Savepoint created.
+
+SQL> 
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           20 Marketing                             201        1800                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 SALES                                 149        2500                                                                                                                                     
+
+SQL> DELETE D1
+  2  WHERE LOCATION_ID IN (SELECT LOCATION_ID FROM LOCATIONS        // SUB-QUERY BOLTE!!!!!!!!!!!!
+  3  WHERE COUNTRY_ID IN (SELECT COUNTRY_ID FROM COUNTRIES WHERE COUNTRY_NAME ='Canada'));
+
+1 row deleted.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 SALES                                 149        2500                                                                                                                                     
+
+SQL> ROLLBACK TO A;
+
+Rollback complete.
+
+SQL> DELETE D1
+  2  WHERE LOCATION_ID IN (SELECT LOCATION_ID FROM LOCATIONS NATURAL JOIN COUNTRIES WHERE COUNTRY_NAME ='Canada');
+
+1 row deleted.
+
+SQL> SELECT * FROM D1;
+
+DEPARTMENT_ID DEPARTMENT_NAME                MANAGER_ID LOCATION_ID                                                                                                                                     
+------------- ------------------------------ ---------- -----------                                                                                                                                     
+           60 IT                                    103        1400                                                                                                                                     
+           80 SALES                                 149        2500                                                                                                                                     
+
+SQL> SPOOL OFF

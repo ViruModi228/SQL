@@ -1,0 +1,930 @@
+SQL> 
+SQL> CREATE TABLE R1 AS SELECT * FROM REGIONS;
+CREATE TABLE R1 AS SELECT * FROM REGIONS
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> DROP TABLE R1;
+
+Table dropped.
+
+SQL> CREATE TABLE R1 AS SELECT * FROM REGIONS;
+
+Table created.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> INSERT INTO R1 VALUES (5,'AUS');
+
+1 row created.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+
+SQL> REM 4 TABLE , 1 MEMORY = 5
+SQL> 
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> REM 5 TABLE , 0 MEMORY = 5
+SQL> 
+SQL> INSERT INTO R1 VALUES (6,'ANT');
+
+1 row created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> REM WE CAN SEE OLDER VERSIONS OF TABLE IN TWO WAYS : 1 SELECT ... AS OF TIMESTAMP 2 SELECT ... TIMESTAMP BETWEEN MINVALUE AND MAXVALUE     // OP!!!!!!!!!
+SQL> 
+SQL> REM 1 SELECT ... AS OF TIMESTAMP : IT CAN PROVIDE SINGLE OLDER VERSION OF TABLE ON SPECIFIC TIME     // RETURNS ONLY ONE VERSION OF THE TABLE AT ANY SPECIFIC TIME!!!!!
+SQL> 
+SQL> REM 2 SELECT ... TIMESTAMP BETWEEN MINVALUE AND MAXVALUE : CAN PROVIDE ALL AVAILABLE OLDER VERSIONS AT A TIME.
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '1' MINUTE;         // SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '1' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '2' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '3' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '4' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '5' MINUTE;   // SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '5' MINUTE
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '6' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '7' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '8' MINUTE;        // BEFORE 8 MINUTES NO TABLE NAMED R1 WAS CREATED
+SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '8' MINUTE
+              *
+ERROR at line 1:
+ORA-01466: unable to read data - table definition has changed 
+
+
+SQL> SELECT * FROM R1 VERSIONS BETWEEN TIMESTAMP MINVALUE AND MAXVALUE;   
+
+SQL> SELECT * FROM D1 VERSIONS BETWEEN TIMESTAMP MINVALUE AND MAXVALUE;       // RETURNS ALL THE VERSIONS
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         6 ANT                                                                                                                                                                                          
+         5 AUS                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> UPDATE R1 SET REGION_NAME = UPPER(REGION_NAME) WHERE REGION_ID = 2;
+
+1 row updated.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 AMERICAS                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> SELECT * FROM R1 VERSIONS BETWEEN TIMESTAMP MINVALUE AND MAXVALUE;      OP WORK!!!!!!!!!!!  // SELECT * FROM R1 VERSIONS BETWEEN TIMESTAMP MINVALUE AND MAXVALUE
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         2 AMERICAS                                                                                                                                                                                     
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         6 ANT                                                                                                                                                                                          
+         5 AUS                                                                                                                                                                                          
+
+7 rows selected.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 AMERICAS                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '5' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '8' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+
+SQL> FLASHBACK TABLE R1 TO TIMESTAMP SYSTIMESTAMP - INTERVAL '8' MINUTE;
+FLASHBACK TABLE R1 TO TIMESTAMP SYSTIMESTAMP - INTERVAL '8' MINUTE
+                *
+ERROR at line 1:
+ORA-08189: cannot flashback the table because row movement is not enabled 
+
+
+SQL> ALTER TABLE R1 ENABLE ROW MOVEMENT;                    // ROW MOVEMENT TO BE ALLOWED WITH THE HELP OF ALTER TABLE COMMAND  // IN ORDER TO RESTORE THE PERVIOUS VERSION WE NEED TO ENABLE
+
+Table altered.                                                                                                  // ROW MOVEMENT FIRST!!!!!!!
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '8' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '9' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '10' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+
+SQL> FLASHBACK TABLE R1 TO TIMESTAMP SYSTIMESTAMP - INTERVAL '10' MINUTE;        // FLASHBACK BOLTE!!!!!!!!!!!
+
+Flashback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         5 AUS                                                                                                                                                                                          
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '15' MINUTE;
+SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '15' MINUTE
+              *
+ERROR at line 1:
+ORA-01466: unable to read data - table definition has changed 
+
+-----------------------------------------------------------------------------------------------
+
+SQL> REM WORK DONE BY ME ON LIVE SERVER
+
+ CREATE TABLE E1 AS SELECT * FROM EMPLOYEES;
+
+ UPDATE E1 SET FIRST_NAME = LOWER(FIRST_NAME) WHERE JOB_ID IN ('AD_VP','ST_CLERK','IT_PROG');
+
+ SELECT * FROM E1;
+
+ DELETE FROM E1 WHERE DEPARTMENT_ID IN
+ (SELECT DEPARTMENT_ID FROM DEPARTMENTS WHERE LOCATION_ID IN
+ (SELECT LOCATION_ID FROM LOCATIONS WHERE COUNTRY_ID IN
+ (SELECT COUNTRY_ID FROM COUNTRIES WHERE REGION_ID IN
+ (SELECT REGION_ID FROM REGIONS WHERE REGION_NAME = 'Americas'))));   // JODD BEYYY
+
+ SELECT * FROM E1 AS OF TIMESTAMP SYSTIMESTAMP  - INTERVAL '3' MINUTE; // 3 MINUTE PEHELE UPDATE HI NAHI HUA THA
+ 
+ SELECT * FROM E1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '1' MINUTE;      // ROWS DELETE HOGYI THI
+
+ ALTER TABLE E1 ENABLE ROW MOVEMENT;
+
+ FLASHBACK TABLE E1 TO TIMESTAMP SYSTIMESTAMP - INTERVAL '7' MINUTE;
+
+ REM JODD USE OF DML COMMANDS
+
+ SELECT * FROM E1;
+
+------------------------------------------------------------------------------------------------
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '13' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '14' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> FLASHBACK TABLE R1 TO TIMESTAMP SYSTIMESTAMP - INTERVAL '14' MINUTE;
+
+Flashback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SELECT * FROM R1 AS OF TIMESTAMP SYSTIMESTAMP - INTERVAL '6' MINUTE;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> FLASHBACK TABLE R1 TO TIMESTAMP SYSTIMESTAMP - INTERVAL '6' MINUTE;
+
+Flashback complete.
+
+SQL> ALTER TABLE R1 DISABLE ROW MOVEMENT;         // PRE REQUISITE FOR RESTORING BACK THE OLDER VERSIONS
+
+Table altered.
+
+SQL> REM DROP , FLASHBACK , TRUNCATE , PURGE , DROP ... PURGE
+SQL> 
+SQL> REM DELETE : IT CAN DELETE SINGLE , MULTIPLE OR ALL ROWS OF TABLE. WE CAN ROLLBACK OR FLASHBACK. DEFINITION WILL NOT BE AFFECTED.
+SQL> 
+SQL> REM TRUNCATE : IT WILL DELETE ALL ROWS PERMANENTLY. WE CAN'T ROLLBACK OR FLASHBACK. DEFINITION WILL NOT BE AFFECTED.  // TRUNCATE KIYA TOH KHTM HAI ZINDAGI ALMOST!!!!!!!!!!
+SQL> 
+SQL> DESC R1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGION_ID                                                                                                         NOT NULL NUMBER
+ REGION_NAME                                                                                                                VARCHAR2(25)
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> DELETE R1 WHERE REGION_ID IN (1,5);
+
+2 rows deleted.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         6 ANT                                                                                                                                                                                          
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> DELETE R1 WHERE REGION_ID IN (1,5);
+
+2 rows deleted.
+
+SQL> COMMIT;
+
+Commit complete.        // AS IF WE HAVE COMMITTED HERE, THAN ROLLBACK CAN'T UNDO THE CHANGES DONE... WE HAVE TO USE THE FLASHBACK COMMAND OP!!!!!!!!!!
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         6 ANT                                                                                                                                                                                          
+
+SQL> ROLLBACK;
+
+Rollback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         6 ANT                                                                                                                                                                                          
+
+SQL> ALTER TABLE R1 ENABLE ROW MOVEMENT;
+
+Table altered.
+
+SQL> FLASHBACK TABLE R1 TO TIMESTAMP SYSTIMESTAMP - INTERVAL '2' MINUTE;
+
+Flashback complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+         5 AUS                                                                                                                                                                                          
+         6 ANT                                                                                                                                                                                          
+
+6 rows selected.
+
+SQL> TRUNCATE TABLE R1;     // NOW IT'S KHTM R1 KO NA TOH ROLLBACK NA TOH FLASHBACK KAR SKTE HAI PAT GYA !!!!!!!!!!!!!!
+
+Table truncated.
+
+SQL> SELECT * FROM R1;
+
+no rows selected
+
+SQL> ROLLBACK;
+
+Rollback complete.        // ROLLBACK IS A GOOD BOY N................. HEHEHE
+
+SQL> SELECT * FROM R1;
+
+no rows selected
+
+SQL> FLASHBACK TABLE R1 TO TIMESTAMP SYSTIMESTAMP - INTERVAL '2' MINUTE;
+FLASHBACK TABLE R1 TO TIMESTAMP SYSTIMESTAMP - INTERVAL '2' MINUTE
+                *
+ERROR at line 1:
+ORA-01466: unable to read data - table definition has changed 
+
+
+SQL> DESC R1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGION_ID                                                                                                         NOT NULL NUMBER
+ REGION_NAME                                                                                                                VARCHAR2(25)
+
+SQL> INSERT INTO R1 SELECT * FROM REGIONS;
+
+4 rows created.
+
+SQL> COMMIT;
+
+Commit complete.
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> REM DROP : WILL DROP TABLE DATA AND DEFINITION. IT WILL ACTUALLY NOT DROP BUT WILL RENAME AND KEEP INSIDE ORACLE'S RECYCLEBIN.
+SQL> 
+SQL> DROP TABLE R1;
+
+Table dropped.
+
+SQL> DESC R1
+ERROR:
+ORA-04043: object R1 does not exist 
+
+
+SQL> SELECT * FROM R1;
+SELECT * FROM R1
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SHOW RECYC
+ORIGINAL NAME    RECYCLEBIN NAME                OBJECT TYPE  DROP TIME                                                                                                                                  
+---------------- ------------------------------ ------------ -------------------                                                                                                                        
+C1               BIN$XtPO8zssSWaKrDDjBkaCyQ==$0 TABLE        2022-06-13:11:42:01                                                                                                                        
+C1               BIN$RPI3R9A6S1em05UO3s3F/g==$0 TABLE        2022-05-17:19:40:50                                                                                                                        
+C2               BIN$Q0nrSzD/RfWB8GqmES3ibw==$0 TABLE        2022-05-17:19:40:49                                                                                                                        
+C3               BIN$QGuYz3/jTkG7Iq9VPzKxZA==$0 TABLE        2022-05-17:19:40:47                                                                                                                        
+D1               BIN$jQTyM3TFSF+rSEc41bCwsw==$0 TABLE        2022-06-07:18:58:13                                                                                                                        
+DEPT             BIN$CpgV1kEoS9ymF2tOYVas0g==$0 TABLE        2022-06-13:10:50:43                                                                                                                        
+DEPT             BIN$3MwZ/NKBRUOoFRnbB9tS1A==$0 TABLE        2022-06-10:18:21:35                                                                                                                        
+DEPT             BIN$2EJqNqRkSH+TJXKw6RRFpA==$0 TABLE        2022-06-10:18:03:49                                                                                                                        
+DEPT             BIN$HaVrq1ZRTFiFIwc++hFilg==$0 TABLE        2022-06-10:17:59:01                                                                                                                        
+EMP              BIN$ifwWPjRcSyybDgoHN6l5GA==$0 TABLE        2022-06-13:10:50:41                                                                                                                        
+EMP              BIN$UzxNjDDdSg+WnQ9OFgihng==$0 TABLE        2022-06-13:10:40:26                                                                                                                        
+EMP              BIN$SQA0vbLdQaaJ+NafgxJlOQ==$0 TABLE        2022-06-10:18:21:32                                                                                                                        
+EMP              BIN$faHUZR6kRqaVrWGp6kbusg==$0 TABLE        2022-06-10:18:03:48                                                                                                                        
+EMP              BIN$K3MAihZyRvqu8xgsBbmLSg==$0 TABLE        2022-06-10:17:58:59                                                                                                                        
+EMP              BIN$9MfaK29bQpKhJv88LKX3Gw==$0 TABLE        2022-06-10:17:47:43                                                                                                                        
+EMP              BIN$Dss0nQHGQ5SOL6vtkUsk/A==$0 TABLE        2022-06-10:17:41:23                                                                                                                        
+FEES             BIN$Z6z/vbMOTIqTTLvSTNHcHw==$0 TABLE        2022-06-13:11:13:52                                                                                                                        
+FEES             BIN$Lxzz0OAFQzaW6TutR9cnSw==$0 TABLE        2022-06-10:18:25:34                                                                                                                        
+FEES             BIN$zjYNNOZtToaoglhxvUpuDw==$0 TABLE        2022-05-17:19:39:11                                                                                                                        
+P1               BIN$iaQSPUbpRSeZxvU2MOGIig==$0 TABLE        2022-06-13:11:42:07                                                                                                                        
+P1               BIN$2rJIH28bQAC1u3fr6vLVRQ==$0 TABLE        2022-05-17:19:40:36                                                                                                                        
+P2               BIN$qYVQGRlSRnex2TUunLpdeA==$0 TABLE        2022-05-17:19:40:39                                                                                                                        
+P3               BIN$RcRgS/WfSbC+xRIgJ299Zw==$0 TABLE        2022-05-17:19:40:42                                                                                                                        
+R1               BIN$XRKGxADBQ+GCQWN4x6DolA==$0 TABLE        2022-06-15:18:23:05                                                                                                                        
+R1               BIN$/R0aDifkQHKMhSU8E/Q4HA==$0 TABLE        2022-06-15:17:58:57                                                                                                                        
+R1               BIN$N6czgptHTxC0Q73PizRaXQ==$0 TABLE        2022-06-08:19:20:14                                                                                                                        
+R1               BIN$5M5E6+fFSLK/b5Jr8MfKEw==$0 TABLE        2022-06-08:17:32:22                                                                                                                        
+SCHOOL           BIN$xFItXVJiRMKmzhGlnvq84g==$0 TABLE        2022-06-13:11:22:35                                                                                                                        
+SCHOOL           BIN$zBVoP1nnQdGGyjoLBj10Gw==$0 TABLE        2022-06-13:11:20:59                                                                                                                        
+SCHOOL           BIN$1DBHe/9bTMWQ3NpP8NEEcw==$0 TABLE        2022-06-13:11:13:46                                                                                                                        
+SCHOOL           BIN$E1RQ7ISRReaXqLPbDiDZTg==$0 TABLE        2022-06-10:18:37:10                                                                                                                        
+SCHOOL           BIN$ORhNIkwxQGSx4m6L2rHbAQ==$0 TABLE        2022-06-10:18:35:37                                                                                                                        
+SCHOOL           BIN$r5w4MihGRdGGQ6zSw1jEDQ==$0 TABLE        2022-06-10:18:32:44                                                                                                                        
+SCHOOL           BIN$5uavaclPRuGxNaFNoUIrjQ==$0 TABLE        2022-06-10:18:28:13                                                                                                                        
+SCHOOL           BIN$tytvBOHxQSKZLcT/wYeoMg==$0 TABLE        2022-06-10:18:25:30                                                                                                                        
+STD5A            BIN$YMqhGADyRWeFGM88E0nlOw==$0 TABLE        2022-06-13:10:30:40                                                                                                                        
+STD5A            BIN$cgU//W5GTk6MSxsUTP/QBg==$0 TABLE        2022-06-13:10:29:17                                                                                                                        
+STD5A            BIN$P2onJpmtTVeUolGxHi9L2w==$0 TABLE        2022-06-13:10:27:17                                                                                                                        
+STD5A            BIN$jwOTboDZRE2/jKTA88M1IQ==$0 TABLE        2022-06-13:10:26:20                                                                                                                        
+STD5A            BIN$P7r/mLeySjuQXiMfCu1HeQ==$0 TABLE        2022-06-13:10:25:25                                                                                                                        
+STD5A            BIN$BUKKc48mQiKxvWUPIDS+jA==$0 TABLE        2022-06-13:10:24:20                                                                                                                        
+STD5A            BIN$fJS2x4HoSUyz9dyMQzsspw==$0 TABLE        2022-06-13:10:23:37                                                                                                                        
+STD5A            BIN$9Vcx7OCnTma7dQpQgF0BKQ==$0 TABLE        2022-06-13:10:22:18                                                                                                                        
+STD5A            BIN$8fN4UHU1TdGf9Fa4nbwcVA==$0 TABLE        2022-06-13:10:20:16                                                                                                                        
+STD5A            BIN$RUTzVdU1TS2e+NaUx+Qxfw==$0 TABLE        2022-06-10:17:40:14                                                                                                                        
+STD5A            BIN$+Kn3jbERQ7eydCyVvDHAtg==$0 TABLE        2022-06-10:17:36:26                                                                                                                        
+STD5A            BIN$3w6QccHTQGGarcA6j4WhaQ==$0 TABLE        2022-06-10:17:34:55                                                                                                                        
+STD5A            BIN$I5kOReqdSSGaCo/Q2wRFMQ==$0 TABLE        2022-06-10:17:32:52                                                                                                                        
+STD5A            BIN$J3JC3wB+RbCZ5s+92dt0/Q==$0 TABLE        2022-06-10:17:29:32                                                                                                                        
+XYZ              BIN$GMI3B/jeTmWIvBEDcz43Kg==$0 TABLE        2022-06-06:10:25:48                                                                                                                        
+Xyz              BIN$9KeUI8rwQGWybzbhItkSWQ==$0 TABLE        2022-06-06:10:25:10                                                                                                                        
+SQL> SELECT * FROM R1;
+SELECT * FROM R1
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT * FROM "BIN$XRKGxADBQ+GCQWN4x6DolA==$0";
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> DESC "BIN$XRKGxADBQ+GCQWN4x6DolA==$0"
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGION_ID                                                                                                         NOT NULL NUMBER
+ REGION_NAME                                                                                                                VARCHAR2(25)
+
+SQL> FLASHBACK TABLE R1 TO BEFORE DROP;      // NEW COMMAND FOR RESTORING THE DROPPED TABLES  "TO BEFORE DROP"
+
+Flashback complete.
+
+SQL> DESC R1
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ REGION_ID                                                                                                         NOT NULL NUMBER
+ REGION_NAME                                                                                                                VARCHAR2(25)
+
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> SHOW RECYC
+ORIGINAL NAME    RECYCLEBIN NAME                OBJECT TYPE  DROP TIME                                                                                                                                  
+---------------- ------------------------------ ------------ -------------------                                                                                                                        
+C1               BIN$XtPO8zssSWaKrDDjBkaCyQ==$0 TABLE        2022-06-13:11:42:01                                                                                                                        
+C1               BIN$RPI3R9A6S1em05UO3s3F/g==$0 TABLE        2022-05-17:19:40:50                                                                                                                        
+C2               BIN$Q0nrSzD/RfWB8GqmES3ibw==$0 TABLE        2022-05-17:19:40:49                                                                                                                        
+C3               BIN$QGuYz3/jTkG7Iq9VPzKxZA==$0 TABLE        2022-05-17:19:40:47                                                                                                                        
+D1               BIN$jQTyM3TFSF+rSEc41bCwsw==$0 TABLE        2022-06-07:18:58:13                                                                                                                        
+DEPT             BIN$CpgV1kEoS9ymF2tOYVas0g==$0 TABLE        2022-06-13:10:50:43                                                                                                                        
+DEPT             BIN$3MwZ/NKBRUOoFRnbB9tS1A==$0 TABLE        2022-06-10:18:21:35                                                                                                                        
+DEPT             BIN$2EJqNqRkSH+TJXKw6RRFpA==$0 TABLE        2022-06-10:18:03:49                                                                                                                        
+DEPT             BIN$HaVrq1ZRTFiFIwc++hFilg==$0 TABLE        2022-06-10:17:59:01                                                                                                                        
+EMP              BIN$ifwWPjRcSyybDgoHN6l5GA==$0 TABLE        2022-06-13:10:50:41                                                                                                                        
+EMP              BIN$UzxNjDDdSg+WnQ9OFgihng==$0 TABLE        2022-06-13:10:40:26                                                                                                                        
+EMP              BIN$SQA0vbLdQaaJ+NafgxJlOQ==$0 TABLE        2022-06-10:18:21:32                                                                                                                        
+EMP              BIN$faHUZR6kRqaVrWGp6kbusg==$0 TABLE        2022-06-10:18:03:48                                                                                                                        
+EMP              BIN$K3MAihZyRvqu8xgsBbmLSg==$0 TABLE        2022-06-10:17:58:59                                                                                                                        
+EMP              BIN$9MfaK29bQpKhJv88LKX3Gw==$0 TABLE        2022-06-10:17:47:43                                                                                                                        
+EMP              BIN$Dss0nQHGQ5SOL6vtkUsk/A==$0 TABLE        2022-06-10:17:41:23                                                                                                                        
+FEES             BIN$Z6z/vbMOTIqTTLvSTNHcHw==$0 TABLE        2022-06-13:11:13:52                                                                                                                        
+FEES             BIN$Lxzz0OAFQzaW6TutR9cnSw==$0 TABLE        2022-06-10:18:25:34                                                                                                                        
+FEES             BIN$zjYNNOZtToaoglhxvUpuDw==$0 TABLE        2022-05-17:19:39:11                                                                                                                        
+P1               BIN$iaQSPUbpRSeZxvU2MOGIig==$0 TABLE        2022-06-13:11:42:07                                                                                                                        
+P1               BIN$2rJIH28bQAC1u3fr6vLVRQ==$0 TABLE        2022-05-17:19:40:36                                                                                                                        
+P2               BIN$qYVQGRlSRnex2TUunLpdeA==$0 TABLE        2022-05-17:19:40:39                                                                                                                        
+P3               BIN$RcRgS/WfSbC+xRIgJ299Zw==$0 TABLE        2022-05-17:19:40:42                                                                                                                        
+R1               BIN$/R0aDifkQHKMhSU8E/Q4HA==$0 TABLE        2022-06-15:17:58:57                                                                                                                        
+R1               BIN$N6czgptHTxC0Q73PizRaXQ==$0 TABLE        2022-06-08:19:20:14                                                                                                                        
+R1               BIN$5M5E6+fFSLK/b5Jr8MfKEw==$0 TABLE        2022-06-08:17:32:22                                                                                                                        
+SCHOOL           BIN$xFItXVJiRMKmzhGlnvq84g==$0 TABLE        2022-06-13:11:22:35                                                                                                                        
+SCHOOL           BIN$zBVoP1nnQdGGyjoLBj10Gw==$0 TABLE        2022-06-13:11:20:59                                                                                                                        
+SCHOOL           BIN$1DBHe/9bTMWQ3NpP8NEEcw==$0 TABLE        2022-06-13:11:13:46                                                                                                                        
+SCHOOL           BIN$E1RQ7ISRReaXqLPbDiDZTg==$0 TABLE        2022-06-10:18:37:10                                                                                                                        
+SCHOOL           BIN$ORhNIkwxQGSx4m6L2rHbAQ==$0 TABLE        2022-06-10:18:35:37                                                                                                                        
+SCHOOL           BIN$r5w4MihGRdGGQ6zSw1jEDQ==$0 TABLE        2022-06-10:18:32:44                                                                                                                        
+SCHOOL           BIN$5uavaclPRuGxNaFNoUIrjQ==$0 TABLE        2022-06-10:18:28:13                                                                                                                        
+SCHOOL           BIN$tytvBOHxQSKZLcT/wYeoMg==$0 TABLE        2022-06-10:18:25:30                                                                                                                        
+STD5A            BIN$YMqhGADyRWeFGM88E0nlOw==$0 TABLE        2022-06-13:10:30:40                                                                                                                        
+STD5A            BIN$cgU//W5GTk6MSxsUTP/QBg==$0 TABLE        2022-06-13:10:29:17                                                                                                                        
+STD5A            BIN$P2onJpmtTVeUolGxHi9L2w==$0 TABLE        2022-06-13:10:27:17                                                                                                                        
+STD5A            BIN$jwOTboDZRE2/jKTA88M1IQ==$0 TABLE        2022-06-13:10:26:20                                                                                                                        
+STD5A            BIN$P7r/mLeySjuQXiMfCu1HeQ==$0 TABLE        2022-06-13:10:25:25                                                                                                                        
+STD5A            BIN$BUKKc48mQiKxvWUPIDS+jA==$0 TABLE        2022-06-13:10:24:20                                                                                                                        
+STD5A            BIN$fJS2x4HoSUyz9dyMQzsspw==$0 TABLE        2022-06-13:10:23:37                                                                                                                        
+STD5A            BIN$9Vcx7OCnTma7dQpQgF0BKQ==$0 TABLE        2022-06-13:10:22:18                                                                                                                        
+STD5A            BIN$8fN4UHU1TdGf9Fa4nbwcVA==$0 TABLE        2022-06-13:10:20:16                                                                                                                        
+STD5A            BIN$RUTzVdU1TS2e+NaUx+Qxfw==$0 TABLE        2022-06-10:17:40:14                                                                                                                        
+STD5A            BIN$+Kn3jbERQ7eydCyVvDHAtg==$0 TABLE        2022-06-10:17:36:26                                                                                                                        
+STD5A            BIN$3w6QccHTQGGarcA6j4WhaQ==$0 TABLE        2022-06-10:17:34:55                                                                                                                        
+STD5A            BIN$I5kOReqdSSGaCo/Q2wRFMQ==$0 TABLE        2022-06-10:17:32:52                                                                                                                        
+STD5A            BIN$J3JC3wB+RbCZ5s+92dt0/Q==$0 TABLE        2022-06-10:17:29:32                                                                                                                        
+XYZ              BIN$GMI3B/jeTmWIvBEDcz43Kg==$0 TABLE        2022-06-06:10:25:48                                                                                                                        
+Xyz              BIN$9KeUI8rwQGWybzbhItkSWQ==$0 TABLE        2022-06-06:10:25:10                                                                                                                        
+SQL> REM FLASHBACK COMMAND WORKS IN LIFO (LAST IN FIRST OUT)
+SQL> 
+SQL> REM WE CAN FLASHBACK ANY VERSION OF TABLE USING RECYCLEBIN OBJECT NAME. RECYCLEBIN OBJECT NAMES ARE CASE SENSITIVE. SO WE MUST DELIMIT IT WITH DOUBLE QUOTES.
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> DROP TABLE R1;
+
+Table dropped.
+
+SQL> SHOW REYCL
+SP2-0158: unknown SHOW option "REYCL"
+SQL> SHOW RECYC
+ORIGINAL NAME    RECYCLEBIN NAME                OBJECT TYPE  DROP TIME                                                                                                                                  
+---------------- ------------------------------ ------------ -------------------                                                                                                                        
+C1               BIN$XtPO8zssSWaKrDDjBkaCyQ==$0 TABLE        2022-06-13:11:42:01                                                                                                                        
+C1               BIN$RPI3R9A6S1em05UO3s3F/g==$0 TABLE        2022-05-17:19:40:50                                                                                                                        
+C2               BIN$Q0nrSzD/RfWB8GqmES3ibw==$0 TABLE        2022-05-17:19:40:49                                                                                                                        
+C3               BIN$QGuYz3/jTkG7Iq9VPzKxZA==$0 TABLE        2022-05-17:19:40:47                                                                                                                        
+D1               BIN$jQTyM3TFSF+rSEc41bCwsw==$0 TABLE        2022-06-07:18:58:13                                                                                                                        
+DEPT             BIN$CpgV1kEoS9ymF2tOYVas0g==$0 TABLE        2022-06-13:10:50:43                                                                                                                        
+DEPT             BIN$3MwZ/NKBRUOoFRnbB9tS1A==$0 TABLE        2022-06-10:18:21:35                                                                                                                        
+DEPT             BIN$2EJqNqRkSH+TJXKw6RRFpA==$0 TABLE        2022-06-10:18:03:49                                                                                                                        
+DEPT             BIN$HaVrq1ZRTFiFIwc++hFilg==$0 TABLE        2022-06-10:17:59:01                                                                                                                        
+EMP              BIN$ifwWPjRcSyybDgoHN6l5GA==$0 TABLE        2022-06-13:10:50:41                                                                                                                        
+EMP              BIN$UzxNjDDdSg+WnQ9OFgihng==$0 TABLE        2022-06-13:10:40:26                                                                                                                        
+EMP              BIN$SQA0vbLdQaaJ+NafgxJlOQ==$0 TABLE        2022-06-10:18:21:32                                                                                                                        
+EMP              BIN$faHUZR6kRqaVrWGp6kbusg==$0 TABLE        2022-06-10:18:03:48                                                                                                                        
+EMP              BIN$K3MAihZyRvqu8xgsBbmLSg==$0 TABLE        2022-06-10:17:58:59                                                                                                                        
+EMP              BIN$9MfaK29bQpKhJv88LKX3Gw==$0 TABLE        2022-06-10:17:47:43                                                                                                                        
+EMP              BIN$Dss0nQHGQ5SOL6vtkUsk/A==$0 TABLE        2022-06-10:17:41:23                                                                                                                        
+FEES             BIN$Z6z/vbMOTIqTTLvSTNHcHw==$0 TABLE        2022-06-13:11:13:52                                                                                                                        
+FEES             BIN$Lxzz0OAFQzaW6TutR9cnSw==$0 TABLE        2022-06-10:18:25:34                                                                                                                        
+FEES             BIN$zjYNNOZtToaoglhxvUpuDw==$0 TABLE        2022-05-17:19:39:11                                                                                                                        
+P1               BIN$iaQSPUbpRSeZxvU2MOGIig==$0 TABLE        2022-06-13:11:42:07                                                                                                                        
+P1               BIN$2rJIH28bQAC1u3fr6vLVRQ==$0 TABLE        2022-05-17:19:40:36                                                                                                                        
+P2               BIN$qYVQGRlSRnex2TUunLpdeA==$0 TABLE        2022-05-17:19:40:39                                                                                                                        
+P3               BIN$RcRgS/WfSbC+xRIgJ299Zw==$0 TABLE        2022-05-17:19:40:42                                                                                                                        
+R1               BIN$Je/PtZS0Rh+vBk3ceAVbFw==$0 TABLE        2022-06-15:18:29:19                                                                                                                        
+R1               BIN$/R0aDifkQHKMhSU8E/Q4HA==$0 TABLE        2022-06-15:17:58:57                                                                                                                        
+R1               BIN$N6czgptHTxC0Q73PizRaXQ==$0 TABLE        2022-06-08:19:20:14                                                                                                                        
+R1               BIN$5M5E6+fFSLK/b5Jr8MfKEw==$0 TABLE        2022-06-08:17:32:22                                                                                                                        
+SCHOOL           BIN$xFItXVJiRMKmzhGlnvq84g==$0 TABLE        2022-06-13:11:22:35                                                                                                                        
+SCHOOL           BIN$zBVoP1nnQdGGyjoLBj10Gw==$0 TABLE        2022-06-13:11:20:59                                                                                                                        
+SCHOOL           BIN$1DBHe/9bTMWQ3NpP8NEEcw==$0 TABLE        2022-06-13:11:13:46                                                                                                                        
+SCHOOL           BIN$E1RQ7ISRReaXqLPbDiDZTg==$0 TABLE        2022-06-10:18:37:10                                                                                                                        
+SCHOOL           BIN$ORhNIkwxQGSx4m6L2rHbAQ==$0 TABLE        2022-06-10:18:35:37                                                                                                                        
+SCHOOL           BIN$r5w4MihGRdGGQ6zSw1jEDQ==$0 TABLE        2022-06-10:18:32:44                                                                                                                        
+SCHOOL           BIN$5uavaclPRuGxNaFNoUIrjQ==$0 TABLE        2022-06-10:18:28:13                                                                                                                        
+SCHOOL           BIN$tytvBOHxQSKZLcT/wYeoMg==$0 TABLE        2022-06-10:18:25:30                                                                                                                        
+STD5A            BIN$YMqhGADyRWeFGM88E0nlOw==$0 TABLE        2022-06-13:10:30:40                                                                                                                        
+STD5A            BIN$cgU//W5GTk6MSxsUTP/QBg==$0 TABLE        2022-06-13:10:29:17                                                                                                                        
+STD5A            BIN$P2onJpmtTVeUolGxHi9L2w==$0 TABLE        2022-06-13:10:27:17                                                                                                                        
+STD5A            BIN$jwOTboDZRE2/jKTA88M1IQ==$0 TABLE        2022-06-13:10:26:20                                                                                                                        
+STD5A            BIN$P7r/mLeySjuQXiMfCu1HeQ==$0 TABLE        2022-06-13:10:25:25                                                                                                                        
+STD5A            BIN$BUKKc48mQiKxvWUPIDS+jA==$0 TABLE        2022-06-13:10:24:20                                                                                                                        
+STD5A            BIN$fJS2x4HoSUyz9dyMQzsspw==$0 TABLE        2022-06-13:10:23:37                                                                                                                        
+STD5A            BIN$9Vcx7OCnTma7dQpQgF0BKQ==$0 TABLE        2022-06-13:10:22:18                                                                                                                        
+STD5A            BIN$8fN4UHU1TdGf9Fa4nbwcVA==$0 TABLE        2022-06-13:10:20:16                                                                                                                        
+STD5A            BIN$RUTzVdU1TS2e+NaUx+Qxfw==$0 TABLE        2022-06-10:17:40:14                                                                                                                        
+STD5A            BIN$+Kn3jbERQ7eydCyVvDHAtg==$0 TABLE        2022-06-10:17:36:26                                                                                                                        
+STD5A            BIN$3w6QccHTQGGarcA6j4WhaQ==$0 TABLE        2022-06-10:17:34:55                                                                                                                        
+STD5A            BIN$I5kOReqdSSGaCo/Q2wRFMQ==$0 TABLE        2022-06-10:17:32:52                                                                                                                        
+STD5A            BIN$J3JC3wB+RbCZ5s+92dt0/Q==$0 TABLE        2022-06-10:17:29:32                                                                                                                        
+XYZ              BIN$GMI3B/jeTmWIvBEDcz43Kg==$0 TABLE        2022-06-06:10:25:48                                                                                                                        
+Xyz              BIN$9KeUI8rwQGWybzbhItkSWQ==$0 TABLE        2022-06-06:10:25:10                                                                                                                        
+SQL> PURGE TABLE R1;          // PERMANANTLY DELETED      // DROP TABLE R1 PURGE IS A ONE LINER COMMAND TO PERMANANTLY DELETE ANY TABLE 
+
+Table purged.
+
+SQL> SHOW RECYC
+ORIGINAL NAME    RECYCLEBIN NAME                OBJECT TYPE  DROP TIME                                                                                                                                  
+---------------- ------------------------------ ------------ -------------------                                                                                                                        
+C1               BIN$XtPO8zssSWaKrDDjBkaCyQ==$0 TABLE        2022-06-13:11:42:01                                                                                                                        
+C1               BIN$RPI3R9A6S1em05UO3s3F/g==$0 TABLE        2022-05-17:19:40:50                                                                                                                        
+C2               BIN$Q0nrSzD/RfWB8GqmES3ibw==$0 TABLE        2022-05-17:19:40:49                                                                                                                        
+C3               BIN$QGuYz3/jTkG7Iq9VPzKxZA==$0 TABLE        2022-05-17:19:40:47                                                                                                                        
+D1               BIN$jQTyM3TFSF+rSEc41bCwsw==$0 TABLE        2022-06-07:18:58:13                                                                                                                        
+DEPT             BIN$CpgV1kEoS9ymF2tOYVas0g==$0 TABLE        2022-06-13:10:50:43                                                                                                                        
+DEPT             BIN$3MwZ/NKBRUOoFRnbB9tS1A==$0 TABLE        2022-06-10:18:21:35                                                                                                                        
+DEPT             BIN$2EJqNqRkSH+TJXKw6RRFpA==$0 TABLE        2022-06-10:18:03:49                                                                                                                        
+DEPT             BIN$HaVrq1ZRTFiFIwc++hFilg==$0 TABLE        2022-06-10:17:59:01                                                                                                                        
+EMP              BIN$ifwWPjRcSyybDgoHN6l5GA==$0 TABLE        2022-06-13:10:50:41                                                                                                                        
+EMP              BIN$UzxNjDDdSg+WnQ9OFgihng==$0 TABLE        2022-06-13:10:40:26                                                                                                                        
+EMP              BIN$SQA0vbLdQaaJ+NafgxJlOQ==$0 TABLE        2022-06-10:18:21:32                                                                                                                        
+EMP              BIN$faHUZR6kRqaVrWGp6kbusg==$0 TABLE        2022-06-10:18:03:48                                                                                                                        
+EMP              BIN$K3MAihZyRvqu8xgsBbmLSg==$0 TABLE        2022-06-10:17:58:59                                                                                                                        
+EMP              BIN$9MfaK29bQpKhJv88LKX3Gw==$0 TABLE        2022-06-10:17:47:43                                                                                                                        
+EMP              BIN$Dss0nQHGQ5SOL6vtkUsk/A==$0 TABLE        2022-06-10:17:41:23                                                                                                                        
+FEES             BIN$Z6z/vbMOTIqTTLvSTNHcHw==$0 TABLE        2022-06-13:11:13:52                                                                                                                        
+FEES             BIN$Lxzz0OAFQzaW6TutR9cnSw==$0 TABLE        2022-06-10:18:25:34                                                                                                                        
+FEES             BIN$zjYNNOZtToaoglhxvUpuDw==$0 TABLE        2022-05-17:19:39:11                                                                                                                        
+P1               BIN$iaQSPUbpRSeZxvU2MOGIig==$0 TABLE        2022-06-13:11:42:07                                                                                                                        
+P1               BIN$2rJIH28bQAC1u3fr6vLVRQ==$0 TABLE        2022-05-17:19:40:36                                                                                                                        
+P2               BIN$qYVQGRlSRnex2TUunLpdeA==$0 TABLE        2022-05-17:19:40:39                                                                                                                        
+P3               BIN$RcRgS/WfSbC+xRIgJ299Zw==$0 TABLE        2022-05-17:19:40:42                                                                                                                        
+R1               BIN$Je/PtZS0Rh+vBk3ceAVbFw==$0 TABLE        2022-06-15:18:29:19                                                                                                                        
+R1               BIN$/R0aDifkQHKMhSU8E/Q4HA==$0 TABLE        2022-06-15:17:58:57                                                                                                                        
+R1               BIN$N6czgptHTxC0Q73PizRaXQ==$0 TABLE        2022-06-08:19:20:14                                                                                                                        
+SCHOOL           BIN$xFItXVJiRMKmzhGlnvq84g==$0 TABLE        2022-06-13:11:22:35                                                                                                                        
+SCHOOL           BIN$zBVoP1nnQdGGyjoLBj10Gw==$0 TABLE        2022-06-13:11:20:59                                                                                                                        
+SCHOOL           BIN$1DBHe/9bTMWQ3NpP8NEEcw==$0 TABLE        2022-06-13:11:13:46                                                                                                                        
+SCHOOL           BIN$E1RQ7ISRReaXqLPbDiDZTg==$0 TABLE        2022-06-10:18:37:10                                                                                                                        
+SCHOOL           BIN$ORhNIkwxQGSx4m6L2rHbAQ==$0 TABLE        2022-06-10:18:35:37                                                                                                                        
+SCHOOL           BIN$r5w4MihGRdGGQ6zSw1jEDQ==$0 TABLE        2022-06-10:18:32:44                                                                                                                        
+SCHOOL           BIN$5uavaclPRuGxNaFNoUIrjQ==$0 TABLE        2022-06-10:18:28:13                                                                                                                        
+SCHOOL           BIN$tytvBOHxQSKZLcT/wYeoMg==$0 TABLE        2022-06-10:18:25:30                                                                                                                        
+STD5A            BIN$YMqhGADyRWeFGM88E0nlOw==$0 TABLE        2022-06-13:10:30:40                                                                                                                        
+STD5A            BIN$cgU//W5GTk6MSxsUTP/QBg==$0 TABLE        2022-06-13:10:29:17                                                                                                                        
+STD5A            BIN$P2onJpmtTVeUolGxHi9L2w==$0 TABLE        2022-06-13:10:27:17                                                                                                                        
+STD5A            BIN$jwOTboDZRE2/jKTA88M1IQ==$0 TABLE        2022-06-13:10:26:20                                                                                                                        
+STD5A            BIN$P7r/mLeySjuQXiMfCu1HeQ==$0 TABLE        2022-06-13:10:25:25                                                                                                                        
+STD5A            BIN$BUKKc48mQiKxvWUPIDS+jA==$0 TABLE        2022-06-13:10:24:20                                                                                                                        
+STD5A            BIN$fJS2x4HoSUyz9dyMQzsspw==$0 TABLE        2022-06-13:10:23:37                                                                                                                        
+STD5A            BIN$9Vcx7OCnTma7dQpQgF0BKQ==$0 TABLE        2022-06-13:10:22:18                                                                                                                        
+STD5A            BIN$8fN4UHU1TdGf9Fa4nbwcVA==$0 TABLE        2022-06-13:10:20:16                                                                                                                        
+STD5A            BIN$RUTzVdU1TS2e+NaUx+Qxfw==$0 TABLE        2022-06-10:17:40:14                                                                                                                        
+STD5A            BIN$+Kn3jbERQ7eydCyVvDHAtg==$0 TABLE        2022-06-10:17:36:26                                                                                                                        
+STD5A            BIN$3w6QccHTQGGarcA6j4WhaQ==$0 TABLE        2022-06-10:17:34:55                                                                                                                        
+STD5A            BIN$I5kOReqdSSGaCo/Q2wRFMQ==$0 TABLE        2022-06-10:17:32:52                                                                                                                        
+STD5A            BIN$J3JC3wB+RbCZ5s+92dt0/Q==$0 TABLE        2022-06-10:17:29:32                                                                                                                        
+XYZ              BIN$GMI3B/jeTmWIvBEDcz43Kg==$0 TABLE        2022-06-06:10:25:48                                                                                                                        
+Xyz              BIN$9KeUI8rwQGWybzbhItkSWQ==$0 TABLE        2022-06-06:10:25:10                                                                                                                        
+SQL> FLASHBACK TABLE R1 TO BEFORE DROP;
+
+Flashback complete.
+
+SQL> 
+SQL> SELECT * FROM R1;
+
+ REGION_ID REGION_NAME                                                                                                                                                                                  
+---------- -------------------------                                                                                                                                                                    
+         1 Europe                                                                                                                                                                                       
+         2 Americas                                                                                                                                                                                     
+         3 Asia                                                                                                                                                                                         
+         4 Middle East and Africa                                                                                                                                                                       
+
+SQL> DROP TABLE R1 PURGE;           DROP ... PURGE SYNTAX
+
+Table dropped.
+
+SQL> SHOW RECYC
+ORIGINAL NAME    RECYCLEBIN NAME                OBJECT TYPE  DROP TIME                                                                                                                                  
+---------------- ------------------------------ ------------ -------------------                                                                                                                        
+C1               BIN$XtPO8zssSWaKrDDjBkaCyQ==$0 TABLE        2022-06-13:11:42:01                                                                                                                        
+C1               BIN$RPI3R9A6S1em05UO3s3F/g==$0 TABLE        2022-05-17:19:40:50                                                                                                                        
+C2               BIN$Q0nrSzD/RfWB8GqmES3ibw==$0 TABLE        2022-05-17:19:40:49                                                                                                                        
+C3               BIN$QGuYz3/jTkG7Iq9VPzKxZA==$0 TABLE        2022-05-17:19:40:47                                                                                                                        
+D1               BIN$jQTyM3TFSF+rSEc41bCwsw==$0 TABLE        2022-06-07:18:58:13                                                                                                                        
+DEPT             BIN$CpgV1kEoS9ymF2tOYVas0g==$0 TABLE        2022-06-13:10:50:43                                                                                                                        
+DEPT             BIN$3MwZ/NKBRUOoFRnbB9tS1A==$0 TABLE        2022-06-10:18:21:35                                                                                                                        
+DEPT             BIN$2EJqNqRkSH+TJXKw6RRFpA==$0 TABLE        2022-06-10:18:03:49                                                                                                                        
+DEPT             BIN$HaVrq1ZRTFiFIwc++hFilg==$0 TABLE        2022-06-10:17:59:01                                                                                                                        
+EMP              BIN$ifwWPjRcSyybDgoHN6l5GA==$0 TABLE        2022-06-13:10:50:41                                                                                                                        
+EMP              BIN$UzxNjDDdSg+WnQ9OFgihng==$0 TABLE        2022-06-13:10:40:26                                                                                                                        
+EMP              BIN$SQA0vbLdQaaJ+NafgxJlOQ==$0 TABLE        2022-06-10:18:21:32                                                                                                                        
+EMP              BIN$faHUZR6kRqaVrWGp6kbusg==$0 TABLE        2022-06-10:18:03:48                                                                                                                        
+EMP              BIN$K3MAihZyRvqu8xgsBbmLSg==$0 TABLE        2022-06-10:17:58:59                                                                                                                        
+EMP              BIN$9MfaK29bQpKhJv88LKX3Gw==$0 TABLE        2022-06-10:17:47:43                                                                                                                        
+EMP              BIN$Dss0nQHGQ5SOL6vtkUsk/A==$0 TABLE        2022-06-10:17:41:23                                                                                                                        
+FEES             BIN$Z6z/vbMOTIqTTLvSTNHcHw==$0 TABLE        2022-06-13:11:13:52                                                                                                                        
+FEES             BIN$Lxzz0OAFQzaW6TutR9cnSw==$0 TABLE        2022-06-10:18:25:34                                                                                                                        
+FEES             BIN$zjYNNOZtToaoglhxvUpuDw==$0 TABLE        2022-05-17:19:39:11                                                                                                                        
+P1               BIN$iaQSPUbpRSeZxvU2MOGIig==$0 TABLE        2022-06-13:11:42:07                                                                                                                        
+P1               BIN$2rJIH28bQAC1u3fr6vLVRQ==$0 TABLE        2022-05-17:19:40:36                                                                                                                        
+P2               BIN$qYVQGRlSRnex2TUunLpdeA==$0 TABLE        2022-05-17:19:40:39                                                                                                                        
+P3               BIN$RcRgS/WfSbC+xRIgJ299Zw==$0 TABLE        2022-05-17:19:40:42                                                                                                                        
+R1               BIN$/R0aDifkQHKMhSU8E/Q4HA==$0 TABLE        2022-06-15:17:58:57                                                                                                                        
+R1               BIN$N6czgptHTxC0Q73PizRaXQ==$0 TABLE        2022-06-08:19:20:14                                                                                                                        
+SCHOOL           BIN$xFItXVJiRMKmzhGlnvq84g==$0 TABLE        2022-06-13:11:22:35                                                                                                                        
+SCHOOL           BIN$zBVoP1nnQdGGyjoLBj10Gw==$0 TABLE        2022-06-13:11:20:59                                                                                                                        
+SCHOOL           BIN$1DBHe/9bTMWQ3NpP8NEEcw==$0 TABLE        2022-06-13:11:13:46                                                                                                                        
+SCHOOL           BIN$E1RQ7ISRReaXqLPbDiDZTg==$0 TABLE        2022-06-10:18:37:10                                                                                                                        
+SCHOOL           BIN$ORhNIkwxQGSx4m6L2rHbAQ==$0 TABLE        2022-06-10:18:35:37                                                                                                                        
+SCHOOL           BIN$r5w4MihGRdGGQ6zSw1jEDQ==$0 TABLE        2022-06-10:18:32:44                                                                                                                        
+SCHOOL           BIN$5uavaclPRuGxNaFNoUIrjQ==$0 TABLE        2022-06-10:18:28:13                                                                                                                        
+SCHOOL           BIN$tytvBOHxQSKZLcT/wYeoMg==$0 TABLE        2022-06-10:18:25:30                                                                                                                        
+STD5A            BIN$YMqhGADyRWeFGM88E0nlOw==$0 TABLE        2022-06-13:10:30:40                                                                                                                        
+STD5A            BIN$cgU//W5GTk6MSxsUTP/QBg==$0 TABLE        2022-06-13:10:29:17                                                                                                                        
+STD5A            BIN$P2onJpmtTVeUolGxHi9L2w==$0 TABLE        2022-06-13:10:27:17                                                                                                                        
+STD5A            BIN$jwOTboDZRE2/jKTA88M1IQ==$0 TABLE        2022-06-13:10:26:20                                                                                                                        
+STD5A            BIN$P7r/mLeySjuQXiMfCu1HeQ==$0 TABLE        2022-06-13:10:25:25                                                                                                                        
+STD5A            BIN$BUKKc48mQiKxvWUPIDS+jA==$0 TABLE        2022-06-13:10:24:20                                                                                                                        
+STD5A            BIN$fJS2x4HoSUyz9dyMQzsspw==$0 TABLE        2022-06-13:10:23:37                                                                                                                        
+STD5A            BIN$9Vcx7OCnTma7dQpQgF0BKQ==$0 TABLE        2022-06-13:10:22:18                                                                                                                        
+STD5A            BIN$8fN4UHU1TdGf9Fa4nbwcVA==$0 TABLE        2022-06-13:10:20:16                                                                                                                        
+STD5A            BIN$RUTzVdU1TS2e+NaUx+Qxfw==$0 TABLE        2022-06-10:17:40:14                                                                                                                        
+STD5A            BIN$+Kn3jbERQ7eydCyVvDHAtg==$0 TABLE        2022-06-10:17:36:26                                                                                                                        
+STD5A            BIN$3w6QccHTQGGarcA6j4WhaQ==$0 TABLE        2022-06-10:17:34:55                                                                                                                        
+STD5A            BIN$I5kOReqdSSGaCo/Q2wRFMQ==$0 TABLE        2022-06-10:17:32:52                                                                                                                        
+STD5A            BIN$J3JC3wB+RbCZ5s+92dt0/Q==$0 TABLE        2022-06-10:17:29:32                                                                                                                        
+XYZ              BIN$GMI3B/jeTmWIvBEDcz43Kg==$0 TABLE        2022-06-06:10:25:48                                                                                                                        
+Xyz              BIN$9KeUI8rwQGWybzbhItkSWQ==$0 TABLE        2022-06-06:10:25:10                                                                                                                        
+SQL> SPOOL OFF

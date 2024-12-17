@@ -1,0 +1,251 @@
+SQL>                      
+SQL> REM CREATE TABLE :             // IMPORTANT CHAPTER HAI YE!!!!!!!
+SQL> 
+SQL> REM CREATE TABLE : 1 FROM SCTRATCH/NEW 2 USING SUB QUERY/EXISTING TABLE
+SQL> 
+SQL> REM CREATE TABLE FROM SCTRATCH SYNTAX : CREATE TABLE tablename(columnname datatype (size) DEFAULT defaultvalue column_level_constraints,...,table_level_constraints);
+SQL> 
+SQL> REM TABLE NAMING : 1 CASE INSENSITIVE NAMING 2 CASE SENSITIVE NAMING
+SQL> 
+SQL> 
+SQL> 
+SQL> REM RULES FOR CASE INSENSITIVE NAMING
+SQL> 
+SQL> REM 1 MINIMUM 1 CHARACTER, MAXIMUM 128 CHARACTERS
+SQL> 
+SQL> REM 2 FIRST CHARACTER MUST BE ALPHABET
+SQL> 
+SQL> REM 3 REMAINING CHARACTERS MAY BE ALPHABETS , DIGITS OR ANY OF THE 3 SPECIAL CHARACTERS :  _ # $
+SQL> 
+SQL> REM 4 WE CAN'T CREATE TABLE WITH IDENTICAL NAME UNDER SAME USER/SCHEMA.
+SQL> 
+SQL> REM 5 WE CAN'T USE ORACLE/SQL KEY/RESERVE WORD AS TABLE NAME.
+SQL> 
+SQL> 
+SQL> CREATE TABLE ABC(NO NUMBER);
+CREATE TABLE ABC(NO NUMBER)
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> DROP TABLE ABC;
+
+Table dropped.
+
+SQL> CREATE TABLE ABC(NO NUMBER);
+
+Table created.
+
+SQL> INSERT INTO abc values (10);
+
+1 row created.
+
+SQL> SELECT * FROM ABc;
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+
+SQL> REM RULES FOR CASE SENSITIVE NAMING
+SQL> 
+SQL> REM 1 MINIMUM 1 CHARACTER, MAXIMUM 128 CHARACTERS
+SQL> 
+SQL> REM 2 FIRST CHARACTER MAY BE ANY CHARACTER
+SQL> 
+SQL> REM 3 REMAINING CHARACTERS MAY BE ALPHABETS , DIGITS OR ANY SPECIAL CHARACTERS (EXCEPTION &, ")
+SQL> 
+SQL> REM 4 WE CAN CREATE TABLE WITH IDENTICAL NAME UNDER SAME USER/SCHEMA.
+SQL> 
+SQL> REM 5 WE CAN USE ORACLE/SQL KEY/RESERVE WORD AS TABLE NAME.
+SQL> 
+SQL> REM 6 WE MUST DELIMIT THE NAME WITH DOUBLE QUOTES.      // IMORTANT BOLTE!!!!!!!
+SQL> 
+SQL> REM 7 SAME CASE , SAME SPELLING AND SAME SPACING MUST BE USED.
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> CREATE TABLE "pqr"(NO NUMBER);
+
+Table created.
+
+SQL> INSERT INTO pqr values (11);
+
+1 row created.
+
+SQL> select * from pqr;
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        11                                                                                                                                                                                              
+        20                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+        20                                                                                                                                                                                              
+        30                                                                                                                                                                                              
+
+SQL> select * from "pqr";
+
+no rows selected
+
+SQL> INSERT INTO "pqr" values (11);
+
+1 row created.
+
+SQL> INSERT INTO "pqr" values (22);
+
+1 row created.
+
+SQL> select * from pqr;
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        11                                                                                                                                                                                              
+        20                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+        20                                                                                                                                                                                              
+        30                                                                                                                                                                                              
+
+SQL> select * from "pqr";
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        11                                                                                                                                                                                              
+        22                                                                                                                                                                                              
+
+SQL> CREATE TABLE "Pqr"(d date);
+CREATE TABLE "Pqr"(d date)
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> drop table "Pqr";
+
+Table dropped.
+
+SQL> CREATE TABLE "Pqr"(d date);
+
+Table created.
+
+SQL> insert into "pqr" values (sysdate);
+insert into "pqr" values (sysdate)
+                          *
+ERROR at line 1:
+ORA-00932: inconsistent datatypes: expected NUMBER got DATE 
+
+
+SQL> insert into "Pqr" values (sysdate);
+
+1 row created.
+
+SQL> select * from pqr;
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        11                                                                                                                                                                                              
+        20                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+        20                                                                                                                                                                                              
+        30                                                                                                                                                                                              
+
+SQL> select * from "pqr";
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        11                                                                                                                                                                                              
+        22                                                                                                                                                                                              
+
+SQL> select * from "Pqr";
+
+D                                                                                                                                                                                                       
+---------                                                                                                                                                                                               
+29-JUN-22                                                                                                                                                                                               
+
+SQL> CREATE TABLE "Sita Ram"(name varchar(10));
+
+Table created.
+
+SQL> insert into "Sita Ram" values ('Ganesh');
+
+1 row created.
+
+SQL> insert into "Sita ram" values ('Ganesh');
+insert into "Sita ram" values ('Ganesh')
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> insert into Sita Ram values ('Ganesh');
+insert into Sita Ram values ('Ganesh')
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> insert into "Sita  Ram" values ('Ganesh');
+insert into "Sita  Ram" values ('Ganesh')
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> create table "select"( no number);
+create table "select"( no number)
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> drop table "select";
+
+Table dropped.
+
+SQL> create table "select"( no number);
+
+Table created.
+
+SQL> insert into "select" values (10);
+
+1 row created.
+
+SQL> select * from "select";
+
+        NO                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        10                                                                                                                                                                                              
+
+SQL> alter session set nls_date_format = 'DD-MON-RR HH:MI.SS AM';
+
+Session altered.
+
+SQL> 
+SQL> SELECT FIRST_NAME , HIRE_DATE FROM EMPLOYEES;
+
+FIRST_NAME HIRE_DATE                                                                                                                                                                                    
+---------- ---------------------                                                                                                                                                                        
+Steven     17-JUL-87 12:00.00 AM                                                                                                                                                                        
+Neena      21-SEP-89 12:00.00 AM                                                                                                                                                                        
+Lex        13-JAN-93 12:00.00 AM                                                                                                                                                                        
+Alexander  03-JAN-90 12:00.00 AM                                                                                                                                                                        
+Bruce      21-MAY-91 12:00.00 AM                                                                                                                                                                        
+Diana      07-FEB-99 12:00.00 AM                                                                                                                                                                        
+Kevin      16-NOV-99 12:00.00 AM                                                                                                                                                                        
+Trenna     17-OCT-95 12:00.00 AM                                                                                                                                                                        
+Curtis     29-JAN-97 12:00.00 AM                                                                                                                                                                        
+Randall    15-MAR-98 12:00.00 AM                                                                                                                                                                        
+Peter      09-JUL-98 12:00.00 AM                                                                                                                                                                        
+Eleni      29-JAN-00 12:00.00 AM                                                                                                                                                                        
+Ellen      11-MAY-96 12:00.00 AM                                                                                                                                                                        
+Jonathon   24-MAR-98 12:00.00 AM                                                                                                                                                                        
+Kimerely   24-MAY-99 12:00.00 AM                                                                                                                                                                        
+Jennifer   17-SEP-87 12:00.00 AM                                                                                                                                                                        
+Michael    17-FEB-96 12:00.00 AM                                                                                                                                                                        
+Pat        17-AUG-97 12:00.00 AM                                                                                                                                                                        
+Shelley    07-JUN-94 12:00.00 AM                                                                                                                                                                        
+William    07-JUN-94 12:00.00 AM                                                                                                                                                                        
+
+20 rows selected.
+
+SQL> SPOOL OFF
